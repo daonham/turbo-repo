@@ -9,7 +9,6 @@ const initialState = {
 
 export default function Logout() {
   const [state, formAction] = useActionState(logoutAction, initialState);
-  console.log(state);
 
   return (
     <form action={formAction}>

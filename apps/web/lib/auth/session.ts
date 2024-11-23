@@ -8,6 +8,23 @@ import {
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 
+export interface Session {
+  id: string;
+  expires_at: Date;
+  user_id: number;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  username: string;
+  email_verified: boolean;
+}
+
+export type SessionValidationResult =
+  | { session: Session; user: User }
+  | { session: null; user: null };
+
 export async function createSession(
   token: string,
   userId: number,
@@ -138,20 +155,3 @@ export function generateSessionToken(): string {
 
   return token;
 }
-
-export interface Session {
-  id: string;
-  expires_at: Date;
-  user_id: number;
-}
-
-export interface User {
-  id: number;
-  email: string;
-  username: string;
-  email_verified: boolean;
-}
-
-export type SessionValidationResult =
-  | { session: Session; user: User }
-  | { session: null; user: null };
