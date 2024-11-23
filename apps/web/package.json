@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
     "@repo/config": "workspace:*",
     "@repo/ui": "workspace:*",
-    "dotenv": "^16.4.5",
+    "arctic": "^2.2.2",
     "drizzle-orm": "^0.36.3",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
