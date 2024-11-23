@@ -126,9 +126,7 @@ export async function setSessionTokenCookie(
   token: string,
   expiresAt: Date,
 ): Promise<void> {
-  const cookieStore = await cookies();
-
-  cookieStore.set("session", token, {
+  (await cookies()).set("session", token, {
     httpOnly: true,
     path: "/",
     secure: process.env.NODE_ENV === "production",
@@ -138,8 +136,7 @@ export async function setSessionTokenCookie(
 }
 
 export async function deleteSessionTokenCookie(): Promise<void> {
-  const cookieStore = await cookies();
-  cookieStore.set("session", "", {
+  (await cookies()).set("session", "", {
     httpOnly: true,
     path: "/",
     secure: process.env.NODE_ENV === "production",

@@ -11,9 +11,7 @@ import { cookies } from "next/headers";
 import { cache } from "react";
 
 export const auth = cache(async (): Promise<SessionValidationResult> => {
-  const cookieStore = await cookies();
-
-  const token = cookieStore.get("session")?.value ?? null;
+  const token = (await cookies()).get("session")?.value ?? null;
 
   if (token === null) {
     return { session: null, user: null };
