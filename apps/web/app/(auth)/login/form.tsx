@@ -6,6 +6,7 @@ import { useFormStatus } from "react-dom";
 import { loginAction } from "./actions";
 
 const initialState = {
+  status: "",
   message: "",
 };
 
@@ -21,7 +22,6 @@ export function LoginForm() {
         id="form-login.email"
         name="email"
         autoComplete="username"
-        required
       />
       <br />
       <label htmlFor="form-login.password">Password</label>
@@ -30,7 +30,6 @@ export function LoginForm() {
         id="form-login.password"
         name="password"
         autoComplete="current-password"
-        required
       />
       <br />
       <button type="submit">{pending ? "Loading" : "Login"}</button>
