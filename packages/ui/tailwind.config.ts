@@ -4,5 +4,5 @@ const base = require("@repo/config/tailwind-preset");
 module.exports = {
   ...base,
   content: [...base.content],
-  plugins: [...base.plugins],
+  plugins: [...base.plugins, require("tailwindcss-animate")],
 };

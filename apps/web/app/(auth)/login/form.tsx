@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@repo/ui";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -17,7 +18,7 @@ export function LoginForm() {
   return (
     <form action={formAction}>
       <label htmlFor="form-login.email">Email</label>
-      <input
+      <Input
         type="email"
         id="form-login.email"
         name="email"
@@ -25,7 +26,7 @@ export function LoginForm() {
       />
       <br />
       <label htmlFor="form-login.password">Password</label>
-      <input
+      <Input
         type="password"
         id="form-login.password"
         name="password"
