@@ -29,10 +29,7 @@ export function LoginForm() {
   const { executeAsync, isExecuting } = useAction(loginAction, {
     onSuccess: () => {
       toast.success("Login successful!");
-
-      if (searchParams.get("from")) {
-        router.push(searchParams.get("from") || "/dashboard");
-      }
+      router.push(searchParams.get("from") || "/dashboard");
     },
     onError: ({ error }) => {
       toast.error(error.serverError);
