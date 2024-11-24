@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@repo/ui";
+import { Button, Input, Label } from "@repo/ui";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -17,24 +17,37 @@ export function LoginForm() {
 
   return (
     <form action={formAction}>
-      <label htmlFor="form-login.email">Email</label>
-      <Input
-        type="email"
-        id="form-login.email"
-        name="email"
-        autoComplete="username"
-      />
-      <br />
-      <label htmlFor="form-login.password">Password</label>
-      <Input
-        type="password"
-        id="form-login.password"
-        name="password"
-        autoComplete="current-password"
-      />
-      <br />
-      <button type="submit">{pending ? "Loading" : "Login"}</button>
-      <p>{state.message}</p>
+      <div className="p-6 pt-0">
+        <div className="grid w-full items-center gap-4">
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              name="email"
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect="off"
+            />
+          </div>
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              name="password"
+              autoCapitalize="none"
+              autoCorrect="off"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col items-center p-6 pt-0">
+        <Button type="submit" text={"Login"} />
+        <p>{state.message}</p>
+      </div>
     </form>
   );
 }
