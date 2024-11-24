@@ -3,12 +3,26 @@
 import { login } from "@/lib/auth";
 import { createUser, getUserFromEmail } from "@/lib/auth/user";
 import { actionClient } from "@/lib/safe-action";
-import { schema } from "./schema";
+import { registerSchema, signUpSchema } from "./schema";
+
+export const signUpAction = actionClient
+  .schema(signUpSchema)
+  .action(async ({ parsedInput }) => {
+    const { email } = parsedInput;
+
+    // TODO: send OTP code to the email
+
+    return {
+      ok: true,
+    };
+  });
 
 export const registerAction = actionClient
-  .schema(schema)
+  .schema(registerSchema)
   .action(async ({ parsedInput }) => {
-    const { username, email, password } = parsedInput;
+    const { username, email, password, code } = parsedInput;
+
+    // TODO: Verify OTP code
 
     const user_exist = await getUserFromEmail(email);
 
