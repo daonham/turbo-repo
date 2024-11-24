@@ -1,42 +1,26 @@
 "use server";
 
-import {
-  createSession,
-  generateSessionToken,
-  setSessionTokenCookie,
-} from "@/lib/auth/session";
-import { createUser } from "@/lib/auth/user";
+import { login } from "@/lib/auth";
+import { createUser, getUserFromEmail } from "@/lib/auth/user";
+import { actionClient } from "@/lib/safe-action";
+import { schema } from "./schema";
 
-interface ActionResult {
-  message: string;
-}
+export const registerAction = actionClient
+  .schema(schema)
+  .action(async ({ parsedInput }) => {
+    const { username, email, password } = parsedInput;
 
-export async function registerAction(
-  _prev: ActionResult,
-  formData: FormData,
-): Promise<ActionResult> {
-  const email = formData.get("email");
-  const username = formData.get("username");
-  const password = formData.get("password");
+    const user_exist = await getUserFromEmail(email);
 
-  if (
-    typeof email !== "string" ||
-    typeof username !== "string" ||
-    typeof password !== "string"
-  ) {
+    if (user_exist) {
+      throw new Error("User already exists");
+    }
+
+    const user = await createUser(email, username, password);
+
+    await login(user.id);
+
     return {
-      message: "Invalid or missing fields",
+      ok: true,
     };
-  }
-
-  const user = await createUser(email, username, password);
-
-  const sessionToken = generateSessionToken();
-  const session = await createSession(sessionToken, user.id);
-
-  await setSessionTokenCookie(sessionToken, session.expires_at);
-
-  return {
-    message: `Welcome ${user.username}!`,
-  };
-}
+  });

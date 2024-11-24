@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { user as userDB } from "@/lib/db/schema";
+import { lower, user as userDB } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { hashPassword } from "./password";
 
@@ -51,7 +51,7 @@ export async function getUserFromEmail(email: string): Promise<User | null> {
   const row = await db
     .select()
     .from(userDB)
-    .where(eq(userDB.email, email))
+    .where(eq(lower(userDB.email), email.toLowerCase()))
     .get();
 
   if (!row) {
