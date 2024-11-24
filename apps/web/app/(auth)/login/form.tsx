@@ -1,22 +1,50 @@
 "use client";
 
 import { Button, Input, Label } from "@repo/ui";
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
+import { useAction } from "next-safe-action/hooks";
+import { toast } from "sonner";
+import { z } from "zod";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { loginAction } from "./actions";
+import { schema } from "./schema";
 
-const initialState = {
-  status: "",
-  message: "",
-};
+type loginProps = z.infer<typeof schema>;
 
 export function LoginForm() {
-  const [state, formAction] = useActionState(loginAction, initialState);
-  const { pending } = useFormStatus();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm<loginProps>({
+    resolver: zodResolver(schema),
+  });
+
+  const { executeAsync, isExecuting } = useAction(loginAction, {
+    onSuccess: () => {
+      toast.success("Login successful!");
+
+      if (searchParams.get("from")) {
+        router.push(searchParams.get("from") || "/dashboard");
+      }
+    },
+    onError: ({ error }) => {
+      toast.error(error.serverError);
+    },
+  });
 
   return (
-    <form action={formAction}>
+    <form
+      onSubmit={handleSubmit((data) =>
+        executeAsync({ email: data.email, password: data.password }),
+      )}
+    >
       <div className="p-6 pt-0">
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
@@ -25,10 +53,10 @@ export function LoginForm() {
               id="email"
               type="email"
               placeholder="Enter your email"
-              name="email"
               autoCapitalize="none"
               autoComplete="email"
-              autoCorrect="off"
+              {...register("email")}
+              error={errors.email?.message}
             />
           </div>
           <div className="flex flex-col space-y-1.5">
@@ -37,16 +65,15 @@ export function LoginForm() {
               id="password"
               type="password"
               placeholder="Enter your password"
-              name="password"
               autoCapitalize="none"
-              autoCorrect="off"
+              {...register("password")}
+              error={errors.password?.message}
             />
           </div>
         </div>
       </div>
       <div className="flex flex-col items-center p-6 pt-0">
-        <Button type="submit" text={"Login"} />
-        <p>{state.message}</p>
+        <Button type="submit" text={"Login"} loading={isExecuting} />
       </div>
     </form>
   );
