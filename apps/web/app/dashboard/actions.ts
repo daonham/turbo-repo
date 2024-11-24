@@ -1,6 +1,7 @@
 "use server";
 
 import { auth, logout } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export async function logoutAction() {
   const { session } = await auth();
@@ -13,7 +14,5 @@ export async function logoutAction() {
 
   await logout();
 
-  return {
-    message: "Logged out successfully",
-  };
+  redirect("/login");
 }
