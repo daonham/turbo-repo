@@ -4,7 +4,7 @@ import {
   lower,
   user as userDB,
 } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { hashPassword } from "./password";
 import { generateOTP } from "./utils";
 
@@ -98,7 +98,7 @@ export async function createVerifyOTP(email: string): Promise<string> {
   const result = await db
     .insert(emailVerifyDB)
     .values({
-      email: email,
+      email: email.toLowerCase(),
       code: otp,
       expires_at: Math.floor(expire.getTime() / 1000),
     })
@@ -106,4 +106,31 @@ export async function createVerifyOTP(email: string): Promise<string> {
     .get();
 
   return result.code;
+}
+
+export async function verifyOTP(email: string, otp: string): Promise<string> {
+  const row = await db
+    .select()
+    .from(emailVerifyDB)
+    .where(
+      sql`${emailVerifyDB.email} = ${email} and ${emailVerifyDB.code} = ${otp}`,
+    )
+    .get();
+
+  if (!row) {
+    throw new Error("Invalid OTP");
+  }
+
+  const expire = new Date(row.expires_at * 1000);
+
+  if (Date.now() >= expire.getTime()) {
+    await db
+      .delete(emailVerifyDB)
+      .where(
+        sql`${emailVerifyDB.email} = ${email} and ${emailVerifyDB.code} = ${otp}`,
+      );
+    throw new Error("OTP expired");
+  }
+
+  return row.email;
 }

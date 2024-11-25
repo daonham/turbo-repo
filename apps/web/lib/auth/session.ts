@@ -108,15 +108,7 @@ export async function validateSessionToken(
 }
 
 export async function invalidateSession(sessionId: string): Promise<void> {
-  const row = await db
-    .delete(session)
-    .where(eq(session.id, sessionId))
-    .returning({ deletedId: session.id })
-    .get();
-
-  if (!row?.deletedId) {
-    throw new Error("Cannot delete session");
-  }
+  await db.delete(session).where(eq(session.id, sessionId));
 }
 
 export async function setSessionTokenCookie(

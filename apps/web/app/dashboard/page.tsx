@@ -1,5 +1,5 @@
 import Logout from "./Logout";
 
-export default async function Page() {
+export default function Page() {
   return <Logout />;
 }

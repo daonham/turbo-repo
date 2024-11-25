@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, Input, Label } from "@repo/ui";
+import {
+  Button,
+  Input,
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  Label,
+} from "@repo/ui";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -119,15 +126,20 @@ function VerifyForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { username, email, password } = useRegisterContext();
+  const [isInvalidCode, setIsInvalidCode] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [code, setCode] = useState("");
 
   const { executeAsync, isExecuting } = useAction(registerAction, {
     onSuccess: () => {
-      toast.success("Register successful!");
+      toast.success("Account created! Redirecting...");
+      setIsRedirecting(true);
       router.push(searchParams.get("from") || "/dashboard");
     },
     onError: ({ error }) => {
       toast.error(error.serverError);
+      setCode("");
+      setIsInvalidCode(true);
     },
   });
 
@@ -151,23 +163,38 @@ function VerifyForm() {
         }}
       >
         <div className="p-6 pt-0">
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="opt">Username</Label>
-              <Input
-                id="opt"
-                type="text"
-                placeholder="Enter your OTP"
-                name="opt"
-              />
-            </div>
-          </div>
+          <InputOTP
+            maxLength={6}
+            value={code}
+            containerClassName="group flex items-center justify-center"
+            onChange={(code: string) => {
+              setIsInvalidCode(false);
+              setCode(code);
+            }}
+            onComplete={() => {
+              executeAsync({ username, email, password, code });
+            }}
+          >
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+          {isInvalidCode && (
+            <p className="mt-2 text-center text-sm text-red-500">
+              Invalid code. Please try again.
+            </p>
+          )}
         </div>
         <div className="flex flex-col items-center p-6 pt-0">
           <Button
             type="submit"
             text={isExecuting ? "Verifying..." : "Continue"}
-            loading={isExecuting}
+            loading={isExecuting || isRedirecting}
           />
         </div>
       </form>

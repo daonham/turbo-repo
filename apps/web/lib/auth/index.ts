@@ -34,13 +34,8 @@ export async function login(userId: number) {
 }
 
 export async function logout() {
-  try {
-    const { session } = await auth();
-    if (!session) return;
-    await invalidateSession(session.id);
-    deleteSessionTokenCookie();
-  } catch (error) {
-    console.error("Error logging out:", error);
-    throw new Error("Failed to log out");
-  }
+  const { session } = await auth();
+  if (!session) return;
+  await invalidateSession(session.id);
+  deleteSessionTokenCookie();
 }

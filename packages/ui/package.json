@@ -32,6 +32,7 @@
     "@radix-ui/react-tooltip": "^1.1.4",
     "class-variance-authority": "^0.7.0",
     "framer-motion": "^11.11.17",
+    "input-otp": "^1.4.1",
     "linkify-react": "^4.1.4",
     "lucide-react": "^0.460.0",
     "next": "15.0.3",

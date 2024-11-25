@@ -3,7 +3,12 @@
 import { sendEmail } from "@/emails";
 import VerifyEmail from "@/emails/verify-email";
 import { login } from "@/lib/auth";
-import { createUser, createVerifyOTP, getUserFromEmail } from "@/lib/auth/user";
+import {
+  createUser,
+  createVerifyOTP,
+  getUserFromEmail,
+  verifyOTP,
+} from "@/lib/auth/user";
 import { actionClient } from "@/lib/safe-action";
 import { registerSchema, signUpSchema } from "./schema";
 
@@ -16,6 +21,12 @@ export const signUpAction = actionClient
       throw new Error(
         "Email addresses with + are not allowed. Please use your work email instead.",
       );
+    }
+
+    const user_exist = await getUserFromEmail(email);
+
+    if (user_exist) {
+      throw new Error("User already exists");
     }
 
     const code = await createVerifyOTP(email);
@@ -39,7 +50,7 @@ export const registerAction = actionClient
   .action(async ({ parsedInput }) => {
     const { username, email, password, code } = parsedInput;
 
-    // TODO: Verify OTP code
+    await verifyOTP(email, code);
 
     const user_exist = await getUserFromEmail(email);
 
