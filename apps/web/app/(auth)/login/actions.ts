@@ -17,10 +17,10 @@ export const loginAction = actionClient
       throw new Error("User not found.");
     }
 
-    const passwordHash = await getUserPasswordHash(user.id);
+    const passwordHash = await getUserPasswordHash(email);
 
     if (!passwordHash) {
-      throw new Error("Password hash not found.");
+      throw new Error("User not found.");
     }
 
     const validPassword = verifyPasswordHash(passwordHash, password);

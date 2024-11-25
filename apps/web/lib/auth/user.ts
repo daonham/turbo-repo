@@ -14,12 +14,6 @@ export interface User {
   username: string;
 }
 
-export function verifyUsernameInput(username: string): boolean {
-  return (
-    username.length > 3 && username.length < 32 && username.trim() === username
-  );
-}
-
 export async function createUser(
   email: string,
   username: string,
@@ -71,14 +65,14 @@ export async function getUserFromEmail(email: string): Promise<User | null> {
 }
 
 export async function getUserPasswordHash(
-  user_id: number,
+  email: string,
 ): Promise<string | null> {
   const row = await db
     .select({
       password_hash: userDB.password_hash,
     })
     .from(userDB)
-    .where(eq(userDB.id, user_id))
+    .where(eq(userDB.email, email))
     .get();
 
   if (!row) {
