@@ -1,4 +1,4 @@
-import type { SessionValidationResult } from "@/lib/auth/session";
+import type { Session, User } from "@/lib/auth/session";
 import {
   createSession,
   deleteSessionTokenCookie,
@@ -10,17 +10,27 @@ import {
 import { cookies } from "next/headers";
 import { cache } from "react";
 
-export const auth = cache(async (): Promise<SessionValidationResult> => {
-  const token = (await cookies()).get("session")?.value ?? null;
+export const auth = cache(
+  async (): Promise<{
+    isAuth: boolean;
+    session: Session | null;
+    user: User | null;
+  }> => {
+    const token = (await cookies()).get("session")?.value ?? null;
 
-  if (token === null) {
-    return { session: null, user: null };
-  }
+    if (token === null) {
+      return { isAuth: false, session: null, user: null };
+    }
 
-  const result = await validateSessionToken(token);
+    const result = await validateSessionToken(token);
 
-  return result;
-});
+    return {
+      isAuth: Boolean(result.session && result.user),
+      session: result.session,
+      user: result.user,
+    };
+  },
+);
 
 export async function login(userId: number) {
   try {
@@ -34,8 +44,6 @@ export async function login(userId: number) {
 }
 
 export async function logout() {
-  const { session } = await auth();
-  if (!session) return;
-  await invalidateSession(session.id);
   deleteSessionTokenCookie();
+  await invalidateSession((await auth())?.session?.id || "");
 }

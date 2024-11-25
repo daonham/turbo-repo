@@ -5,9 +5,9 @@ export default async function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { session, user } = await auth();
+  const { isAuth, user } = await auth();
 
-  if (!session || !user) {
+  if (!isAuth) {
     return <div>Not signed in</div>;
   }
 

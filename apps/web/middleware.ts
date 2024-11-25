@@ -27,13 +27,6 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     });
-
-    if (
-      request.nextUrl.pathname.startsWith("/login") ||
-      request.nextUrl.pathname.startsWith("/register")
-    ) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
   }
 
   return response;
