@@ -18,7 +18,6 @@ export interface User {
   id: number;
   email: string;
   username: string;
-  email_verified: boolean;
 }
 
 export type SessionValidationResult =
@@ -66,7 +65,6 @@ export async function validateSessionToken(
       expires_at: session.expires_at,
       email: user.email,
       username: user.username,
-      email_verified: user.email_verified,
     })
     .from(session)
     .innerJoin(user, eq(session.user_id, user.id))
@@ -87,7 +85,6 @@ export async function validateSessionToken(
     id: row.user_id,
     email: row.email,
     username: row.username,
-    email_verified: Boolean(row.email_verified),
   };
 
   if (Date.now() >= data_session.expires_at.getTime()) {

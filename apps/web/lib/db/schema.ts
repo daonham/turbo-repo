@@ -16,7 +16,6 @@ export const user = createTable(
     email: text("email").notNull(),
     password_hash: text("password_hash").notNull(),
     username: text("username").notNull(),
-    email_verified: integer("email_verified").notNull().default(0),
   },
   (table) => ({
     email_idx: uniqueIndex("email_idx").on(lower(table.email)),
@@ -34,29 +33,18 @@ export const session = createTable("session", {
 export const email_verification_request = createTable(
   "email_verification_request",
   {
-    id: text("id").primaryKey(),
-    user_id: integer("user_id")
-      .notNull()
-      .references(() => user.id),
+    id: integer("id").primaryKey(),
     email: text("email").notNull(),
-    code: text("token").notNull(),
-    expires_at: integer("expires_at", {
-      mode: "timestamp",
-    }).notNull(),
+    code: text("code").notNull(),
+    expires_at: integer("expires_at").notNull(),
   },
 );
 
 export const password_reset_session = createTable("password_reset_session", {
-  id: text("id").primaryKey(),
-  user_id: integer("user_id")
-    .notNull()
-    .references(() => user.id),
+  id: integer("id").primaryKey(),
   email: text("email").notNull(),
-  code: text("token").notNull(),
-  expires_at: integer("expires_at", {
-    mode: "timestamp",
-  }).notNull(),
-  email_verified: integer("email_verified").notNull().default(0),
+  code: text("code").notNull(),
+  expires_at: integer("expires_at").notNull(),
 });
 
 export function lower(email: AnySQLiteColumn): SQL {

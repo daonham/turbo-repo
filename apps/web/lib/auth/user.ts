@@ -1,13 +1,17 @@
 import { db } from "@/lib/db";
-import { lower, user as userDB } from "@/lib/db/schema";
+import {
+  email_verification_request as emailVerifyDB,
+  lower,
+  user as userDB,
+} from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { hashPassword } from "./password";
+import { generateOTP } from "./utils";
 
 export interface User {
   id: number;
   email: string;
   username: string;
-  email_verified: boolean;
 }
 
 export function verifyUsernameInput(username: string): boolean {
@@ -41,7 +45,6 @@ export async function createUser(
     id: row.id,
     username: row.username,
     email: row.email,
-    email_verified: !!row.email_verified,
   };
 
   return user;
@@ -62,7 +65,6 @@ export async function getUserFromEmail(email: string): Promise<User | null> {
     id: row.id,
     username: row.username,
     email: row.email,
-    email_verified: !!row.email_verified,
   };
 
   return user;
@@ -86,4 +88,28 @@ export async function getUserPasswordHash(
   const passwordHash: string = row.password_hash;
 
   return passwordHash;
+}
+
+export async function createVerifyOTP(email: string): Promise<string> {
+  const otp = generateOTP();
+
+  // Delete all existing OTPs for the email.
+  await db
+    .delete(emailVerifyDB)
+    .where(eq(lower(emailVerifyDB.email), email.toLowerCase()));
+
+  const expire = new Date(Date.now() + 2 * 60 * 1000);
+
+  // Insert OTP to DB
+  const result = await db
+    .insert(emailVerifyDB)
+    .values({
+      email: email,
+      code: otp,
+      expires_at: Math.floor(expire.getTime() / 1000),
+    })
+    .returning({ code: emailVerifyDB.code })
+    .get();
+
+  return result.code;
 }

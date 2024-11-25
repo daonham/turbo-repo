@@ -1,7 +1,9 @@
 "use server";
 
+import { sendEmail } from "@/emails";
+import VerifyEmail from "@/emails/verify-email";
 import { login } from "@/lib/auth";
-import { createUser, getUserFromEmail } from "@/lib/auth/user";
+import { createUser, createVerifyOTP, getUserFromEmail } from "@/lib/auth/user";
 import { actionClient } from "@/lib/safe-action";
 import { registerSchema, signUpSchema } from "./schema";
 
@@ -10,7 +12,22 @@ export const signUpAction = actionClient
   .action(async ({ parsedInput }) => {
     const { email } = parsedInput;
 
-    // TODO: send OTP code to the email
+    if (email.includes("+") && email.endsWith("@gmail.com")) {
+      throw new Error(
+        "Email addresses with + are not allowed. Please use your work email instead.",
+      );
+    }
+
+    const code = await createVerifyOTP(email);
+
+    await sendEmail({
+      subject: `OTP to verify your account`,
+      email,
+      react: VerifyEmail({
+        email,
+        code,
+      }),
+    });
 
     return {
       ok: true,
