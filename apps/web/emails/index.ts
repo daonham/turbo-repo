@@ -54,8 +54,6 @@ export const sendEmail = async ({
   marketing?: boolean;
 }) => {
   if (resend) {
-    console.log("Resend is use: ", process.env.RESEND_API_KEY);
-
     return await resend.emails.send({
       to: email,
       from:
