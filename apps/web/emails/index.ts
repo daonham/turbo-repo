@@ -62,10 +62,10 @@ export const sendEmail = async ({
         from ||
         (marketing
           ? "Acme <onboarding@resend.dev>"
-          : "Acme<onboarding@resend.dev>"),
+          : "Acme <onboarding@resend.dev>"),
       bcc: bcc,
       ...(!replyToFromEmail && {
-        replyTo: "onboarding@resend.dev",
+        replyTo: "daonham95@gmail.com",
       }),
       subject: subject,
       text: text,

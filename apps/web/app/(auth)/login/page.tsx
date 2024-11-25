@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { LoginForm } from "./form";
 
@@ -20,6 +21,15 @@ export default async function Page() {
         </div>
         <LoginForm />
       </div>
+      <p className="mt-4 text-center text-sm text-gray-500">
+        Don't have an account?&nbsp;
+        <Link
+          href="register"
+          className="font-semibold text-gray-600 underline underline-offset-2 transition-colors hover:text-black"
+        >
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 }
