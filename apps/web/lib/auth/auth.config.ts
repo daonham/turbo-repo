@@ -1,7 +1,5 @@
 import client from "@/lib/db";
-import { User, type NextAuthConfig } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
-import { JWT } from "next-auth/jwt";
+import { type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
@@ -28,7 +26,6 @@ export const authConfig = {
       },
     }),
   ],
-  session: { strategy: "jwt" },
   pages: {
     signIn: "/login",
     error: "/login",
@@ -65,15 +62,7 @@ export const authConfig = {
 
       return session;
     },
-    jwt: async ({
-      token,
-      user,
-      trigger,
-    }: {
-      token: JWT;
-      user: User | AdapterUser;
-      trigger?: "signIn" | "update" | "signUp";
-    }) => {
+    jwt: async ({ token, user }) => {
       if (user) {
         token.user = user;
       }
