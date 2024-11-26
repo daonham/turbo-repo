@@ -2,6 +2,7 @@
 
 import { signIn } from '@/lib/auth';
 import { actionClient } from '@/lib/safe-action';
+import { ratelimit } from '@/lib/upstash';
 import { schema } from './schema';
 
 export const loginAction = actionClient.schema(schema).action(async ({ parsedInput }) => {
@@ -9,6 +10,12 @@ export const loginAction = actionClient.schema(schema).action(async ({ parsedInp
 
   // refactor: code
   try {
+    const { success } = await ratelimit(5, '1 m').limit(`login-attempts:${email}`);
+
+    if (!success) {
+      throw new Error('Too many requests. Please try again later.');
+    }
+
     await signIn('credentials', {
       redirect: false,
       email: email.toLowerCase(),

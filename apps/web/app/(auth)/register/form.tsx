@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { registerAction, signUpAction } from './actions';
+import { registerAction, sendOTPAction } from './actions';
 import { schema } from './schema';
 
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -43,7 +43,7 @@ function SignUpForm() {
     resolver: zodResolver(schema)
   });
 
-  const { executeAsync, isExecuting } = useAction(signUpAction, {
+  const { executeAsync, isExecuting } = useAction(sendOTPAction, {
     onSuccess: () => {
       setUsername(getValues('username'));
       setEmail(getValues('email'));

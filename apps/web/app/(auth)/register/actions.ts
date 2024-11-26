@@ -10,8 +10,14 @@ import { ratelimit } from '@/lib/upstash';
 import { z } from 'zod';
 import { schema } from './schema';
 
-export const signUpAction = actionClient.schema(schema).action(async ({ parsedInput }) => {
+export const sendOTPAction = actionClient.schema(schema).action(async ({ parsedInput }) => {
   const { email } = parsedInput;
+
+  const { success } = await ratelimit(2, '1 m').limit(`sendOTPAction`);
+
+  if (!success) {
+    throw new Error('Too many requests. Please try again later.');
+  }
 
   if (email.includes('+') && email.endsWith('@gmail.com')) {
     throw new Error('Email addresses with + are not allowed. Please use your work email instead.');
@@ -65,7 +71,7 @@ export const registerAction = actionClient
   .action(async ({ parsedInput }) => {
     const { username, email, password, code } = parsedInput;
 
-    const { success } = await ratelimit(2, '1 m').limit(`signup: test`);
+    const { success } = await ratelimit(2, '1 m').limit(`registerAction`);
 
     if (!success) {
       throw new Error('Too many requests. Please try again later.');
