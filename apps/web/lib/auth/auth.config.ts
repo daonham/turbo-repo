@@ -1,4 +1,3 @@
-import client from "@/lib/db";
 import { type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
@@ -17,6 +16,8 @@ export const authConfig = {
       async authorize(credentials) {
         const { email, password } = credentials;
 
+        // TODO: check email login and return data.
+
         return {
           id: "1",
           name: "John Doe",
@@ -31,29 +32,6 @@ export const authConfig = {
     error: "/login",
   },
   callbacks: {
-    signIn: async ({ user, account, profile }) => {
-      console.log({ user, account, profile });
-      if (!user.email) {
-        return false;
-      }
-
-      if (account?.provider === "google") {
-        const db = await client.connect();
-
-        const userExists = await db
-          .db(process.env.MONGODB_DB_NAME)
-          .collection("users")
-          .findOne({ email: user.email });
-
-        if (!userExists || !profile) {
-          return true;
-        }
-
-        // TODO: upload avatar and more...
-      }
-
-      return true;
-    },
     session: ({ session, token }) => {
       session.user = {
         // @ts-ignore
