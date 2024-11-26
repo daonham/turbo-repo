@@ -13,7 +13,17 @@ export function InputSearch(props: SVGProps<SVGSVGElement>) {
           strokeWidth="1.5"
         />
         <circle cx="13" cy="12" fill="none" r="2.25" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="14.59" x2="16.25" y1="13.59" y2="15.25" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="14.59"
+          x2="16.25"
+          y1="13.59"
+          y2="15.25"
+        />
       </g>
     </svg>
   );

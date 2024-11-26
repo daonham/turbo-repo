@@ -20,7 +20,17 @@ export function Window(props: SVGProps<SVGSVGElement>) {
         />
         <circle cx="4.25" cy="5.25" fill="currentColor" r=".75" stroke="none" />
         <circle cx="6.75" cy="5.25" fill="currentColor" r=".75" stroke="none" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="1.75" x2="16.25" y1="7.75" y2="7.75" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="1.75"
+          x2="16.25"
+          y1="7.75"
+          y2="7.75"
+        />
       </g>
     </svg>
   );

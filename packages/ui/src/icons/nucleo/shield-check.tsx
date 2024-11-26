@@ -19,7 +19,14 @@ export function ShieldCheck(props: SVGProps<SVGSVGElement> & { invert?: boolean 
               strokeLinejoin="round"
               strokeWidth="1.5"
             />
-            <polyline fill="none" points="6.497 9.75 8.106 11.25 11.503 6.75" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+            <polyline
+              fill="none"
+              points="6.497 9.75 8.106 11.25 11.503 6.75"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
+            />
           </>
         )}
       </g>

@@ -20,9 +20,29 @@ export function Blog(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="4.75" x2="9.25" y1="5.75" y2="5.75" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="4.75"
+          x2="9.25"
+          y1="5.75"
+          y2="5.75"
+        />
         <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="4.75" x2="7" y1="8.75" y2="8.75" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="4.75" x2="6.25" y1="11.75" y2="11.75" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="4.75"
+          x2="6.25"
+          y1="11.75"
+          y2="11.75"
+        />
       </g>
     </svg>
   );

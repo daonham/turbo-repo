@@ -12,7 +12,14 @@ export function ArrowTrendUp(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <polyline fill="none" points="11.25 5.75 16.25 5.75 16.25 10.75" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+        <polyline
+          fill="none"
+          points="11.25 5.75 16.25 5.75 16.25 10.75"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
       </g>
     </svg>
   );

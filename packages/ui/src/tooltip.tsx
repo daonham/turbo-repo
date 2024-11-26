@@ -55,7 +55,19 @@ export function Tooltip({ children, content, side = 'top', disableHoverableConte
   );
 }
 
-export function TooltipContent({ title, cta, href, target, onClick }: { title: ReactNode; cta?: string; href?: string; target?: string; onClick?: () => void }) {
+export function TooltipContent({
+  title,
+  cta,
+  href,
+  target,
+  onClick
+}: {
+  title: ReactNode;
+  cta?: string;
+  href?: string;
+  target?: string;
+  onClick?: () => void;
+}) {
   return (
     <div className="flex max-w-xs flex-col items-center space-y-3 p-4 text-center">
       <p className="text-sm text-gray-700">{title}</p>
@@ -64,7 +76,10 @@ export function TooltipContent({ title, cta, href, target, onClick }: { title: R
           <Link
             href={href}
             {...(target ? { target } : {})}
-            className={cn(buttonVariants({ variant: 'primary' }), 'flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm')}
+            className={cn(
+              buttonVariants({ variant: 'primary' }),
+              'flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm'
+            )}
           >
             {cta}
           </Link>
@@ -79,7 +94,13 @@ export function SimpleTooltipContent({ title, cta, href }: { title: string; cta:
   return (
     <div className="max-w-xs px-4 py-2 text-center text-sm text-gray-700">
       {title}{' '}
-      <a href={href} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="inline-flex text-gray-500 underline underline-offset-4 hover:text-gray-800">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className="inline-flex text-gray-500 underline underline-offset-4 hover:text-gray-800"
+      >
         {cta}
       </a>
     </div>

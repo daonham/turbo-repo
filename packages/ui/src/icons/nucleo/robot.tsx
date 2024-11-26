@@ -12,11 +12,25 @@ export function Robot(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <path d="M7.5,12h2c.276,0,.5,.224,.5,.5h0c0,.828-.672,1.5-1.5,1.5h0c-.828,0-1.5-.672-1.5-1.5h0c0-.276,.224-.5,.5-.5Z" fill="currentColor" stroke="none" />
+        <path
+          d="M7.5,12h2c.276,0,.5,.224,.5,.5h0c0,.828-.672,1.5-1.5,1.5h0c-.828,0-1.5-.672-1.5-1.5h0c0-.276,.224-.5,.5-.5Z"
+          fill="currentColor"
+          stroke="none"
+        />
         <circle cx="5.5" cy="11" fill="currentColor" r="1" stroke="none" />
         <circle cx="11.5" cy="11" fill="currentColor" r="1" stroke="none" />
         <circle cx="5.25" cy="2.5" fill="currentColor" r="1.5" stroke="none" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="5.25" x2="5.25" y1="3.75" y2="6.75" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="5.25"
+          x2="5.25"
+          y1="3.75"
+          y2="6.75"
+        />
       </g>
     </svg>
   );

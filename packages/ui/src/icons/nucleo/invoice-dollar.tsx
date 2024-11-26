@@ -20,8 +20,28 @@ export function InvoiceDollar({ strokeWidth = 1.5, ...props }: SVGProps<SVGSVGEl
           strokeLinejoin="round"
           strokeWidth={strokeWidth}
         />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={strokeWidth} x1="9" x2="9" y1="4.75" y2="5.47" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={strokeWidth} x1="9" x2="9" y1="11.638" y2="12.25" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={strokeWidth}
+          x1="9"
+          x2="9"
+          y1="4.75"
+          y2="5.47"
+        />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={strokeWidth}
+          x1="9"
+          x2="9"
+          y1="11.638"
+          y2="12.25"
+        />
       </g>
     </svg>
   );

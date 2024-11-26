@@ -21,7 +21,14 @@ export function GoogleEnhanced({ className }: { className?: string }) {
         fill="url(#paint4_linear_8357_120)"
       />
       <defs>
-        <radialGradient id="paint0_radial_8357_120" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(226.5 207.5) rotate(-140.591) scale(286.681)">
+        <radialGradient
+          id="paint0_radial_8357_120"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(226.5 207.5) rotate(-140.591) scale(286.681)"
+        >
           <stop stop-color="white" />
           <stop offset="0.5" stop-color="white" />
           <stop offset="1" stop-color="#E8E8E8" />

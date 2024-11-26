@@ -22,7 +22,15 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <ThemeImage className={styles.logo} srcLight="turborepo-dark.svg" srcDark="turborepo-light.svg" alt="Turborepo logo" width={180} height={38} priority />
+        <ThemeImage
+          className={styles.logo}
+          srcLight="turborepo-dark.svg"
+          srcDark="turborepo-light.svg"
+          alt="Turborepo logo"
+          width={180}
+          height={38}
+          priority
+        />
         <ol>
           <li>
             Get started by editing <code>apps/docs/app/page.tsx</code>
@@ -49,7 +57,11 @@ export default function Home() {
         </Button>
       </main>
       <footer className={styles.footer}>
-        <a href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Image aria-hidden src="/window.svg" alt="Window icon" width={16} height={16} />
           Examples
         </a>

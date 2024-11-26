@@ -12,7 +12,17 @@ export function PenWriting(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="9" x2="15.25" y1="15.25" y2="15.25" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="9"
+          x2="15.25"
+          y1="15.25"
+          y2="15.25"
+        />
       </g>
     </svg>
   );

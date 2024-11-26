@@ -20,10 +20,50 @@ export function LinkBroken(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="12.25" x2="13" y1="3.75" y2="1.5" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="14.25" x2="16.5" y1="5.75" y2="5" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="3.75" x2="1.5" y1="12.25" y2="13" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="5.75" x2="5" y1="14.25" y2="16.5" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="12.25"
+          x2="13"
+          y1="3.75"
+          y2="1.5"
+        />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="14.25"
+          x2="16.5"
+          y1="5.75"
+          y2="5"
+        />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="3.75"
+          x2="1.5"
+          y1="12.25"
+          y2="13"
+        />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="5.75"
+          x2="5"
+          y1="14.25"
+          y2="16.5"
+        />
       </g>
     </svg>
   );

@@ -12,7 +12,17 @@ export function Flag6(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="3.75" x2="3.75" y1="1.75" y2="16.25" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="3.75"
+          x2="3.75"
+          y1="1.75"
+          y2="16.25"
+        />
       </g>
     </svg>
   );

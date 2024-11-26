@@ -9,7 +9,14 @@ export function GitHubEnhanced({ className }: { className?: string }) {
         fill="url(#paint0_radial_39_32)"
       />
       <defs>
-        <radialGradient id="paint0_radial_39_32" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(42 44) rotate(44.1575) scale(192.354 192.312)">
+        <radialGradient
+          id="paint0_radial_39_32"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(42 44) rotate(44.1575) scale(192.354 192.312)"
+        >
           <stop stopColor="white" stopOpacity="0.77" />
           <stop offset="1" stopColor="white" stopOpacity="0.1" />
         </radialGradient>

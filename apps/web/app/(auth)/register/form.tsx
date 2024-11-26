@@ -78,11 +78,26 @@ function SignUpForm() {
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="Enter your email" autoCapitalize="none" autoComplete="email" {...register('email')} error={errors.email?.message} />
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                autoCapitalize="none"
+                autoComplete="email"
+                {...register('email')}
+                error={errors.email?.message}
+              />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="Enter your password" autoCapitalize="none" {...register('password')} error={errors.password?.message} />
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                autoCapitalize="none"
+                {...register('password')}
+                error={errors.password?.message}
+              />
             </div>
           </div>
         </div>

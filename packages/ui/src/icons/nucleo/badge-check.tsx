@@ -12,7 +12,14 @@ export function BadgeCheck(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <polyline fill="none" points="5.75 9.25 8 11.75 12.25 6.25" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+        <polyline
+          fill="none"
+          points="5.75 9.25 8 11.75 12.25 6.25"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
       </g>
     </svg>
   );

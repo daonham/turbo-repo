@@ -12,7 +12,14 @@ export function FileZip2(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <path d="M15.16,6.25h-3.41c-.552,0-1-.448-1-1V1.852" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+        <path
+          d="M15.16,6.25h-3.41c-.552,0-1-.448-1-1V1.852"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
         <rect height="1.5" width="2" fill="currentColor" stroke="none" x="5" y="9.5" />
         <rect height="1.5" width="2" fill="currentColor" stroke="none" x="7" y="11" />
         <rect height="1.5" width="2" fill="currentColor" stroke="none" x="5" y="12.5" />

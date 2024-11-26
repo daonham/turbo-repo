@@ -13,7 +13,14 @@ export function UserCheck(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <polyline fill="none" points="11.25 14.75 12.859 16.25 16.256 11.75" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+        <polyline
+          fill="none"
+          points="11.25 14.75 12.859 16.25 16.256 11.75"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
       </g>
     </svg>
   );

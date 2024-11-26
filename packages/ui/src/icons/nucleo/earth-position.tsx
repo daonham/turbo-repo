@@ -37,7 +37,17 @@ export function EarthPosition(props: SVGProps<SVGSVGElement>) {
           strokeWidth="1.5"
         />
         <circle cx="13.25" cy="2.75" fill="none" r="2" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="13.25" x2="13.25" y1="4.75" y2="7.25" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="13.25"
+          x2="13.25"
+          y1="4.75"
+          y2="7.25"
+        />
       </g>
     </svg>
   );

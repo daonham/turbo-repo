@@ -9,7 +9,14 @@ export function ChatGPT({ className }: { className?: string }) {
         fill="url(#paint0_radial_39_26)"
       />
       <defs>
-        <radialGradient id="paint0_radial_39_26" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(40 38) rotate(45.5947) scale(204.365 204.365)">
+        <radialGradient
+          id="paint0_radial_39_26"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(40 38) rotate(45.5947) scale(204.365 204.365)"
+        >
           <stop stopColor="white" stopOpacity="0.85" />
           <stop offset="1" stopColor="white" stopOpacity="0.1" />
         </radialGradient>

@@ -16,7 +16,14 @@ export function Amazon({ className }: { className?: string }) {
           <stop offset="0.5" stopColor="#FF9900" />
           <stop offset="1" stopColor="#EA580C" />
         </linearGradient>
-        <radialGradient id="paint1_radial_39_35" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(48 48) rotate(45) scale(178.191 178.229)">
+        <radialGradient
+          id="paint1_radial_39_35"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(48 48) rotate(45) scale(178.191 178.229)"
+        >
           <stop stopColor="white" />
           <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </radialGradient>

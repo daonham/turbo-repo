@@ -13,7 +13,17 @@ export function MapPosition(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="15.25" x2="15.25" y1="14.75" y2="17.25" />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="15.25"
+          x2="15.25"
+          y1="14.75"
+          y2="17.25"
+        />
       </g>
     </svg>
   );

@@ -14,8 +14,25 @@ export function Incognito(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <path d="M7.58,12.842c.362-.365,.865-.592,1.42-.592,.555,0,1.058,.226,1.42,.592" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" x1="4.75" x2="13.25" y1="5.25" y2="5.25" />
+        <path
+          d="M7.58,12.842c.362-.365,.865-.592,1.42-.592,.555,0,1.058,.226,1.42,.592"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          x1="4.75"
+          x2="13.25"
+          y1="5.25"
+          y2="5.25"
+        />
       </g>
     </svg>
   );

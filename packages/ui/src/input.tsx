@@ -33,7 +33,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type,
           )}
           {type === 'password' && (
             <button
-              className={cn('absolute inset-y-0 right-0 flex items-center px-3', props.error && 'opacity-0 transition-opacity group-hover:opacity-100')}
+              className={cn(
+                'absolute inset-y-0 right-0 flex items-center px-3',
+                props.error && 'opacity-0 transition-opacity group-hover:opacity-100'
+              )}
               type="button"
               onClick={() => toggleIsPasswordVisible()}
               aria-label={isPasswordVisible ? 'Hide password' : 'Show Password'}
