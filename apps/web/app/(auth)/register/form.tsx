@@ -172,7 +172,12 @@ function VerifyForm() {
           {isInvalidCode && <p className="mt-2 text-center text-sm text-red-500">Invalid code. Please try again.</p>}
         </div>
         <div className="flex flex-col items-center p-6 pt-0">
-          <Button type="submit" text={isExecuting ? 'Verifying...' : 'Continue'} loading={isExecuting || isRedirecting} />
+          <Button
+            type="submit"
+            text={isExecuting ? 'Verifying...' : 'Continue'}
+            loading={isExecuting || isRedirecting}
+            disabled={!code || code.length < 6}
+          />
         </div>
       </form>
     </>
