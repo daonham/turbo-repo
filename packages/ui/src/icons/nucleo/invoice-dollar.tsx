@@ -1,17 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
-export function InvoiceDollar({
-  strokeWidth = 1.5,
-  ...props
-}: SVGProps<SVGSVGElement>) {
+export function InvoiceDollar({ strokeWidth = 1.5, ...props }: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      height="18"
-      width="18"
-      viewBox="0 0 18 18"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg height="18" width="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g fill="currentColor">
         <path
           d="M14.75,3.75v12.5l-2.75-1.5-3,1.5-3-1.5-2.75,1.5V3.75c0-1.105,.895-2,2-2h7.5c1.105,0,2,.895,2,2Z"
@@ -29,28 +20,8 @@ export function InvoiceDollar({
           strokeLinejoin="round"
           strokeWidth={strokeWidth}
         />
-        <line
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={strokeWidth}
-          x1="9"
-          x2="9"
-          y1="4.75"
-          y2="5.47"
-        />
-        <line
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={strokeWidth}
-          x1="9"
-          x2="9"
-          y1="11.638"
-          y2="12.25"
-        />
+        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={strokeWidth} x1="9" x2="9" y1="4.75" y2="5.47" />
+        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={strokeWidth} x1="9" x2="9" y1="11.638" y2="12.25" />
       </g>
     </svg>
   );

@@ -1,14 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export function Webhook(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      height="18"
-      width="18"
-      viewBox="0 0 18 18"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg height="18" width="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g fill="currentColor">
         <path
           d="M3.804,13.278l3.721-6.444c-.91-.515-1.524-1.492-1.524-2.613,0-1.657,1.343-3,3-3s3,1.343,3,3c0,.08-.003,.159-.009,.237"
@@ -34,21 +28,9 @@ export function Webhook(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <circle
-          cx="3.804"
-          cy="13.278"
-          fill="currentColor"
-          r="1.25"
-          stroke="none"
-        />
+        <circle cx="3.804" cy="13.278" fill="currentColor" r="1.25" stroke="none" />
         <circle cx="9" cy="4.222" fill="currentColor" r="1.25" stroke="none" />
-        <circle
-          cx="14.248"
-          cy="13.252"
-          fill="currentColor"
-          r="1.25"
-          stroke="none"
-        />
+        <circle cx="14.248" cy="13.252" fill="currentColor" r="1.25" stroke="none" />
       </g>
     </svg>
   );

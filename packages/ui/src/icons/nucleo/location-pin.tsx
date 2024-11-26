@@ -1,14 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export function LocationPin(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      height="18"
-      width="18"
-      viewBox="0 0 18 18"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg height="18" width="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g fill="currentColor">
         <path
           d="M13.429,5.978c0,2.609-4.429,7.272-4.429,7.272,0,0-4.429-4.662-4.429-7.272,0-2.675,2.289-4.228,4.429-4.228s4.429,1.552,4.429,4.228Z"
@@ -26,16 +20,7 @@ export function LocationPin(props: SVGProps<SVGSVGElement>) {
           strokeLinejoin="round"
           strokeWidth="1.5"
         />
-        <circle
-          cx="9"
-          cy="6"
-          fill="none"
-          r="1.5"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
+        <circle cx="9" cy="6" fill="none" r="1.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
       </g>
     </svg>
   );

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useActionState } from "react";
-import { logoutAction } from "./actions";
+import { useActionState } from 'react';
+import { logoutAction } from './actions';
 
 const initialState = {
-  message: "",
+  message: ''
 };
 
 export default function Logout() {

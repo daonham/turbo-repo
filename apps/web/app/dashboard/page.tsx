@@ -1,4 +1,4 @@
-import Logout from "./Logout";
+import Logout from './Logout';
 
 export default function Page() {
   return <Logout />;

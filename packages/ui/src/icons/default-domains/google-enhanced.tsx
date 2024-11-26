@@ -1,13 +1,8 @@
-import { cn } from "@repo/utils";
+import { cn } from '@repo/utils';
 
 export function GoogleEnhanced({ className }: { className?: string }) {
   return (
-    <svg
-      className={cn("h-full w-full", className)}
-      viewBox="0 0 222 222"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg className={cn('h-full w-full', className)} viewBox="0 0 222 222" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="111" cy="111" r="111" fill="url(#paint0_radial_8357_120)" />
       <path
         d="M182.248 111.875C182.248 105.853 181.76 101.458 180.702 96.9003H111.931V124.083H152.298C151.484 130.838 147.089 141.011 137.323 147.848L137.186 148.758L158.93 165.603L160.437 165.753C174.272 152.975 182.248 134.175 182.248 111.875Z"
@@ -26,59 +21,24 @@ export function GoogleEnhanced({ className }: { className?: string }) {
         fill="url(#paint4_linear_8357_120)"
       />
       <defs>
-        <radialGradient
-          id="paint0_radial_8357_120"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(226.5 207.5) rotate(-140.591) scale(286.681)"
-        >
+        <radialGradient id="paint0_radial_8357_120" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(226.5 207.5) rotate(-140.591) scale(286.681)">
           <stop stop-color="white" />
           <stop offset="0.5" stop-color="white" />
           <stop offset="1" stop-color="#E8E8E8" />
         </radialGradient>
-        <linearGradient
-          id="paint1_linear_8357_120"
-          x1="176.5"
-          y1="148.5"
-          x2="112"
-          y2="97"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint1_linear_8357_120" x1="176.5" y1="148.5" x2="112" y2="97" gradientUnits="userSpaceOnUse">
           <stop stop-color="#76A7F9" />
           <stop offset="1" stop-color="#4285F4" />
         </linearGradient>
-        <linearGradient
-          id="paint2_linear_8357_120"
-          x1="38.5"
-          y1="164.5"
-          x2="160"
-          y2="175"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint2_linear_8357_120" x1="38.5" y1="164.5" x2="160" y2="175" gradientUnits="userSpaceOnUse">
           <stop stop-color="#34A853" />
           <stop offset="1" stop-color="#8DFBAA" />
         </linearGradient>
-        <linearGradient
-          id="paint3_linear_8357_120"
-          x1="81"
-          y1="115"
-          x2="35.9999"
-          y2="110"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint3_linear_8357_120" x1="81" y1="115" x2="35.9999" y2="110" gradientUnits="userSpaceOnUse">
           <stop stop-color="#FFE28F" />
           <stop offset="1" stop-color="#FBBC05" />
         </linearGradient>
-        <linearGradient
-          id="paint4_linear_8357_120"
-          x1="117.5"
-          y1="84"
-          x2="78"
-          y2="45.5"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint4_linear_8357_120" x1="117.5" y1="84" x2="78" y2="45.5" gradientUnits="userSpaceOnUse">
           <stop stop-color="#FF968D" />
           <stop offset="1" stop-color="#EB4335" />
         </linearGradient>

@@ -1,4 +1,4 @@
-const base = require("@repo/config/tailwind-preset");
+const base = require('@repo/config/tailwind-preset');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,15 +7,15 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        "caret-blink": {
-          "0%,70%,100%": { opacity: "1" },
-          "20%,50%": { opacity: "0" },
-        },
+        'caret-blink': {
+          '0%,70%,100%': { opacity: '1' },
+          '20%,50%': { opacity: '0' }
+        }
       },
       animation: {
-        "caret-blink": "caret-blink 1.25s ease-out infinite",
-      },
-    },
+        'caret-blink': 'caret-blink 1.25s ease-out infinite'
+      }
+    }
   },
-  plugins: [...base.plugins, require("tailwindcss-animate")],
+  plugins: [...base.plugins, require('tailwindcss-animate')]
 };

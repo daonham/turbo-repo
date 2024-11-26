@@ -1,9 +1,9 @@
-import { randomBytes, scryptSync } from "crypto";
+import { randomBytes, scryptSync } from 'crypto';
 
 // Pass the password string and get hashed password back
 // ( and store only the hashed string in your database)
 function encryptPassword(password: string, salt: string) {
-  return scryptSync(password, salt, 32).toString("hex");
+  return scryptSync(password, salt, 32).toString('hex');
 }
 
 /**
@@ -14,7 +14,7 @@ function encryptPassword(password: string, salt: string) {
  */
 export function hashPassword(password: string) {
   // Any random string here (ideally should be at least 16 bytes)
-  const salt = randomBytes(16).toString("hex");
+  const salt = randomBytes(16).toString('hex');
   return encryptPassword(password, salt) + salt;
 }
 

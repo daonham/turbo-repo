@@ -1,13 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export function Raycast(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 176 177"
-      fill="none"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 177" fill="none" {...props}>
       <path
         fill="currentColor"
         fillRule="evenodd"

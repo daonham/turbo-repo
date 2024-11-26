@@ -1,20 +1,20 @@
-"use server";
+'use server';
 
-import { auth, signOut } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { auth, signOut } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
 export async function logoutAction() {
   const session = await auth();
 
   if (!session) {
     return {
-      message: "Not authenticated",
+      message: 'Not authenticated'
     };
   }
 
   await signOut({
-    redirectTo: "/",
+    redirectTo: '/'
   });
 
-  redirect("/login");
+  redirect('/login');
 }

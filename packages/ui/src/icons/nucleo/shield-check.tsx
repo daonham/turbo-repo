@@ -1,16 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
-export function ShieldCheck(
-  props: SVGProps<SVGSVGElement> & { invert?: boolean },
-) {
+export function ShieldCheck(props: SVGProps<SVGSVGElement> & { invert?: boolean }) {
   return (
-    <svg
-      height="18"
-      width="18"
-      viewBox="0 0 18 18"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg height="18" width="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g fill="currentColor">
         {props.invert ? (
           <path
@@ -27,14 +19,7 @@ export function ShieldCheck(
               strokeLinejoin="round"
               strokeWidth="1.5"
             />
-            <polyline
-              fill="none"
-              points="6.497 9.75 8.106 11.25 11.503 6.75"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-            />
+            <polyline fill="none" points="6.497 9.75 8.106 11.25 11.503 6.75" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
           </>
         )}
       </g>

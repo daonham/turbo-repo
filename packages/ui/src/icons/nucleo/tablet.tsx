@@ -1,14 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export function Tablet(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      height="18"
-      width="18"
-      viewBox="0 0 18 18"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg height="18" width="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g fill="currentColor">
         <path
           d="M7,14.25h-2.25c-1.105,0-2-.895-2-2V3.75c0-1.105,.895-2,2-2h6.5c1.105,0,2,.895,2,2v1.25"

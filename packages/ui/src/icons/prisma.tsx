@@ -1,13 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export function Prisma(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 159 194"
-      fill="none"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 159 194" fill="none" {...props}>
       <path
         fill="currentColor"
         fillRule="evenodd"

@@ -1,13 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export function Python(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 112 113"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 112 113" {...props}>
       <path
         className="snake snake1"
         fill="currentColor"

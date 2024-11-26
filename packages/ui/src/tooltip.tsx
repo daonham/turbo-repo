@@ -1,47 +1,28 @@
-"use client";
+'use client';
 
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { cn, nFormatter, timeAgo } from "@repo/utils";
-import Linkify from "linkify-react";
-import { HelpCircle } from "lucide-react";
-import Link from "next/link";
-import { ReactNode, useState } from "react";
-import { Badge } from "./badge";
-import { Button, ButtonProps, buttonVariants } from "./button";
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import { cn, nFormatter, timeAgo } from '@repo/utils';
+import Linkify from 'linkify-react';
+import { HelpCircle } from 'lucide-react';
+import Link from 'next/link';
+import { ReactNode, useState } from 'react';
+import { Badge } from './badge';
+import { Button, ButtonProps, buttonVariants } from './button';
 
 export function TooltipProvider({ children }: { children: ReactNode }) {
-  return (
-    <TooltipPrimitive.Provider delayDuration={150}>
-      {children}
-    </TooltipPrimitive.Provider>
-  );
+  return <TooltipPrimitive.Provider delayDuration={150}>{children}</TooltipPrimitive.Provider>;
 }
 
-export interface TooltipProps
-  extends Omit<TooltipPrimitive.TooltipContentProps, "content"> {
-  content:
-    | ReactNode
-    | string
-    | ((props: { setOpen: (open: boolean) => void }) => ReactNode);
-  disableHoverableContent?: TooltipPrimitive.TooltipProps["disableHoverableContent"];
+export interface TooltipProps extends Omit<TooltipPrimitive.TooltipContentProps, 'content'> {
+  content: ReactNode | string | ((props: { setOpen: (open: boolean) => void }) => ReactNode);
+  disableHoverableContent?: TooltipPrimitive.TooltipProps['disableHoverableContent'];
 }
 
-export function Tooltip({
-  children,
-  content,
-  side = "top",
-  disableHoverableContent,
-  ...rest
-}: TooltipProps) {
+export function Tooltip({ children, content, side = 'top', disableHoverableContent, ...rest }: TooltipProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <TooltipPrimitive.Root
-      open={open}
-      onOpenChange={setOpen}
-      delayDuration={0}
-      disableHoverableContent={disableHoverableContent}
-    >
+    <TooltipPrimitive.Root open={open} onOpenChange={setOpen} delayDuration={0} disableHoverableContent={disableHoverableContent}>
       <TooltipPrimitive.Trigger
         asChild
         onClick={() => {
@@ -61,11 +42,9 @@ export function Tooltip({
           collisionPadding={0}
           {...rest}
         >
-          {typeof content === "string" ? (
-            <span className="block max-w-xs text-pretty px-4 py-2 text-center text-sm text-gray-700">
-              {content}
-            </span>
-          ) : typeof content === "function" ? (
+          {typeof content === 'string' ? (
+            <span className="block max-w-xs text-pretty px-4 py-2 text-center text-sm text-gray-700">{content}</span>
+          ) : typeof content === 'function' ? (
             content({ setOpen })
           ) : (
             content
@@ -76,19 +55,7 @@ export function Tooltip({
   );
 }
 
-export function TooltipContent({
-  title,
-  cta,
-  href,
-  target,
-  onClick,
-}: {
-  title: ReactNode;
-  cta?: string;
-  href?: string;
-  target?: string;
-  onClick?: () => void;
-}) {
+export function TooltipContent({ title, cta, href, target, onClick }: { title: ReactNode; cta?: string; href?: string; target?: string; onClick?: () => void }) {
   return (
     <div className="flex max-w-xs flex-col items-center space-y-3 p-4 text-center">
       <p className="text-sm text-gray-700">{title}</p>
@@ -97,44 +64,22 @@ export function TooltipContent({
           <Link
             href={href}
             {...(target ? { target } : {})}
-            className={cn(
-              buttonVariants({ variant: "primary" }),
-              "flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
-            )}
+            className={cn(buttonVariants({ variant: 'primary' }), 'flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm')}
           >
             {cta}
           </Link>
         ) : onClick ? (
-          <Button
-            onClick={onClick}
-            text={cta}
-            variant="primary"
-            className="h-9"
-          />
+          <Button onClick={onClick} text={cta} variant="primary" className="h-9" />
         ) : null)}
     </div>
   );
 }
 
-export function SimpleTooltipContent({
-  title,
-  cta,
-  href,
-}: {
-  title: string;
-  cta: string;
-  href: string;
-}) {
+export function SimpleTooltipContent({ title, cta, href }: { title: string; cta: string; href: string }) {
   return (
     <div className="max-w-xs px-4 py-2 text-center text-sm text-gray-700">
-      {title}{" "}
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        className="inline-flex text-gray-500 underline underline-offset-4 hover:text-gray-800"
-      >
+      {title}{' '}
+      <a href={href} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="inline-flex text-gray-500 underline underline-offset-4 hover:text-gray-800">
         {cta}
       </a>
     </div>
@@ -147,10 +92,9 @@ export function LinkifyTooltipContent({ children }: { children: ReactNode }) {
       <Linkify
         as="p"
         options={{
-          target: "_blank",
-          rel: "noopener noreferrer nofollow",
-          className:
-            "underline underline-offset-4 text-gray-400 hover:text-gray-700",
+          target: '_blank',
+          rel: 'noopener noreferrer nofollow',
+          className: 'underline underline-offset-4 text-gray-400 hover:text-gray-700'
         }}
       >
         {children}
@@ -159,7 +103,7 @@ export function LinkifyTooltipContent({ children }: { children: ReactNode }) {
   );
 }
 
-export function InfoTooltip(props: Omit<TooltipProps, "children">) {
+export function InfoTooltip(props: Omit<TooltipProps, 'children'>) {
   return (
     <Tooltip {...props}>
       <HelpCircle className="h-4 w-4 text-gray-500" />
@@ -169,10 +113,10 @@ export function InfoTooltip(props: Omit<TooltipProps, "children">) {
 
 export function NumberTooltip({
   value,
-  unit = "total clicks",
+  unit = 'total clicks',
   prefix,
   children,
-  lastClicked,
+  lastClicked
 }: {
   value?: number | null;
   unit?: string;
@@ -208,10 +152,7 @@ export function BadgeTooltip({ children, content, ...props }: TooltipProps) {
   return (
     <Tooltip content={content} {...props}>
       <div className="flex cursor-pointer items-center">
-        <Badge
-          variant="gray"
-          className="border-gray-300 transition-all hover:bg-gray-200"
-        >
+        <Badge variant="gray" className="border-gray-300 transition-all hover:bg-gray-200">
           {children}
         </Badge>
       </div>
@@ -233,8 +174,8 @@ export function ButtonTooltip({
         type="button"
         {...props}
         className={cn(
-          "flex h-6 w-6 items-center justify-center rounded-md text-gray-500 transition-colors duration-75 hover:bg-gray-100 active:bg-gray-200 disabled:cursor-not-allowed disabled:hover:bg-transparent",
-          props.className,
+          'flex h-6 w-6 items-center justify-center rounded-md text-gray-500 transition-colors duration-75 hover:bg-gray-100 active:bg-gray-200 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+          props.className
         )}
       >
         {children}

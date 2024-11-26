@@ -1,10 +1,10 @@
-import { defineConfig, Options } from "tsup";
+import { defineConfig, Options } from 'tsup';
 
 export default defineConfig((options: Options) => ({
-  entry: ["src/**/*.tsx"],
-  format: ["esm"],
+  entry: ['src/**/*.tsx'],
+  format: ['esm'],
   dts: true,
   minify: true,
-  external: ["react"],
-  ...options,
+  external: ['react'],
+  ...options
 }));

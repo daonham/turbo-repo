@@ -1,14 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export function Desktop(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      height="18"
-      width="18"
-      viewBox="0 0 18 18"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg height="18" width="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g fill="currentColor">
         <path
           d="M12.476,15.535c-.887-.279-1.803-.445-2.726-.504v-1.781c0-.414-.336-.75-.75-.75s-.75,.336-.75,.75v1.781c-.923,.06-1.839,.225-2.726,.504-.395,.125-.614,.545-.489,.941,.124,.394,.541,.612,.94,.49,1.958-.617,4.087-.618,6.049,0,.075,.023,.151,.035,.226,.035,.319,0,.614-.205,.716-.525,.124-.395-.096-.816-.49-.94Z"

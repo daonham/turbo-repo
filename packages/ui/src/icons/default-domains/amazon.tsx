@@ -1,13 +1,8 @@
-import { cn } from "@repo/utils";
+import { cn } from '@repo/utils';
 
 export function Amazon({ className }: { className?: string }) {
   return (
-    <svg
-      className={cn("h-full w-full", className)}
-      viewBox="0 0 222 222"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg className={cn('h-full w-full', className)} viewBox="0 0 222 222" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="111" cy="111" r="111" fill="url(#paint0_linear_39_35)" />
       <path
         fillRule="evenodd"
@@ -16,26 +11,12 @@ export function Amazon({ className }: { className?: string }) {
         fill="url(#paint1_radial_39_35)"
       />
       <defs>
-        <linearGradient
-          id="paint0_linear_39_35"
-          x1="0"
-          y1="0"
-          x2="222"
-          y2="222"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint0_linear_39_35" x1="0" y1="0" x2="222" y2="222" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF9900" />
           <stop offset="0.5" stopColor="#FF9900" />
           <stop offset="1" stopColor="#EA580C" />
         </linearGradient>
-        <radialGradient
-          id="paint1_radial_39_35"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(48 48) rotate(45) scale(178.191 178.229)"
-        >
+        <radialGradient id="paint1_radial_39_35" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(48 48) rotate(45) scale(178.191 178.229)">
           <stop stopColor="white" />
           <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </radialGradient>

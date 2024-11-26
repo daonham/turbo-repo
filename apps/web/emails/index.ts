@@ -1,16 +1,16 @@
-import { resend } from "@/lib/resend";
-import { render } from "@react-email/components";
-import nodemailer from "nodemailer";
-import { ReactElement } from "react";
-import { CreateEmailOptions } from "resend";
+import { resend } from '@/lib/resend';
+import { render } from '@react-email/components';
+import nodemailer from 'nodemailer';
+import { ReactElement } from 'react';
+import { CreateEmailOptions } from 'resend';
 
 // Send email using SMTP (Recommended for local development)
 const sendEmailViaSMTP = async ({
   email,
   subject,
   text,
-  react,
-}: Pick<CreateEmailOptions, "subject" | "text" | "react"> & {
+  react
+}: Pick<CreateEmailOptions, 'subject' | 'text' | 'react'> & {
   email: string;
 }) => {
   const transporter = nodemailer.createTransport({
@@ -18,23 +18,23 @@ const sendEmailViaSMTP = async ({
     port: process.env.SMTP_PORT,
     auth: {
       user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
+      pass: process.env.SMTP_PASSWORD
     },
     secure: false,
     tls: {
-      rejectUnauthorized: false,
-    },
+      rejectUnauthorized: false
+    }
   });
 
   const info = await transporter.sendMail({
-    from: "noreply@example.com",
+    from: 'noreply@example.com',
     to: email,
     subject,
     text,
-    html: render(react as ReactElement),
+    html: render(react as ReactElement)
   });
 
-  console.info("Email sent: %s", info.messageId);
+  console.info('Email sent: %s', info.messageId);
 };
 
 export const sendEmail = async ({
@@ -46,8 +46,8 @@ export const sendEmail = async ({
   text,
   react,
   scheduledAt,
-  marketing,
-}: Omit<CreateEmailOptions, "to" | "from"> & {
+  marketing
+}: Omit<CreateEmailOptions, 'to' | 'from'> & {
   email: string;
   from?: string;
   replyToFromEmail?: boolean;
@@ -56,19 +56,15 @@ export const sendEmail = async ({
   if (resend) {
     return await resend.emails.send({
       to: email,
-      from:
-        from ||
-        (marketing
-          ? "Acme <onboarding@resend.dev>"
-          : "Acme <onboarding@resend.dev>"),
+      from: from || (marketing ? 'Acme <onboarding@resend.dev>' : 'Acme <onboarding@resend.dev>'),
       bcc: bcc,
       ...(!replyToFromEmail && {
-        replyTo: "daonham95@gmail.com",
+        replyTo: 'daonham95@gmail.com'
       }),
       subject: subject,
       text: text,
       react: react,
-      scheduledAt,
+      scheduledAt
       // ...(marketing && {
       //   headers: {
       //     "List-Unsubscribe": "https://app.com/account/settings",
@@ -78,20 +74,16 @@ export const sendEmail = async ({
   }
 
   // Fallback to SMTP if Resend is not configured
-  const smtpConfigured = Boolean(
-    process.env.SMTP_HOST && process.env.SMTP_PORT,
-  );
+  const smtpConfigured = Boolean(process.env.SMTP_HOST && process.env.SMTP_PORT);
 
   if (smtpConfigured) {
     return await sendEmailViaSMTP({
       email,
       subject,
       text,
-      react,
+      react
     });
   }
 
-  console.info(
-    "Email sending failed: Neither SMTP nor Resend is configured. Please set up at least one email service to send emails.",
-  );
+  console.info('Email sending failed: Neither SMTP nor Resend is configured. Please set up at least one email service to send emails.');
 };

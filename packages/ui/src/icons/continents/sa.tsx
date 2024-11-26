@@ -1,15 +1,8 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export function SouthAmerica(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      width="213"
-      height="213"
-      fill="none"
-      viewBox="0 0 213 213"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width="213" height="213" fill="none" viewBox="0 0 213 213" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         fill="#FFFFFF"
         d="M212.999 106.426a106.541 106.541 0 01-17.707 58.869 106.504 106.504 0 01-47.28 39.28 106.48 106.48 0 01-115.687-21.659A106.546 106.546 0 017.228 67.902 106.52 106.52 0 0145.07 19.46 106.484 106.484 0 01103.372 0h3.224a106.127 106.127 0 0184.8 42.103 105.715 105.715 0 0121.136 54.084c.326 3.403.482 6.82.467 10.239z"
@@ -31,47 +24,19 @@ export function SouthAmerica(props: SVGProps<SVGSVGElement>) {
         d="M121.444 202.855c-2.547 2.258-7.9 3.386-6.207 5.644a27.1 27.1 0 004.224 3.612 106.48 106.48 0 01-33.323-1.177c3.579-2.209 7.319-3.886 10.188-3.564 7.61.839 15.509-2.257 20.04-4.515 4.53-2.257 7.609-2.274 5.078 0z"
       ></path>
       <defs>
-        <linearGradient
-          id="paint0_linear_5250_15542"
-          x1="44.529"
-          x2="177.645"
-          y1="95.992"
-          y2="95.992"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint0_linear_5250_15542" x1="44.529" x2="177.645" y1="95.992" y2="95.992" gradientUnits="userSpaceOnUse">
           <stop stopColor="#085078"></stop>
           <stop offset="1" stopColor="#85D8CE"></stop>
         </linearGradient>
-        <linearGradient
-          id="paint1_linear_5250_15542"
-          x1="123.378"
-          x2="137.275"
-          y1="6.245"
-          y2="6.245"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint1_linear_5250_15542" x1="123.378" x2="137.275" y1="6.245" y2="6.245" gradientUnits="userSpaceOnUse">
           <stop stopColor="#085078"></stop>
           <stop offset="1" stopColor="#85D8CE"></stop>
         </linearGradient>
-        <linearGradient
-          id="paint2_linear_5250_15542"
-          x1="190.988"
-          x2="212.483"
-          y1="69.137"
-          y2="69.137"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint2_linear_5250_15542" x1="190.988" x2="212.483" y1="69.137" y2="69.137" gradientUnits="userSpaceOnUse">
           <stop stopColor="#085078"></stop>
           <stop offset="1" stopColor="#85D8CE"></stop>
         </linearGradient>
-        <linearGradient
-          id="paint3_linear_5250_15542"
-          x1="86.138"
-          x2="122.355"
-          y1="207.029"
-          y2="207.029"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint3_linear_5250_15542" x1="86.138" x2="122.355" y1="207.029" y2="207.029" gradientUnits="userSpaceOnUse">
           <stop stopColor="#085078"></stop>
           <stop offset="1" stopColor="#85D8CE"></stop>
         </linearGradient>
