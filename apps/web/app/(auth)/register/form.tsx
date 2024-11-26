@@ -145,7 +145,7 @@ function VerifyForm() {
               executeAsync({ username, email, password, code });
             }}
           >
-            <InputOTPGroup>
+            <InputOTPGroup className="gap-2">
               <InputOTPSlot index={0} />
               <InputOTPSlot index={1} />
               <InputOTPSlot index={2} />
