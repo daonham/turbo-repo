@@ -1,13 +1,14 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Label } from '@repo/ui';
+import { Google } from '@repo/ui/src/icons';
 import { useAction } from 'next-safe-action/hooks';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
 import { googleLoginAction, loginAction } from './actions';
 import { schema } from './schema';
 
@@ -25,6 +26,13 @@ export function LoginForm() {
   } = useForm<loginProps>({
     resolver: zodResolver(schema)
   });
+
+  useEffect(() => {
+    const error = searchParams?.get('error');
+    if (error) {
+      toast.error('An unexpected error occurred. Please try again later.');
+    }
+  }, [searchParams]);
 
   const { executeAsync, isExecuting } = useAction(loginAction, {
     onSuccess: () => {
@@ -66,13 +74,13 @@ export function LoginForm() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center p-6 pt-0">
+        <div className="flex flex-col items-center p-6 pb-3 pt-0">
           <Button type="submit" text="Login" loading={isExecuting} />
         </div>
       </form>
 
       <div className="flex flex-col items-center p-6 pt-0">
-        <Button onClick={googleLoginAction} text="Sign in with Google" />
+        <Button variant="secondary" onClick={googleLoginAction} text="Sign in with Google" icon={<Google className="size-4" />} />
       </div>
     </>
   );

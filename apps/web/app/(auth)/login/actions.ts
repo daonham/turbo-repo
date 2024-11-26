@@ -7,11 +7,16 @@ import { schema } from './schema';
 export const loginAction = actionClient.schema(schema).action(async ({ parsedInput }) => {
   const { email, password } = parsedInput;
 
-  await signIn('credentials', {
-    redirect: false,
-    email: email.toLowerCase(),
-    password
-  });
+  // refactor: code
+  try {
+    await signIn('credentials', {
+      redirect: false,
+      email: email.toLowerCase(),
+      password
+    });
+  } catch (error: any) {
+    throw new Error(error?.message || 'Invalid credentials');
+  }
 
   return { ok: true };
 });

@@ -1,4 +1,4 @@
-import { type NextAuthConfig } from 'next-auth';
+import { type NextAuthConfig, AuthError } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 
@@ -29,21 +29,22 @@ export default {
         });
 
         if (!response.ok) {
-          throw new Error('User not found', {
-            cause: { type: 'notFound' }
-          });
+          throw new AuthError('User not found');
         }
 
         const user = await response.json();
 
+        // refactor: code
         if (user?.error) {
-          if (user?.error === 'invalidType') {
-            throw new Error(user.error, {
-              cause: { type: 'invalidType' }
-            });
+          if (user.error === 'invalid-credentials') {
+            throw new AuthError('Please provide an email and password.');
           }
 
-          throw new Error(user.error);
+          if (user.error === 'email-not-verified') {
+            throw new AuthError('Please verify your email address.');
+          }
+
+          throw new AuthError(user.error);
         }
 
         return {
