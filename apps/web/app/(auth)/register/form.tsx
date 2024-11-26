@@ -124,7 +124,9 @@ function VerifyForm() {
       router.push(searchParams.get('from') || '/dashboard');
     },
     onError: ({ error }) => {
-      toast.error(error.serverError);
+      if (error.serverError) {
+        toast.error(error.serverError);
+      }
       setCode('');
       setIsInvalidCode(true);
     }
