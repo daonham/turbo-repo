@@ -2,6 +2,9 @@
 
 import { sendEmail } from "@/emails";
 import VerifyEmail from "@/emails/verify-email";
+import { signIn } from "@/lib/auth";
+import { hashPassword } from "@/lib/auth/password";
+import client from "@/lib/db";
 import { actionClient } from "@/lib/safe-action";
 import { registerSchema, signUpSchema } from "./schema";
 
@@ -16,13 +19,36 @@ export const signUpAction = actionClient
       );
     }
 
-    // const user_exist = await getUserFromEmail(email);
+    const db = await client.connect();
 
-    // if (user_exist) {
-    //   throw new Error("User already exists");
-    // }
+    const userExists = await db
+      .db(process.env.MONGODB_DB_NAME)
+      .collection("users")
+      .findOne({ email: email.toLowerCase() });
 
-    // const code = await createVerifyOTP(email);
+    if (userExists) {
+      throw new Error("User already exists");
+    }
+
+    const emailVerificationTokenCollection = db
+      .db(process.env.MONGODB_DB_NAME)
+      .collection("emailVerificationToken");
+
+    // Delete all email verification tokens for the user.
+    await emailVerificationTokenCollection.deleteMany({
+      email: email.toLowerCase(),
+    });
+
+    // Generate a new verification token.
+    const code = Math.floor(Math.random() * 1000000)
+      .toString()
+      .padStart(6, "0");
+
+    await emailVerificationTokenCollection.insertOne({
+      email: email.toLowerCase(),
+      token: code,
+      expires: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+    });
 
     await sendEmail({
       subject: `OTP to verify your account`,
@@ -43,15 +69,40 @@ export const registerAction = actionClient
   .action(async ({ parsedInput }) => {
     const { username, email, password, code } = parsedInput;
 
-    // await verifyOTP(email, code);
+    const db = await client.connect();
 
-    // const user_exist = await getUserFromEmail(email);
+    const emailVerificationTokenCollection = db
+      .db(process.env.MONGODB_DB_NAME)
+      .collection("emailVerificationToken");
 
-    // if (user_exist) {
-    //   throw new Error("User already exists");
-    // }
+    const verifyOTP = await emailVerificationTokenCollection.findOne({
+      email: email.toLowerCase(),
+      token: code,
+      expires: { $gt: new Date() },
+    });
 
-    // const user = await createUser(email, username, password);
+    if (!verifyOTP) {
+      throw new Error("Invalid OTP");
+    }
+
+    await emailVerificationTokenCollection.deleteOne({ email, token: code });
+
+    const userCollection = db
+      .db(process.env.MONGODB_DB_NAME)
+      .collection("users");
+
+    await userCollection.insertOne({
+      email: email.toLowerCase(),
+      name: username,
+      password: hashPassword(password),
+      emailVerified: new Date(),
+    });
+
+    await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
 
     return {
       ok: true,
