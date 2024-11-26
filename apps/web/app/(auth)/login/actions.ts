@@ -7,6 +7,14 @@ import { schema } from "./schema";
 export const loginAction = actionClient
   .schema(schema)
   .action(async ({ parsedInput }) => {
+    const { email, password } = parsedInput;
+
+    await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
     return { ok: true };
   });
 
