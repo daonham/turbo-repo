@@ -11,7 +11,7 @@ export const loginAction = actionClient
 
     await signIn("credentials", {
       redirect: false,
-      email,
+      email: email.toLowerCase(),
       password,
     });
 

@@ -1,6 +1,8 @@
+import client from "@/lib/db";
 import { type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
+import { verifyPasswordHash } from "./password";
 
 export const authConfig = {
   providers: [
@@ -10,19 +12,40 @@ export const authConfig = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { type: "email" },
+        password: { type: "password" },
       },
       async authorize(credentials) {
         const { email, password } = credentials;
 
-        // TODO: check email login and return data.
+        if (!email || !password) {
+          throw new Error("no-credentials");
+        }
+
+        const user = await client
+          .db(process.env.MONGODB_DB_NAME)
+          .collection("users")
+          .findOne({ email: email });
+
+        if (!user || !user.password) {
+          throw new Error("invalid-credentials");
+        }
+
+        const passwordMatch = verifyPasswordHash(user.password, password);
+
+        if (!passwordMatch) {
+          throw new Error("invalid-credentials");
+        }
+
+        if (!user.emailVerified) {
+          throw new Error("email-not-verified");
+        }
 
         return {
-          id: "1",
-          name: "John Doe",
-          email: "john.doe@example.com",
-          image: "https://example.com/avatar.png",
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          image: user?.image || "",
         };
       },
     }),
