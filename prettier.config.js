@@ -1,9 +1,11 @@
 // prettier.config.js
 module.exports = {
+  endOfLine: "lf",
+  singleQuote: true,
   bracketSpacing: true,
-  semi: true,
-  trailingComma: "all",
-  printWidth: 80,
+  trailingComma: "none",
+  arrowParens: "always",
+  printWidth: 200,
   tabWidth: 2,
   plugins: [
     "prettier-plugin-organize-imports",
