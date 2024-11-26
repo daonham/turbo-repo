@@ -6,9 +6,11 @@ import { signIn } from '@/lib/auth';
 import { hashPassword } from '@/lib/auth/password';
 import client from '@/lib/db';
 import { actionClient } from '@/lib/safe-action';
-import { registerSchema, signUpSchema } from './schema';
+import { ratelimit } from '@/lib/upstash';
+import { z } from 'zod';
+import { schema } from './schema';
 
-export const signUpAction = actionClient.schema(signUpSchema).action(async ({ parsedInput }) => {
+export const signUpAction = actionClient.schema(schema).action(async ({ parsedInput }) => {
   const { email } = parsedInput;
 
   if (email.includes('+') && email.endsWith('@gmail.com')) {
@@ -55,41 +57,52 @@ export const signUpAction = actionClient.schema(signUpSchema).action(async ({ pa
   };
 });
 
-export const registerAction = actionClient.schema(registerSchema).action(async ({ parsedInput }) => {
-  const { username, email, password, code } = parsedInput;
+export const registerAction = actionClient
+  .schema(schema)
+  .schema(async (prevSchema) => {
+    return prevSchema.extend({ code: z.string().min(6, 'OTP must be 6 characters long.') });
+  })
+  .action(async ({ parsedInput }) => {
+    const { username, email, password, code } = parsedInput;
 
-  const db = await client.connect();
+    const { success } = await ratelimit(2, '1 m').limit(`signup: test`);
 
-  const emailVerificationTokenCollection = db.db(process.env.MONGODB_DB_NAME).collection('emailVerificationToken');
+    if (!success) {
+      throw new Error('Too many requests. Please try again later.');
+    }
 
-  const verifyOTP = await emailVerificationTokenCollection.findOne({
-    email: email.toLowerCase(),
-    token: code,
-    expires: { $gt: new Date() }
+    const db = await client.connect();
+
+    const emailVerificationTokenCollection = db.db(process.env.MONGODB_DB_NAME).collection('emailVerificationToken');
+
+    const verifyOTP = await emailVerificationTokenCollection.findOne({
+      email: email.toLowerCase(),
+      token: code,
+      expires: { $gt: new Date() }
+    });
+
+    if (!verifyOTP) {
+      throw new Error('Invalid OTP');
+    }
+
+    await emailVerificationTokenCollection.deleteOne({ email, token: code });
+
+    const userCollection = db.db(process.env.MONGODB_DB_NAME).collection('users');
+
+    await userCollection.insertOne({
+      email: email.toLowerCase(),
+      name: username,
+      password: hashPassword(password),
+      emailVerified: new Date()
+    });
+
+    await signIn('credentials', {
+      redirect: false,
+      email,
+      password
+    });
+
+    return {
+      ok: true
+    };
   });
-
-  if (!verifyOTP) {
-    throw new Error('Invalid OTP');
-  }
-
-  await emailVerificationTokenCollection.deleteOne({ email, token: code });
-
-  const userCollection = db.db(process.env.MONGODB_DB_NAME).collection('users');
-
-  await userCollection.insertOne({
-    email: email.toLowerCase(),
-    name: username,
-    password: hashPassword(password),
-    emailVerified: new Date()
-  });
-
-  await signIn('credentials', {
-    redirect: false,
-    email,
-    password
-  });
-
-  return {
-    ok: true
-  };
-});

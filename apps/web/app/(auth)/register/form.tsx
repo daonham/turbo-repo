@@ -8,13 +8,13 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { registerAction, signUpAction } from './actions';
-import { signUpSchema } from './schema';
+import { schema } from './schema';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { RegisterProvider, useRegisterContext } from './context';
 
-type SignUpFormProps = z.infer<typeof signUpSchema>;
+type SignUpFormProps = z.infer<typeof schema>;
 
 export function RegisterForm() {
   return (
@@ -40,7 +40,7 @@ function SignUpForm() {
     formState: { errors },
     getValues
   } = useForm<SignUpFormProps>({
-    resolver: zodResolver(signUpSchema)
+    resolver: zodResolver(schema)
   });
 
   const { executeAsync, isExecuting } = useAction(signUpAction, {
