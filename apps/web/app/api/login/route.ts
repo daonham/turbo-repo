@@ -35,12 +35,12 @@ export async function POST(request: Request) {
 
     // return user
     return NextResponse.json({
+      id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role,
-      id: user._id,
+      image: user?.image || "",
     });
-  } catch (err) {
+  } catch (err: any) {
     return NextResponse.json(
       { error: err?.message || "An error occurred" },
       { status: 200 },
