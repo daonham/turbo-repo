@@ -2,13 +2,6 @@
 
 import { sendEmail } from "@/emails";
 import VerifyEmail from "@/emails/verify-email";
-import { login } from "@/lib/auth";
-import {
-  createUser,
-  createVerifyOTP,
-  getUserFromEmail,
-  verifyOTP,
-} from "@/lib/auth/user";
 import { actionClient } from "@/lib/safe-action";
 import { registerSchema, signUpSchema } from "./schema";
 
@@ -23,13 +16,13 @@ export const signUpAction = actionClient
       );
     }
 
-    const user_exist = await getUserFromEmail(email);
+    // const user_exist = await getUserFromEmail(email);
 
-    if (user_exist) {
-      throw new Error("User already exists");
-    }
+    // if (user_exist) {
+    //   throw new Error("User already exists");
+    // }
 
-    const code = await createVerifyOTP(email);
+    // const code = await createVerifyOTP(email);
 
     await sendEmail({
       subject: `OTP to verify your account`,
@@ -50,17 +43,15 @@ export const registerAction = actionClient
   .action(async ({ parsedInput }) => {
     const { username, email, password, code } = parsedInput;
 
-    await verifyOTP(email, code);
+    // await verifyOTP(email, code);
 
-    const user_exist = await getUserFromEmail(email);
+    // const user_exist = await getUserFromEmail(email);
 
-    if (user_exist) {
-      throw new Error("User already exists");
-    }
+    // if (user_exist) {
+    //   throw new Error("User already exists");
+    // }
 
-    const user = await createUser(email, username, password);
-
-    await login(user.id);
+    // const user = await createUser(email, username, password);
 
     return {
       ok: true,

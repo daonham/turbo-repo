@@ -1,15 +1,7 @@
-import { auth } from "@/lib/auth";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { RegisterForm } from "./form";
 
 export default async function Page() {
-  const { isAuth } = await auth();
-
-  if (isAuth) {
-    return redirect("/dashboard");
-  }
-
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-gray-100">
       <div className="w-[350px] rounded-lg border bg-white shadow-sm">

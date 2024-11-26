@@ -1,49 +1,19 @@
-import type { Session, User } from "@/lib/auth/session";
-import {
-  createSession,
-  deleteSessionTokenCookie,
-  generateSessionToken,
-  invalidateSession,
-  setSessionTokenCookie,
-  validateSessionToken,
-} from "@/lib/auth/session";
-import { cookies } from "next/headers";
+import client from "@/lib/db";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import NextAuth from "next-auth";
 import { cache } from "react";
+import { authConfig } from "./auth.config";
 
-export const auth = cache(
-  async (): Promise<{
-    isAuth: boolean;
-    session: Session | null;
-    user: User | null;
-  }> => {
-    const token = (await cookies()).get("session")?.value ?? null;
+const {
+  auth: uncachedAuth,
+  handlers,
+  signIn,
+  signOut,
+} = NextAuth({
+  adapter: MongoDBAdapter(client),
+  ...authConfig,
+});
 
-    if (token === null) {
-      return { isAuth: false, session: null, user: null };
-    }
+const auth = cache(uncachedAuth);
 
-    const result = await validateSessionToken(token);
-
-    return {
-      isAuth: Boolean(result.session && result.user),
-      session: result.session,
-      user: result.user,
-    };
-  },
-);
-
-export async function login(userId: number) {
-  try {
-    const sessionToken = generateSessionToken();
-    const session = await createSession(sessionToken, userId);
-    await setSessionTokenCookie(sessionToken, session.expires_at);
-  } catch (error) {
-    console.error("Error logging in:", error);
-    throw new Error("Failed to log in");
-  }
-}
-
-export async function logout() {
-  deleteSessionTokenCookie();
-  await invalidateSession((await auth())?.session?.id || "");
-}
+export { auth, handlers, signIn, signOut };

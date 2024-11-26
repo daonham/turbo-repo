@@ -1,10 +1,10 @@
 "use server";
 
-import { auth, logout } from "@/lib/auth";
+import { auth, signOut } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export async function logoutAction() {
-  const { session } = await auth();
+  const session = await auth();
 
   if (!session) {
     return {
@@ -12,7 +12,7 @@ export async function logoutAction() {
     };
   }
 
-  await logout();
+  await signOut();
 
   redirect("/login");
 }
