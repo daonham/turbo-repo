@@ -1,8 +1,6 @@
-import client from "@/lib/db";
 import { type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
-import { verifyPasswordHash } from "./password";
 
 export const authConfig = {
   providers: [
@@ -22,23 +20,33 @@ export const authConfig = {
           throw new Error("no-credentials");
         }
 
-        const user = await client
-          .db(process.env.MONGODB_DB_NAME)
-          .collection("users")
-          .findOne({ email: email });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_APP_URL}/api/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          },
+        );
 
-        if (!user || !user.password) {
-          throw new Error("invalid-credentials");
+        if (!response.ok) {
+          throw new Error("User not found", {
+            cause: { type: "notFound" },
+          });
         }
 
-        const passwordMatch = verifyPasswordHash(user.password, password);
+        const user = await response.json();
 
-        if (!passwordMatch) {
-          throw new Error("invalid-credentials");
-        }
+        if (user?.error) {
+          if (user?.error === "invalidType") {
+            throw new Error(user.error, {
+              cause: { type: "invalidType" },
+            });
+          }
 
-        if (!user.emailVerified) {
-          throw new Error("email-not-verified");
+          throw new Error(user.error);
         }
 
         return {

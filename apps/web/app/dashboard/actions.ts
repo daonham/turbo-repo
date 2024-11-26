@@ -12,7 +12,9 @@ export async function logoutAction() {
     };
   }
 
-  await signOut();
+  await signOut({
+    redirectTo: "/",
+  });
 
   redirect("/login");
 }
