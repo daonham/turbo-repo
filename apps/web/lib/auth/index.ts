@@ -6,7 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 import { cache } from 'react';
 import authConfig from './auth.config';
-import { getRole } from './utils';
+import { getDefaultUserRole } from './utils';
 
 const {
   auth: uncachedAuth,
@@ -65,7 +65,7 @@ const {
   events: {
     async createUser({ user }) {
       // Create role to database.
-      const role = getRole(user.email);
+      const role = getDefaultUserRole(user.email);
 
       // Update role to database.
       await client.db(process.env.MONGODB_DB_NAME).collection('users').updateOne(

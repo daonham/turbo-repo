@@ -1,3 +1,3 @@
-export const getRole = (email: string | null | undefined) => {
+export const getDefaultUserRole = (email: string | null | undefined) => {
   return email === 'nhamdv@templatica.net' ? 'ADMIN' : 'USER';
 };
