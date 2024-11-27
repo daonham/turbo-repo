@@ -64,6 +64,7 @@ const {
   ],
   events: {
     async createUser({ user }) {
+      // Important: run only with OAuth callback, not run in credentials provider.
       // Create role to database.
       const role = getDefaultUserRole(user.email);
 
