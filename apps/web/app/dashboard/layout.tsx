@@ -11,6 +11,7 @@ export default async function Layout({
   if (!session) {
     return redirect('/login');
   }
+  console.log('session', session);
 
   return (
     <div>

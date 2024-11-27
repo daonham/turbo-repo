@@ -4,6 +4,7 @@ import { sendEmail } from '@/emails';
 import VerifyEmail from '@/emails/verify-email';
 import { signIn } from '@/lib/auth';
 import { hashPassword } from '@/lib/auth/password';
+import { getRole } from '@/lib/auth/utils';
 import client from '@/lib/db';
 import { actionClient } from '@/lib/safe-action';
 import { ratelimit } from '@/lib/upstash';
@@ -99,7 +100,8 @@ export const registerAction = actionClient
       email: email.toLowerCase(),
       name: username,
       password: hashPassword(password),
-      emailVerified: new Date()
+      emailVerified: new Date(),
+      role: getRole(email)
     });
 
     await signIn('credentials', {
