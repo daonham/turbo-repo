@@ -10,7 +10,9 @@ const {
   signIn,
   signOut
 } = NextAuth({
-  adapter: MongoDBAdapter(client),
+  adapter: MongoDBAdapter(client, {
+    databaseName: process.env.MONGODB_DB_NAME
+  }),
   session: { strategy: 'jwt' },
   ...authConfig
 });
