@@ -5,7 +5,9 @@ module.exports = {
   ...base,
   content: [...base.content],
   theme: {
+    ...base?.theme,
     extend: {
+      ...base?.theme?.extend,
       keyframes: {
         'caret-blink': {
           '0%,70%,100%': { opacity: '1' },
