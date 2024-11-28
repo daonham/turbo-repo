@@ -50,7 +50,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             {text && <div className={cn('min-w-0 truncate', shortcut && 'flex-1 text-left', textWrapperClassName)}>{text}</div>}
             {shortcut && (
               <kbd
-                className={cn('hidden rounded border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-400 md:inline-block', {
+                className={cn('hidden rounded-sm border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-400 md:inline-block', {
                   'bg-gray-100': variant?.endsWith('outline')
                 })}
               >
@@ -78,7 +78,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {text && <div className={cn('min-w-0 truncate', shortcut && 'flex-1 text-left', textWrapperClassName)}>{text}</div>}
         {shortcut && (
           <kbd
-            className={cn('hidden rounded px-2 py-0.5 text-xs font-light transition-all duration-75 md:inline-block', {
+            className={cn('hidden rounded-sm px-2 py-0.5 text-xs font-light transition-all duration-75 md:inline-block', {
               'bg-gray-700 text-gray-400 group-hover:bg-gray-600 group-hover:text-gray-300': variant === 'primary',
               'bg-gray-200 text-gray-400 group-hover:bg-gray-100 group-hover:text-gray-500': variant === 'secondary',
               'bg-gray-100 text-gray-500 group-hover:bg-gray-200': variant === 'outline',
