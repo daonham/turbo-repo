@@ -38,7 +38,7 @@ export function Tooltip({ children, content, side = 'top', disableHoverableConte
         <TooltipPrimitive.Content
           sideOffset={8}
           side={side}
-          className="animate-slide-up-fade z-[99] items-center overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
+          className="animate-slide-up-fade shadow-xs z-[99] items-center overflow-hidden rounded-xl border border-gray-200 bg-white"
           collisionPadding={0}
           {...rest}
         >
