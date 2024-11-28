@@ -1,3 +1,7 @@
 @source "./**/*.{ts,tsx}";
 
 @plugin "tailwindcss-animate";
+
+@theme {
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+}
