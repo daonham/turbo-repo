@@ -10,13 +10,13 @@ export default async function Page() {
           <p className="text-center text-sm text-gray-500">Enter your credentials to access your account</p>
         </div>
         <LoginForm />
-        <p className="mt-3 text-center text-sm text-gray-500">
-          Don't have an account?&nbsp;
-          <Link href="/register" className="font-semibold text-gray-700 transition-colors hover:text-black">
-            Sign up
-          </Link>
-        </p>
       </div>
+      <p className="mt-3 text-center text-sm text-gray-500">
+        Don't have an account?&nbsp;
+        <Link href="/register" className="font-semibold text-gray-700 transition-colors hover:text-black">
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 }

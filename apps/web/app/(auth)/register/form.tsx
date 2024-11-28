@@ -57,9 +57,9 @@ function SignUpForm() {
 
   return (
     <>
-      <div className="flex flex-col space-y-1.5 p-6">
-        <h1 className="text-xl font-bold text-gray-800">Register</h1>
-        <p className="text-sm text-gray-600">Get started with App</p>
+      <div className="flex flex-col space-y-1.5 pb-6">
+        <h1 className="text-center text-lg font-semibold text-gray-800">Register</h1>
+        <p className="text-center text-sm text-gray-500">Get started with App</p>
       </div>
       <form
         onSubmit={handleSubmit((data) =>
@@ -70,7 +70,7 @@ function SignUpForm() {
           })
         )}
       >
-        <div className="p-6 pt-0">
+        <div>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">Username</Label>
@@ -101,7 +101,7 @@ function SignUpForm() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center p-6 pt-0">
+        <div className="flex flex-col items-center pt-6">
           <Button type="submit" text={'Sign up'} loading={isExecuting} />
         </div>
       </form>
