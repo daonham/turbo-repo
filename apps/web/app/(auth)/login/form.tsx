@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Label } from '@repo/ui';
 import { Google } from '@repo/ui/src/icons';
 import { useAction } from 'next-safe-action/hooks';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -61,7 +62,12 @@ export function LoginForm() {
             />
           </div>
           <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="password">Password</Label>
+            <div className="flex justify-between">
+              <Label htmlFor="password">Password</Label>
+              <Link href="/forgot-password" className="text-sm text-gray-500 transition-colors hover:text-black">
+                Forgot password?
+              </Link>
+            </div>
             <Input
               id="password"
               type="password"
@@ -73,7 +79,7 @@ export function LoginForm() {
           </div>
         </div>
         <div className="flex flex-col items-center pb-3 pt-6">
-          <Button type="submit" text="Login" loading={isExecuting} />
+          <Button type="submit" text="Sign in" loading={isExecuting} />
         </div>
       </form>
 
