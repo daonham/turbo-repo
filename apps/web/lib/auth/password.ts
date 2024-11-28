@@ -18,8 +18,6 @@ export function hashPassword(password: string) {
   return encryptPassword(password, salt) + salt;
 }
 
-// fetch the user from your db and then use this function
-
 /**
  * Match password against the stored hash
  */
@@ -30,20 +28,4 @@ export function verifyPasswordHash(hash: string, password: string) {
   const originalPassHash = hash.slice(0, 64);
   const currentPassHash = encryptPassword(password, salt);
   return originalPassHash === currentPassHash;
-}
-
-export function simpleHash(password: string) {
-  let hash = 0;
-  let char = 0;
-
-  if (password.length === 0) return hash.toString();
-  for (let index = 0; index < password.length; index++) {
-    char = password.charCodeAt(index);
-    hash = (hash << 5) - hash + char;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash.toString();
-}
-export function simpleVerify(hash: string, password: string) {
-  return hash === simpleHash(password);
 }

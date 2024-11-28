@@ -45,7 +45,7 @@ const {
         const passwordMatch = verifyPasswordHash(user.password, password);
 
         if (!passwordMatch) {
-          throw new AuthError('Please provide an email and password.');
+          throw new AuthError('Password is incorrect.');
         }
 
         if (!user.emailVerified) {
