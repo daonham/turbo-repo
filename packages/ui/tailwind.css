@@ -1,0 +1,3 @@
+@source "./**/*.{ts,tsx}";
+
+@plugin "tailwindcss-animate";
