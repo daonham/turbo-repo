@@ -8,7 +8,6 @@ import { schema } from './schema';
 export const loginAction = actionClient.schema(schema).action(async ({ parsedInput }) => {
   const { email, password } = parsedInput;
 
-  // refactor: code
   try {
     const { success } = await ratelimit(5, '1 m').limit(`login-attempts:${email}`);
 
