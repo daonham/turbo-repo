@@ -8,16 +8,19 @@ const { auth } = NextAuth(authConfig);
 export default auth((req: NextRequest) => {
   const isAuth = !!req.auth;
 
-  const isAuthPage = req.nextUrl.pathname.startsWith('/login') || req.nextUrl.pathname.startsWith('/register');
+  const path = req.nextUrl.pathname;
 
-  const isDashboardPage = req.nextUrl.pathname.startsWith('/dashboard');
+  const isAuthPage =
+    path.startsWith('/login') || path.startsWith('/register') || path.startsWith('/forgot-password') || path.startsWith('/reset-password');
+
+  const isDashboardPage = path.startsWith('/dashboard');
 
   if (isAuth && isAuthPage) {
     return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 
   if (!isAuth && isDashboardPage) {
-    let from = req.nextUrl.pathname;
+    let from = path;
 
     if (req.nextUrl.search) {
       from += req.nextUrl.search;
