@@ -9,13 +9,13 @@
   },
   "devDependencies": {
     "eslint": "^9.15.0",
-    "prettier": "^3.2.5",
+    "prettier": "^3.4.1",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-tailwindcss": "^0.6.9",
-    "turbo": "^2.3.0",
-    "typescript": "5.5.4"
+    "turbo": "^2.3.3",
+    "typescript": "5.7.2"
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@9.14.3",
   "engines": {
     "node": ">=18"
   }
