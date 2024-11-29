@@ -64,7 +64,10 @@ export function LoginForm() {
           <div className="flex flex-col space-y-1.5">
             <div className="flex justify-between">
               <Label htmlFor="password">Password</Label>
-              <Link href="/forgot-password" className="text-sm text-gray-500 transition-colors hover:text-black">
+              <Link
+                href={`/forgot-password?email=${encodeURIComponent(getValues('email') || '')}`}
+                className="text-sm text-gray-500 transition-colors hover:text-black"
+              >
                 Forgot password?
               </Link>
             </div>
