@@ -29,12 +29,12 @@ export const forgotAction = actionClient.schema(schema).action(async ({ parsedIn
   const tokenHash = createHash('sha256').update(token).digest('hex');
 
   // Delete all existing password reset tokens for this user.
-  await db.db(process.env.MONGODB_DB_NAME).collection('passwordResetTokens').deleteMany({ email: email.toLowerCase() });
+  await db.db(process.env.MONGODB_DB_NAME).collection('passwordResetToken').deleteMany({ email: email.toLowerCase() });
 
   // Insert new password reset token.
   await db
     .db(process.env.MONGODB_DB_NAME)
-    .collection('passwordResetTokens')
+    .collection('passwordResetToken')
     .insertOne({
       email: email.toLowerCase(),
       token: tokenHash,

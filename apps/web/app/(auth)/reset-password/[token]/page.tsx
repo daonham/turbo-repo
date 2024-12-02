@@ -18,7 +18,7 @@ const isValidToken = async (token: string) => {
 
   const result = await db
     .db(process.env.MONGODB_DB_NAME)
-    .collection('passwordResetTokens')
+    .collection('passwordResetToken')
     .findOne({ token: hashedToken, expiresAt: { $gt: new Date() } });
 
   return !!result;
