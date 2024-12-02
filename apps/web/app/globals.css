@@ -2,5 +2,5 @@
 @import '../../../packages/ui/tailwind.css';
 
 @theme {
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-inter);
 }
