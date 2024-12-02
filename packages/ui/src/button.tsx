@@ -2,7 +2,6 @@ import { cn } from '@repo/utils';
 import { VariantProps, cva } from 'class-variance-authority';
 import { ReactNode, forwardRef } from 'react';
 import { LoadingSpinner } from './icons';
-import { Tooltip } from './tooltip';
 
 export const buttonVariants = cva('transition-all', {
   variants: {
@@ -29,38 +28,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   loading?: boolean;
   icon?: ReactNode;
   shortcut?: string;
-  disabledTooltip?: string | ReactNode;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ text, variant = 'primary', className, textWrapperClassName, loading, icon, shortcut, disabledTooltip, ...props }: ButtonProps, forwardedRef) => {
-    if (disabledTooltip) {
-      return (
-        <Tooltip content={disabledTooltip}>
-          <div
-            className={cn(
-              'flex h-10 w-full cursor-not-allowed items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-gray-100 px-4 text-sm text-gray-400 transition-all focus:outline-none',
-              {
-                'border-transparent bg-transparent': variant?.endsWith('outline')
-              },
-              className
-            )}
-          >
-            {icon}
-            {text && <div className={cn('min-w-0 truncate', shortcut && 'flex-1 text-left', textWrapperClassName)}>{text}</div>}
-            {shortcut && (
-              <kbd
-                className={cn('hidden rounded-sm border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-400 md:inline-block', {
-                  'bg-gray-100': variant?.endsWith('outline')
-                })}
-              >
-                {shortcut}
-              </kbd>
-            )}
-          </div>
-        </Tooltip>
-      );
-    }
+  ({ text, variant = 'primary', className, textWrapperClassName, loading, icon, shortcut, ...props }: ButtonProps, forwardedRef) => {
     return (
       <button
         ref={forwardedRef}
