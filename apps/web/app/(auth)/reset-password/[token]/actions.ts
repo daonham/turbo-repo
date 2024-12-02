@@ -23,7 +23,7 @@ export const resetPasswordAction = actionClient.schema(schema).action(async ({ p
 
   const result = await db
     .db(process.env.MONGODB_DB_NAME)
-    .collection('password-reset-tokens')
+    .collection('passwordResetTokens')
     .findOne({ token: hashedToken, expiresAt: { $gt: new Date() } });
 
   if (!result) {
@@ -47,7 +47,7 @@ export const resetPasswordAction = actionClient.schema(schema).action(async ({ p
     throw new Error('Failed to update password.');
   }
 
-  await db.db(process.env.MONGODB_DB_NAME).collection('password-reset-tokens').deleteMany({ email: email.toLowerCase() });
+  await db.db(process.env.MONGODB_DB_NAME).collection('passwordResetTokens').deleteMany({ email: email.toLowerCase() });
 
   await sendEmail({
     subject: `Your password has been reset`,
