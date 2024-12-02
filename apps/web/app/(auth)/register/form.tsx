@@ -32,7 +32,7 @@ const RegisterFlow = () => {
 };
 
 function SignUpForm() {
-  const { setStep, setUsername, setEmail, setPassword } = useRegisterContext();
+  const { setStep, setName, setEmail, setPassword } = useRegisterContext();
 
   const {
     register,
@@ -45,7 +45,7 @@ function SignUpForm() {
 
   const { executeAsync, isExecuting } = useAction(sendOTPAction, {
     onSuccess: () => {
-      setUsername(getValues('username'));
+      setName(getValues('name'));
       setEmail(getValues('email'));
       setPassword(getValues('password'));
       setStep('verify');
@@ -64,7 +64,7 @@ function SignUpForm() {
       <form
         onSubmit={handleSubmit((data) =>
           executeAsync({
-            username: data.username,
+            name: data.name,
             email: data.email,
             password: data.password
           })
@@ -73,8 +73,8 @@ function SignUpForm() {
         <div>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" type="text" placeholder="Enter your username" {...register('username')} error={errors.username?.message} />
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" type="text" placeholder="Enter your name" {...register('name')} error={errors.name?.message} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
@@ -112,7 +112,7 @@ function SignUpForm() {
 function VerifyForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { username, email, password } = useRegisterContext();
+  const { name, email, password } = useRegisterContext();
   const [isInvalidCode, setIsInvalidCode] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [code, setCode] = useState('');
@@ -146,7 +146,7 @@ function VerifyForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          executeAsync({ username, email, password, code });
+          executeAsync({ name, email, password, code });
         }}
       >
         <div className="p-6 pt-0">
@@ -159,7 +159,7 @@ function VerifyForm() {
               setCode(code);
             }}
             onComplete={() => {
-              executeAsync({ username, email, password, code });
+              executeAsync({ name, email, password, code });
             }}
           >
             <InputOTPGroup className="gap-2">

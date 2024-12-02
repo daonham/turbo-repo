@@ -6,7 +6,7 @@ export const passwordSchema = z
   .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, 'Password must contain at least one number, one uppercase, and one lowercase letter');
 
 export const schema = z.object({
-  username: z.string().min(3, {
+  name: z.string().min(3, {
     message: 'Username must be at least 3 characters long.'
   }),
   email: z.string().email({

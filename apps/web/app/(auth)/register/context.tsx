@@ -3,11 +3,11 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface RegisterContextType {
-  username: string;
+  name: string;
   email: string;
   password: string;
   step: 'signup' | 'verify';
-  setUsername: (username: string) => void;
+  setName: (username: string) => void;
   setEmail: (email: string) => void;
   setPassword: (password: string) => void;
   setStep: (step: 'signup' | 'verify') => void;
@@ -16,7 +16,7 @@ interface RegisterContextType {
 const RegisterContext = createContext<RegisterContextType | undefined>(undefined);
 
 export const RegisterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [step, setStep] = useState<'signup' | 'verify'>('signup');
@@ -24,11 +24,11 @@ export const RegisterProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   return (
     <RegisterContext.Provider
       value={{
-        username,
+        name,
         email,
         password,
         step,
-        setUsername,
+        setName,
         setEmail,
         setPassword,
         setStep

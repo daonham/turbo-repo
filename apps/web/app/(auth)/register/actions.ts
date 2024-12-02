@@ -70,7 +70,7 @@ export const registerAction = actionClient
     return prevSchema.extend({ code: z.string().min(6, 'OTP must be 6 characters long.') });
   })
   .action(async ({ parsedInput }) => {
-    const { username, email, password, code } = parsedInput;
+    const { name, email, password, code } = parsedInput;
 
     const { success } = await ratelimit(2, '1 m').limit(`registerAction`);
 
@@ -98,7 +98,7 @@ export const registerAction = actionClient
 
     await userCollection.insertOne({
       email: email.toLowerCase(),
-      name: username,
+      name: name,
       password: hashPassword(password),
       emailVerified: new Date(),
       role: getDefaultUserRole(email)
