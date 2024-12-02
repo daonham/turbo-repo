@@ -6,3 +6,6 @@ export * from './tooltip';
 
 // icons
 export * from './icons';
+
+// hooks
+export * from './hooks';
