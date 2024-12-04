@@ -12,11 +12,9 @@ interface Props {
 }
 
 const isValidToken = async (token: string) => {
-  const db = await client.connect();
-
   const hashedToken = createHash('sha256').update(token).digest('hex');
 
-  const result = await db
+  const result = await client
     .db(process.env.MONGODB_DB_NAME)
     .collection('passwordResetToken')
     .findOne({ token: hashedToken, expiresAt: { $gt: new Date() } });
