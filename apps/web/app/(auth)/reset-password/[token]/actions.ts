@@ -17,11 +17,10 @@ export const resetPasswordAction = actionClient.schema(schema).action(async ({ p
   if (!success) {
     throw new Error('Too many requests. Please try again later.');
   }
-  const db = await client.connect();
 
   const hashedToken = createHash('sha256').update(token).digest('hex');
 
-  const result = await db
+  const result = await client
     .db(process.env.MONGODB_DB_NAME)
     .collection('passwordResetToken')
     .findOne({ token: hashedToken, expiresAt: { $gt: new Date() } });
@@ -32,13 +31,13 @@ export const resetPasswordAction = actionClient.schema(schema).action(async ({ p
 
   const { email } = result;
 
-  const user = await db.db(process.env.MONGODB_DB_NAME).collection('users').findOne({ email });
+  const user = await client.db(process.env.MONGODB_DB_NAME).collection('users').findOne({ email });
 
   if (!user) {
     throw new Error('User not found.');
   }
 
-  const update = await db
+  const update = await client
     .db(process.env.MONGODB_DB_NAME)
     .collection('users')
     .updateOne({ email }, { $set: { password: hashPassword(password), ...(!user.emailVerified && { emailVerified: new Date() }) } });
@@ -47,7 +46,7 @@ export const resetPasswordAction = actionClient.schema(schema).action(async ({ p
     throw new Error('Failed to update password.');
   }
 
-  await db.db(process.env.MONGODB_DB_NAME).collection('passwordResetToken').deleteMany({ email: email.toLowerCase() });
+  await client.db(process.env.MONGODB_DB_NAME).collection('passwordResetToken').deleteMany({ email: email.toLowerCase() });
 
   await sendEmail({
     subject: `Your password has been reset`,

@@ -24,15 +24,13 @@ export const sendOTPAction = actionClient.schema(schema).action(async ({ parsedI
     throw new Error('Email addresses with + are not allowed. Please use your work email instead.');
   }
 
-  const db = await client.connect();
-
-  const userExists = await db.db(process.env.MONGODB_DB_NAME).collection('users').findOne({ email: email.toLowerCase() });
+  const userExists = await client.db(process.env.MONGODB_DB_NAME).collection('users').findOne({ email: email.toLowerCase() });
 
   if (userExists) {
     throw new Error('User already exists');
   }
 
-  const emailVerificationTokenCollection = db.db(process.env.MONGODB_DB_NAME).collection('emailVerificationToken');
+  const emailVerificationTokenCollection = client.db(process.env.MONGODB_DB_NAME).collection('emailVerificationToken');
 
   // Delete all email verification tokens for the user.
   await emailVerificationTokenCollection.deleteMany({
@@ -78,9 +76,7 @@ export const registerAction = actionClient
       throw new Error('Too many requests. Please try again later.');
     }
 
-    const db = await client.connect();
-
-    const emailVerificationTokenCollection = db.db(process.env.MONGODB_DB_NAME).collection('emailVerificationToken');
+    const emailVerificationTokenCollection = client.db(process.env.MONGODB_DB_NAME).collection('emailVerificationToken');
 
     const verifyOTP = await emailVerificationTokenCollection.findOne({
       email: email.toLowerCase(),
@@ -94,7 +90,7 @@ export const registerAction = actionClient
 
     await emailVerificationTokenCollection.deleteOne({ email, token: code });
 
-    const userCollection = db.db(process.env.MONGODB_DB_NAME).collection('users');
+    const userCollection = client.db(process.env.MONGODB_DB_NAME).collection('users');
 
     await userCollection.insertOne({
       email: email.toLowerCase(),

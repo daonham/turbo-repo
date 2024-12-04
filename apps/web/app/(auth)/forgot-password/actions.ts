@@ -17,9 +17,7 @@ export const forgotAction = actionClient.schema(schema).action(async ({ parsedIn
     throw new Error('Too many requests. Please try again later.');
   }
 
-  const db = await client.connect();
-
-  const user = await db.db(process.env.MONGODB_DB_NAME).collection('users').findOne({ email: email.toLowerCase() });
+  const user = await client.db(process.env.MONGODB_DB_NAME).collection('users').findOne({ email: email.toLowerCase() });
 
   if (!user) {
     throw new Error('User not found');
@@ -29,10 +27,10 @@ export const forgotAction = actionClient.schema(schema).action(async ({ parsedIn
   const tokenHash = createHash('sha256').update(token).digest('hex');
 
   // Delete all existing password reset tokens for this user.
-  await db.db(process.env.MONGODB_DB_NAME).collection('passwordResetToken').deleteMany({ email: email.toLowerCase() });
+  await client.db(process.env.MONGODB_DB_NAME).collection('passwordResetToken').deleteMany({ email: email.toLowerCase() });
 
   // Insert new password reset token.
-  await db
+  await client
     .db(process.env.MONGODB_DB_NAME)
     .collection('passwordResetToken')
     .insertOne({
