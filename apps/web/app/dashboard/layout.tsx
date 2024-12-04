@@ -1,3 +1,4 @@
+import AdminLayout from '@/components/layout/admin-layout';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
@@ -14,9 +15,8 @@ export default async function Layout({
   console.log('session', session);
 
   return (
-    <div>
-      <h1>Welcome, {session?.user?.name}</h1>
-      {children}
+    <div className="size-full bg-white">
+      <AdminLayout>{children}</AdminLayout>
     </div>
   );
 }
