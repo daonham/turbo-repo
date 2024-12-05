@@ -215,18 +215,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                       onClick={() => null}
                       className="my-1 cursor-pointer gap-2 rounded-md p-2 text-gray-600 hover:text-gray-800"
                     >
-                      <div className="flex items-center justify-center">
-                        <team.logo className="size-4" />
-                      </div>
+                      <team.logo className="size-4" />
                       <span className="truncate text-sm">{team.name}</span>
                       <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
                     </DropdownMenuItem>
                   ))}
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer gap-2 rounded-md p-2 text-gray-600 hover:text-gray-800">
-                    <div className="flex size-6 items-center justify-center">
-                      <LogOut className="size-4" />
-                    </div>
+                  <DropdownMenuItem onClick={logoutAction} className="cursor-pointer gap-2 rounded-md p-2 text-gray-600 hover:text-gray-800">
+                    <LogOut className="size-4" />
                     <span className="truncate text-sm font-medium">Logout</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -314,7 +310,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton className="text-gray-600 hover:text-gray-800" onClick={logoutAction}>
+              <SidebarMenuButton className="text-gray-800 hover:text-gray-800" onClick={logoutAction}>
                 <LogOut />
                 <span className="truncate font-medium">Logout</span>
               </SidebarMenuButton>
