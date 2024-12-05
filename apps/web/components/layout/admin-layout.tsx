@@ -29,6 +29,7 @@ import {
   SidebarTrigger
 } from '@repo/ui';
 
+import { logoutAction } from '@/app/dashboard/actions';
 import {
   AudioWaveform,
   BookOpen,
@@ -49,6 +50,7 @@ import {
   SquareTerminal,
   Trash2
 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 const data = {
   teams: [
@@ -175,6 +177,8 @@ const data = {
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const { data: session } = useSession();
+
   return (
     <SidebarProvider>
       <Sidebar collapsible="icon">
@@ -188,8 +192,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                       <GalleryVerticalEnd className="size-4" />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">Acme Inc</span>
-                      <span className="truncate text-xs text-gray-500">Enterprise</span>
+                      <span className="truncate font-semibold">{session?.user?.name}</span>
+                      <span className="truncate text-xs text-gray-500">{session?.user?.email}</span>
                     </div>
                     <ChevronsUpDown className="ml-auto" />
                   </SidebarMenuButton>
@@ -197,7 +201,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <DropdownMenuContent
                   className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
                   align="start"
-                  side="right"
+                  side="bottom"
                   sideOffset={4}
                 >
                   <DropdownMenuLabel className="text-xs text-gray-500">Teams</DropdownMenuLabel>
@@ -302,7 +306,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton className="text-gray-600 hover:text-gray-800">
+              <SidebarMenuButton className="text-gray-600 hover:text-gray-800" onClick={logoutAction}>
                 <LogOut />
                 <span className="truncate font-medium">Logout</span>
               </SidebarMenuButton>

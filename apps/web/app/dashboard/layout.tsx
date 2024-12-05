@@ -1,6 +1,7 @@
 import AdminLayout from '@/components/layout/admin-layout';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import Providers from './providers';
 
 export default async function Layout({
   children
@@ -12,11 +13,12 @@ export default async function Layout({
   if (!session) {
     return redirect('/login');
   }
-  console.log('session', session);
 
   return (
     <div className="size-full bg-white">
-      <AdminLayout>{children}</AdminLayout>
+      <Providers session={session}>
+        <AdminLayout>{children}</AdminLayout>
+      </Providers>
     </div>
   );
 }
