@@ -243,14 +243,14 @@ const SidebarMenuItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li
 SidebarMenuItem.displayName = 'SidebarMenuItem';
 
 const sidebarMenuButtonVariants = cva(
-  'peer/menu-button cursor-pointer flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-gray-200 transition-[width,height,padding] hover:bg-gray-200 focus-visible:ring-1 active:bg-gray-200 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-gray-200 data-[active=true]:font-medium data-[state=open]:hover:bg-gray-200 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0',
+  'peer/menu-button data-[state=open]:text-gray-800 text-gray-600 cursor-pointer flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-gray-200 transition-[width,height,padding] hover:bg-gray-200 focus-visible:ring-1 active:bg-gray-200 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-gray-200 data-[active=true]:font-medium data-[state=open]:hover:bg-gray-200 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0',
   {
     variants: {
       variant: {
         default: 'hover:bg-gray-200'
       },
       size: {
-        default: 'h-8 text-sm',
+        default: 'h-9 text-sm',
         sm: 'h-7 text-xs',
         lg: 'h-12 text-sm group-data-[collapsible=icon]:!p-0'
       }
@@ -327,7 +327,7 @@ const SidebarGroupLabel = React.forwardRef<HTMLDivElement, React.ComponentProps<
         ref={ref}
         data-sidebar="group-label"
         className={cn(
-          'flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-gray-600/70 outline-none ring-gray-200 transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
+          'flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-gray-500/80 outline-none ring-gray-200 transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
           'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
           className
         )}
@@ -343,7 +343,7 @@ const SidebarMenuSub = React.forwardRef<HTMLUListElement, React.ComponentProps<'
     ref={ref}
     data-sidebar="menu-sub"
     className={cn(
-      'mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-gray-200 px-2.5 py-0.5',
+      'ml-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-gray-200 py-0.5 pl-2.5',
       'group-data-[collapsible=icon]:hidden',
       className
     )}
@@ -372,7 +372,7 @@ const SidebarMenuSubButton = React.forwardRef<
       data-size={size}
       data-active={isActive}
       className={cn(
-        'flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-gray-600 outline-none ring-gray-200 hover:bg-gray-200 hover:text-gray-800 focus-visible:ring-2 active:bg-gray-200 active:text-gray-800 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-gray-800',
+        'flex h-8 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-gray-600 outline-none ring-gray-200 hover:bg-gray-200 hover:text-gray-800 focus-visible:ring-2 active:bg-gray-200 active:text-gray-800 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-gray-800',
         'data-[active=true]:bg-gray-200 data-[active=true]:text-gray-800',
         size === 'sm' && 'text-xs',
         size === 'md' && 'text-sm',

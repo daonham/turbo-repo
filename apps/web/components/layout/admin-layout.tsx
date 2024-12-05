@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -31,12 +30,12 @@ import {
 
 import { logoutAction } from '@/app/dashboard/actions';
 import {
-  AudioWaveform,
+  Activity,
+  Bolt,
   BookOpen,
   Bot,
   ChevronRight,
   ChevronsUpDown,
-  Command,
   Folder,
   Forward,
   Frame,
@@ -45,28 +44,28 @@ import {
   Map,
   MoreHorizontal,
   PieChart,
-  Plus,
   Settings2,
   SquareTerminal,
-  Trash2
+  Trash2,
+  Workflow
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 
 const data = {
-  teams: [
+  users: [
     {
-      name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
+      name: 'Activity',
+      logo: Activity,
       plan: 'Enterprise'
     },
     {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
+      name: 'Integrations.',
+      logo: Workflow,
       plan: 'Startup'
     },
     {
-      name: 'Evil Corp.',
-      logo: Command,
+      name: 'Settings',
+      logo: Bolt,
       plan: 'Free'
     }
   ],
@@ -192,34 +191,43 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                       <GalleryVerticalEnd className="size-4" />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">{session?.user?.name}</span>
+                      <span className="truncate font-medium text-gray-800">{session?.user?.name}</span>
                       <span className="truncate text-xs text-gray-500">{session?.user?.email}</span>
                     </div>
                     <ChevronsUpDown className="ml-auto" />
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                  className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                  className="w-[--radix-dropdown-menu-trigger-width] min-w-60 rounded-xl p-2"
                   align="start"
                   side="bottom"
                   sideOffset={4}
                 >
-                  <DropdownMenuLabel className="text-xs text-gray-500">Teams</DropdownMenuLabel>
-                  {data.teams.map((team, index) => (
-                    <DropdownMenuItem key={team.name} onClick={() => null} className="gap-2 p-2">
-                      <div className="flex size-6 items-center justify-center rounded-md border border-gray-200">
-                        <team.logo className="size-4 shrink-0" />
+                  <div className="flex items-center gap-2 p-2">
+                    <span className="flex-1 truncate text-xs text-gray-600">
+                      You login with role: <span className="font-medium text-gray-800">{session?.user?.role}</span>
+                    </span>
+                  </div>
+                  <DropdownMenuSeparator />
+                  {data.users.map((team, index) => (
+                    <DropdownMenuItem
+                      key={team.name}
+                      onClick={() => null}
+                      className="my-1 cursor-pointer gap-2 rounded-md p-2 text-gray-600 hover:text-gray-800"
+                    >
+                      <div className="flex items-center justify-center">
+                        <team.logo className="size-4" />
                       </div>
-                      {team.name}
+                      <span className="truncate text-sm">{team.name}</span>
                       <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
                     </DropdownMenuItem>
                   ))}
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="gap-2 p-2">
-                    <div className="flex size-6 items-center justify-center rounded-md border border-gray-200 bg-gray-100">
-                      <Plus className="size-4" />
+                  <DropdownMenuItem className="cursor-pointer gap-2 rounded-md p-2 text-gray-600 hover:text-gray-800">
+                    <div className="flex size-6 items-center justify-center">
+                      <LogOut className="size-4" />
                     </div>
-                    <div className="text-sm font-medium text-gray-700">Add team</div>
+                    <span className="truncate text-sm font-medium">Logout</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -228,7 +236,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
+            <SidebarGroupLabel>PLATFORM</SidebarGroupLabel>
             <SidebarMenu>
               {data.navMain.map((item) => (
                 <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
@@ -259,7 +267,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </SidebarMenu>
           </SidebarGroup>
           <SidebarGroup>
-            <SidebarGroupLabel>Projects</SidebarGroupLabel>
+            <SidebarGroupLabel>PROJECTS</SidebarGroupLabel>
             <SidebarMenu>
               {data.projects.map((item) => (
                 <SidebarMenuItem key={item.name}>

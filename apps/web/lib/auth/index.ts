@@ -8,6 +8,12 @@ import { cache } from 'react';
 import authConfig from './auth.config';
 import { getDefaultUserRole } from './utils';
 
+declare module 'next-auth' {
+  interface User {
+    role?: string;
+  }
+}
+
 const {
   auth: uncachedAuth,
   handlers,
