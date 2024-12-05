@@ -198,7 +198,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                  className="w-[--radix-dropdown-menu-trigger-width] min-w-60 rounded-xl p-2"
+                  className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-60 rounded-xl p-2"
                   align="start"
                   side="bottom"
                   sideOffset={4}
