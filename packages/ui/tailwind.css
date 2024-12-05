@@ -4,6 +4,10 @@
 
 @theme {
   --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+  --animate-slide-up-fade: slide-up-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-right-fade: slide-right-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-down-fade: slide-down-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-left-fade: slide-left-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes caret-blink {
@@ -15,5 +19,49 @@
   20%,
   50% {
     opacity: 0;
+  }
+}
+
+@keyframes slide-up-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(var(--offset, 2px));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-right-fade {
+  0% {
+    opacity: 0;
+    transform: translateX(var(--offset, -2px));
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-down-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(var(--offset, -2px));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-left-fade {
+  0% {
+    opacity: 0;
+    transform: translateX(var(--offset, 2px));
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

@@ -15,7 +15,7 @@ export function TooltipProvider({ children }: { children: ReactNode }) {
   return <TooltipPrimitive.Provider delayDuration={150}>{children}</TooltipPrimitive.Provider>;
 }
 
-export function Tooltip({ children, content, side = 'top', disableHoverableContent, ...rest }: TooltipProps) {
+export function Tooltip({ children, content, side = 'top', disableHoverableContent, className, ...rest }: TooltipProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -35,7 +35,14 @@ export function Tooltip({ children, content, side = 'top', disableHoverableConte
         <TooltipPrimitive.Content
           sideOffset={8}
           side={side}
-          className="animate-slide-up-fade z-[99] items-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm"
+          className={cn(
+            'z-[99] items-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm',
+            side === 'top' && 'animate-slide-up-fade',
+            side === 'right' && 'animate-slide-right-fade',
+            side === 'bottom' && 'animate-slide-down-fade',
+            side === 'left' && 'animate-slide-left-fade',
+            className
+          )}
           collisionPadding={0}
           {...rest}
         >
