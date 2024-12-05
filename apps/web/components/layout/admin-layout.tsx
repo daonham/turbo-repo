@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
@@ -39,6 +40,7 @@ import {
   Forward,
   Frame,
   GalleryVerticalEnd,
+  LogOut,
   Map,
   MoreHorizontal,
   PieChart,
@@ -270,7 +272,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         <span className="sr-only">More</span>
                       </SidebarMenuAction>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-48 rounded-lg" side="bottom" align="end">
+                    <DropdownMenuContent className="w-48 rounded-lg" side="right" align="start">
                       <DropdownMenuItem>
                         <Folder className="text-gray-500" />
                         <span>View Project</span>
@@ -297,6 +299,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </SidebarMenu>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton className="text-gray-600 hover:text-gray-800">
+                <LogOut />
+                <span className="truncate font-medium">Logout</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
       </Sidebar>
 
       <SidebarInset>
