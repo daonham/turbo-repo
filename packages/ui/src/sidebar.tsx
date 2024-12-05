@@ -399,11 +399,11 @@ const SidebarMenuAction = React.forwardRef<
       ref={ref}
       data-sidebar="menu-action"
       className={cn(
-        'absolute right-1 top-1.5 flex aspect-square w-5 cursor-pointer items-center justify-center rounded-md p-0 text-gray-600 outline-none ring-gray-200 transition-transform hover:bg-gray-200 hover:text-gray-800 focus-visible:ring-2 peer-hover/menu-button:text-gray-800 [&>svg]:size-4 [&>svg]:shrink-0',
+        'absolute right-1 top-2 flex aspect-square w-5 cursor-pointer items-center justify-center rounded-sm p-0 text-gray-600 outline-none ring-gray-200 transition-transform hover:bg-gray-200 hover:text-gray-800 focus-visible:ring-2 peer-hover/menu-button:text-gray-800 [&>svg]:size-4 [&>svg]:shrink-0',
         // Increases the hit area of the button on mobile.
         'after:absolute after:-inset-2 after:md:hidden',
         'peer-data-[size=sm]/menu-button:top-1',
-        'peer-data-[size=default]/menu-button:top-1.5',
+        'peer-data-[size=default]/menu-button:top-2',
         'peer-data-[size=lg]/menu-button:top-2.5',
         'group-data-[collapsible=icon]:hidden',
         showOnHover &&
