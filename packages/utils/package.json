@@ -19,16 +19,16 @@
     "@repo/config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/ms": "^0.7.34",
-    "@types/react": "18.3.12",
-    "@types/react-dom": "18.3.1",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
     "tsup": "^8.3.5",
     "typescript": "5.7.2"
   },
   "dependencies": {
     "clsx": "^2.1.1",
     "ms": "^2.1.3",
-    "react": "19.0.0-rc-5c56b873-20241107",
-    "react-dom": "19.0.0-rc-5c56b873-20241107",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "tailwind-merge": "^2.5.5"
   }
 }
