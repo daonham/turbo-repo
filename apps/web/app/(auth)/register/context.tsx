@@ -22,7 +22,7 @@ export const RegisterProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [step, setStep] = useState<'signup' | 'verify'>('signup');
 
   return (
-    <RegisterContext.Provider
+    <RegisterContext
       value={{
         name,
         email,
@@ -35,7 +35,7 @@ export const RegisterProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }}
     >
       {children}
-    </RegisterContext.Provider>
+    </RegisterContext>
   );
 };
 

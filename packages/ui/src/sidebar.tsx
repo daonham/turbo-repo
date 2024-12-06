@@ -105,7 +105,7 @@ const SidebarProvider = React.forwardRef<
   );
 
   return (
-    <SidebarContext.Provider value={contextValue}>
+    <SidebarContext value={contextValue}>
       <div
         style={
           {
@@ -120,7 +120,7 @@ const SidebarProvider = React.forwardRef<
       >
         {children}
       </div>
-    </SidebarContext.Provider>
+    </SidebarContext>
   );
 });
 SidebarProvider.displayName = 'SidebarProvider';
