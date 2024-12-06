@@ -50,8 +50,29 @@ import {
   Workflow
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 const data = {
+  workspace: [
+    {
+      name: 'Amce Inc',
+      describe: 'Admin Management',
+      logo: GalleryVerticalEnd,
+      url: '/dashboard'
+    },
+    {
+      name: 'Synergy',
+      describe: 'HR Management',
+      logo: PieChart,
+      url: '/synergy'
+    },
+    {
+      name: 'Catalyst',
+      describe: 'Marketing & Sales',
+      logo: Workflow,
+      url: '/catalyst'
+    }
+  ],
   users: [
     {
       name: 'Activity',
@@ -191,40 +212,33 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                       <GalleryVerticalEnd className="size-4" />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-medium text-gray-800">{session?.user?.name}</span>
-                      <span className="truncate text-xs text-gray-500">{session?.user?.email}</span>
+                      <span className="truncate font-medium text-gray-800">Amce Inc</span>
+                      <span className="truncate text-xs text-gray-500">Admin Management</span>
                     </div>
                     <ChevronsUpDown className="ml-auto" />
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                  className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-60 rounded-xl p-2"
+                  className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-60 space-y-1 rounded-xl p-2"
                   align="start"
                   side="bottom"
                   sideOffset={4}
                 >
-                  <div className="flex items-center gap-2 p-2">
-                    <span className="flex-1 truncate text-xs text-gray-600">
-                      You login with role: <span className="font-medium text-gray-800">{session?.user?.role}</span>
-                    </span>
-                  </div>
-                  <DropdownMenuSeparator />
-                  {data.users.map((team, index) => (
+                  {data.workspace.map((item, index) => (
                     <DropdownMenuItem
-                      key={team.name}
+                      key={item.name}
                       onClick={() => null}
-                      className="my-1 cursor-pointer gap-2 rounded-md p-2 text-gray-600 hover:text-gray-800"
+                      className="cursor-pointer gap-3 rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-800"
                     >
-                      <team.logo className="size-4" />
-                      <span className="truncate text-sm">{team.name}</span>
-                      <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                      <div className="flex aspect-square size-8 items-center justify-center rounded-lg border border-gray-200">
+                        <item.logo className="size-4" />
+                      </div>
+                      <div className="grid flex-1 text-left text-sm leading-tight">
+                        <span className="truncate font-medium text-gray-800">{item.name}</span>
+                        <span className="truncate text-xs text-gray-500">{item.describe}</span>
+                      </div>
                     </DropdownMenuItem>
                   ))}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logoutAction} className="cursor-pointer gap-2 rounded-md p-2 text-gray-600 hover:text-gray-800">
-                    <LogOut className="size-4" />
-                    <span className="truncate text-sm font-medium">Logout</span>
-                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </SidebarMenuItem>
@@ -310,10 +324,56 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton className="text-gray-800 hover:text-gray-800" onClick={logoutAction}>
-                <LogOut />
-                <span className="truncate font-medium">Logout</span>
-              </SidebarMenuButton>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <SidebarMenuButton size="lg" className="data-[state=open]:bg-gray-100">
+                    <div className="flex items-center justify-center">
+                      <Image
+                        src="/sophia.png"
+                        alt="Profile picture"
+                        width={32}
+                        height={32}
+                        className="border-1 aspect-square size-8 rounded-full border-gray-200 bg-yellow-100"
+                      />
+                    </div>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-medium text-gray-800">{session?.user?.name}</span>
+                      <span className="truncate text-xs text-gray-500">{session?.user?.email}</span>
+                    </div>
+                    <ChevronRight className="ml-auto" />
+                  </SidebarMenuButton>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-60 rounded-xl p-2"
+                  align="end"
+                  side="right"
+                  sideOffset={15}
+                  alignOffset={0}
+                >
+                  <div className="flex items-center gap-2 p-2">
+                    <span className="flex-1 truncate text-xs text-gray-600">
+                      You login with role: <span className="font-medium text-gray-800">{session?.user?.role}</span>
+                    </span>
+                  </div>
+                  <DropdownMenuSeparator />
+                  {data.users.map((team, index) => (
+                    <DropdownMenuItem
+                      key={team.name}
+                      onClick={() => null}
+                      className="my-1 cursor-pointer gap-2 rounded-md p-2 text-gray-600 hover:text-gray-800"
+                    >
+                      <team.logo className="size-4" />
+                      <span className="truncate text-sm">{team.name}</span>
+                      <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logoutAction} className="cursor-pointer gap-2 rounded-md p-2 text-gray-800 hover:text-red-700">
+                    <LogOut className="size-4" />
+                    <span className="truncate text-sm">Logout</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter>
