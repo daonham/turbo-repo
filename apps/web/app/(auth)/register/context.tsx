@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, use, useState } from 'react';
 
 interface RegisterContextType {
   name: string;
@@ -40,7 +40,7 @@ export const RegisterProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 };
 
 export const useRegisterContext = () => {
-  const context = useContext(RegisterContext);
+  const context = use(RegisterContext);
 
   if (context === undefined) {
     throw new Error('useRegisterContext must be used within a RegisterProvider');
