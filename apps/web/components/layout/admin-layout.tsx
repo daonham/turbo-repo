@@ -32,25 +32,27 @@ import { logoutAction } from '@/app/dashboard/actions';
 import {
   Activity,
   Bolt,
-  BookOpen,
-  Bot,
   ChevronRight,
   ChevronsUpDown,
+  ClipboardMinus,
   Folder,
   Forward,
   Frame,
   GalleryVerticalEnd,
+  House,
   LogOut,
   Map,
   MoreHorizontal,
   PieChart,
   Settings2,
-  SquareTerminal,
   Trash2,
+  Users,
   Workflow
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { Fragment } from 'react';
 
 const data = {
   workspace: [
@@ -90,66 +92,44 @@ const data = {
       plan: 'Free'
     }
   ],
-  navMain: [
+  platform: [
     {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
-      isActive: true,
+      title: 'Dashboard',
+      url: '/dashboard',
+      icon: House,
+      isActive: true
+    },
+    {
+      title: 'Blogs',
+      url: '/dashboard/blogs',
+      icon: ClipboardMinus,
       items: [
         {
-          title: 'History',
-          url: '#'
+          title: 'All Blogs',
+          url: '/dashboard/blogs'
         },
         {
-          title: 'Starred',
-          url: '#'
+          title: 'Add new',
+          url: '/dashboard/blogs/add'
         },
         {
-          title: 'Settings',
-          url: '#'
+          title: 'Category',
+          url: '/dashboard/blogs/category'
         }
       ]
     },
     {
-      title: 'Models',
-      url: '#',
-      icon: Bot,
+      title: 'Customers',
+      url: '/dashboard/customers',
+      icon: Users,
       items: [
         {
-          title: 'Genesis',
-          url: '#'
+          title: 'All Customers',
+          url: '/dashboard/customers'
         },
         {
-          title: 'Explorer',
-          url: '#'
-        },
-        {
-          title: 'Quantum',
-          url: '#'
-        }
-      ]
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#'
-        },
-        {
-          title: 'Get Started',
-          url: '#'
-        },
-        {
-          title: 'Tutorials',
-          url: '#'
-        },
-        {
-          title: 'Changelog',
-          url: '#'
+          title: 'Add new',
+          url: 'dashboard/customers/add'
         }
       ]
     },
@@ -198,6 +178,8 @@ const data = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
+
+  const pathname = usePathname();
 
   return (
     <SidebarProvider>
@@ -248,31 +230,46 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <SidebarGroup>
             <SidebarGroupLabel>PLATFORM</SidebarGroupLabel>
             <SidebarMenu>
-              {data.navMain.map((item) => (
-                <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
-                  <SidebarMenuItem>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton tooltip={item.title}>
-                        {item.icon && <item.icon />}
-                        <span>{item.title}</span>
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                      </SidebarMenuButton>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {item.items?.map((subItem) => (
-                          <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton asChild>
-                              <a href={subItem.url}>
-                                <span>{subItem.title}</span>
-                              </a>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </SidebarMenuItem>
-                </Collapsible>
+              {data.platform.map((item) => (
+                <Fragment key={item.title}>
+                  <>
+                    {item.items ? (
+                      <Collapsible key={item.title} asChild defaultOpen={pathname.startsWith(item.url)} className="group/collapsible">
+                        <SidebarMenuItem>
+                          <CollapsibleTrigger asChild>
+                            <SidebarMenuButton tooltip={item.title} isActive={pathname.startsWith(item.url)}>
+                              {item.icon && <item.icon />}
+                              <span>{item.title}</span>
+                              <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                            </SidebarMenuButton>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <SidebarMenuSub>
+                              {item.items?.map((subItem) => (
+                                <SidebarMenuSubItem key={subItem.title}>
+                                  <SidebarMenuSubButton asChild isActive={pathname === subItem.url}>
+                                    <a href={subItem.url}>
+                                      <span>{subItem.title}</span>
+                                    </a>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              ))}
+                            </SidebarMenuSub>
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </Collapsible>
+                    ) : (
+                      <SidebarMenuItem>
+                        <SidebarMenuButton tooltip={item.title} asChild isActive={pathname === item.url}>
+                          <a href={item.url}>
+                            {item.icon && <item.icon />}
+                            <span>{item.title}</span>
+                          </a>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    )}
+                  </>
+                </Fragment>
               ))}
             </SidebarMenu>
           </SidebarGroup>
@@ -377,7 +374,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger />
-            <div className="mr-2 h-4 w-[1px] shrink-0 bg-gray-200"></div>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
