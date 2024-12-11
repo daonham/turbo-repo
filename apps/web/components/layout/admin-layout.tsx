@@ -326,15 +326,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <SidebarMenuItem>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton size="lg" className="data-[state=open]:bg-gray-100">
-                    <div className="flex items-center justify-center">
-                      <Image
-                        src="/sophia.png"
-                        alt="Profile picture"
-                        width={32}
-                        height={32}
-                        className="border-1 aspect-square size-8 rounded-full border-gray-200 bg-yellow-100"
-                      />
+                  <SidebarMenuButton size="lg" className="data-[state=open]:bg-gray-100 group-data-[collapsible=icon]:rounded-full">
+                    <div className="border-1 aspect-square size-8 items-center justify-center rounded-full border-gray-200 bg-yellow-100">
+                      <Image src="/sophia.png" alt="Profile picture" width={32} height={32} />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-medium text-gray-800">{session?.user?.name}</span>
