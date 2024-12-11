@@ -359,7 +359,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </DropdownMenuItem>
                   ))}
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logoutAction} className="cursor-pointer gap-2 rounded-md p-2 text-gray-800 hover:text-red-700">
+                  <DropdownMenuItem onClick={logoutAction} className="cursor-pointer gap-2 rounded-md p-2 text-red-600 hover:bg-gray-200">
                     <LogOut className="size-4" />
                     <span className="truncate text-sm">Logout</span>
                   </DropdownMenuItem>
