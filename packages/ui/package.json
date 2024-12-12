@@ -39,8 +39,8 @@
     "input-otp": "^1.4.1",
     "linkify-react": "^4.2.0",
     "lucide-react": "^0.468.0",
-    "motion": "^11.13.1",
-    "next": "15.0.4",
+    "motion": "^11.13.5",
+    "next": "15.1.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "tailwindcss-animate": "^1.0.7"
