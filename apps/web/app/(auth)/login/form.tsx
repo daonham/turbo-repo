@@ -1,53 +1,56 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 import { Button, Input, Label } from '@repo/ui';
 import { Google } from '@repo/ui/src/icons';
-import { useAction } from 'next-safe-action/hooks';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 import { googleLoginAction, loginAction } from './actions';
 import { schema } from './schema';
-
-type loginProps = z.infer<typeof schema>;
 
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues
-  } = useForm<loginProps>({
-    resolver: zodResolver(schema)
+    handleSubmitWithAction,
+    action: { isExecuting },
+    form: {
+      register,
+      formState: { errors },
+      getValues
+    }
+  } = useHookFormAction(loginAction, zodResolver(schema), {
+    formProps: {
+      mode: 'onChange'
+    },
+    actionProps: {
+      onSuccess: () => {
+        toast.success('Login successful!');
+        router.push(searchParams.get('from') || '/dashboard');
+      },
+      onError: ({ error }) => {
+        if (error?.serverError) {
+          toast.error(error.serverError);
+        }
+      }
+    }
   });
 
   useEffect(() => {
+    // If next-auth callback error. set error page in next-auth options
     const error = searchParams?.get('error');
     if (error) {
       toast.error('An unexpected error occurred. Please try again later.');
     }
   }, [searchParams]);
 
-  const { executeAsync, isExecuting } = useAction(loginAction, {
-    onSuccess: () => {
-      toast.success('Login successful!');
-      router.push(searchParams.get('from') || '/dashboard');
-    },
-    onError: ({ error }) => {
-      toast.error(error.serverError);
-    }
-  });
-
   return (
     <div>
-      <form onSubmit={handleSubmit((data) => executeAsync({ email: data.email, password: data.password }))}>
+      <form onSubmit={handleSubmitWithAction}>
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="email">Email</Label>
