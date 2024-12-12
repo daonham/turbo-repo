@@ -1,11 +1,11 @@
 'use client';
 
 import { cn } from '@repo/utils';
-import { OTPInput, OTPInputContext } from 'input-otp';
+import { OTPInput, OTPInputContext, type OTPInputProps } from 'input-otp';
 import { Dot } from 'lucide-react';
 import { use } from 'react';
 
-const InputOTP: React.FC<React.ComponentProps<typeof OTPInput>> = ({ ref, className, containerClassName, ...props }) => (
+const InputOTP: React.FC<React.ComponentProps<typeof OTPInput> & OTPInputProps> = ({ ref, className, containerClassName, ...props }) => (
   <OTPInput
     ref={ref}
     containerClassName={cn('flex items-center gap-2 has-[:disabled]:opacity-50', containerClassName)}
