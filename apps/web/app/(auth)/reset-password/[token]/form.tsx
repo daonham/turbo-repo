@@ -1,42 +1,44 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 import { Button, Input, Label } from '@repo/ui';
-import { useAction } from 'next-safe-action/hooks';
 import { useParams, useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 import { resetPasswordAction } from './actions';
 import { schema } from './schema';
-
-type formProps = z.infer<typeof schema>;
 
 export function ResetPasswordForm() {
   const router = useRouter();
   const { token } = useParams<{ token: string }>();
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<formProps>({
-    resolver: zodResolver(schema)
-  });
-
-  const { executeAsync, isExecuting } = useAction(resetPasswordAction, {
-    onSuccess() {
-      toast.success('Your password has been reset. You can now log in with your new password.');
-      router.replace('/login');
+    handleSubmitWithAction,
+    action: { isExecuting },
+    form: {
+      register,
+      formState: { errors }
+    }
+  } = useHookFormAction(resetPasswordAction, zodResolver(schema), {
+    formProps: {
+      mode: 'onChange'
     },
-    onError({ error }) {
-      toast.error(error.serverError);
+    actionProps: {
+      onSuccess: () => {
+        toast.success('Your password has been reset. You can now log in with your new password.');
+        router.replace('/login');
+      },
+      onError: ({ error }) => {
+        if (error?.serverError) {
+          toast.error(error.serverError);
+        }
+      }
     }
   });
 
   return (
     <div>
-      <form onSubmit={handleSubmit((data) => executeAsync({ token: data.token, password: data.password, confirmPassword: data.confirmPassword }))}>
+      <form onSubmit={handleSubmitWithAction}>
         <input type="hidden" value={token} {...register('token')} />
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">

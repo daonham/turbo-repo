@@ -1,20 +1,15 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 import { Button, Input, InputOTP, InputOTPGroup, InputOTPSlot, Label } from '@repo/ui';
 import { useAction } from 'next-safe-action/hooks';
-import { toast } from 'sonner';
-import { z } from 'zod';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { registerAction, sendOTPAction } from './actions';
-import { schema } from './schema';
-
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'sonner';
+import { registerAction, sendOTPAction } from './actions';
 import { RegisterProvider, useRegisterContext } from './context';
-
-type SignUpFormProps = z.infer<typeof schema>;
+import { schema } from './schema';
 
 export function RegisterForm() {
   return (
@@ -27,31 +22,39 @@ export function RegisterForm() {
 const RegisterFlow = () => {
   const { step } = useRegisterContext();
 
-  if (step === 'signup') return <SignUpForm />;
-  if (step === 'verify') return <VerifyForm />;
+  return {
+    signup: <SignUpForm />,
+    verify: <VerifyForm />
+  }[step];
 };
 
 function SignUpForm() {
   const { setStep, setName, setEmail, setPassword } = useRegisterContext();
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues
-  } = useForm<SignUpFormProps>({
-    resolver: zodResolver(schema)
-  });
-
-  const { executeAsync, isExecuting } = useAction(sendOTPAction, {
-    onSuccess: () => {
-      setName(getValues('name'));
-      setEmail(getValues('email'));
-      setPassword(getValues('password'));
-      setStep('verify');
+    handleSubmitWithAction,
+    action: { isExecuting },
+    form: {
+      register,
+      formState: { errors },
+      getValues
+    }
+  } = useHookFormAction(sendOTPAction, zodResolver(schema), {
+    formProps: {
+      mode: 'onChange'
     },
-    onError: ({ error }) => {
-      toast.error(error.serverError);
+    actionProps: {
+      onSuccess: () => {
+        setName(getValues('name'));
+        setEmail(getValues('email'));
+        setPassword(getValues('password'));
+        setStep('verify');
+      },
+      onError: ({ error }) => {
+        if (error?.serverError) {
+          toast.error(error.serverError);
+        }
+      }
     }
   });
 
@@ -61,15 +64,7 @@ function SignUpForm() {
         <h1 className="text-center text-lg font-semibold text-gray-800">Register</h1>
         <p className="text-center text-sm text-gray-500">Get started with App</p>
       </div>
-      <form
-        onSubmit={handleSubmit((data) =>
-          executeAsync({
-            name: data.name,
-            email: data.email,
-            password: data.password
-          })
-        )}
-      >
+      <form onSubmit={handleSubmitWithAction}>
         <div>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">

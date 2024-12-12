@@ -15,7 +15,7 @@ interface RegisterContextType {
 
 const RegisterContext = createContext<RegisterContextType | undefined>(undefined);
 
-export const RegisterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const RegisterProvider = ({ children }: { children: React.ReactNode }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

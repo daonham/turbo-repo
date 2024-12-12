@@ -1,45 +1,47 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 import { Button, Input, Label } from '@repo/ui';
-import { useAction } from 'next-safe-action/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 import { forgotAction } from './actions';
 import { schema } from './schema';
-
-type formProps = z.infer<typeof schema>;
 
 export function ForgotPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<formProps>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      email: searchParams.get('email') || ''
+    handleSubmitWithAction,
+    action: { isExecuting },
+    form: {
+      register,
+      formState: { errors }
     }
-  });
-
-  const { executeAsync, isExecuting } = useAction(forgotAction, {
-    onSuccess() {
-      toast.success('You will receive an email with instructions to reset your password.');
-      router.push('/login');
+  } = useHookFormAction(forgotAction, zodResolver(schema), {
+    formProps: {
+      mode: 'onChange',
+      defaultValues: {
+        email: searchParams.get('email') || ''
+      }
     },
-    onError({ error }) {
-      toast.error(error.serverError);
+    actionProps: {
+      onSuccess: () => {
+        toast.success('You will receive an email with instructions to reset your password.');
+        router.push('/login');
+      },
+      onError: ({ error }) => {
+        if (error?.serverError) {
+          toast.error(error.serverError);
+        }
+      }
     }
   });
 
   return (
     <div>
-      <form onSubmit={handleSubmit((data) => executeAsync({ email: data.email }))}>
+      <form onSubmit={handleSubmitWithAction}>
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="email">Email</Label>
