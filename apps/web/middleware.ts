@@ -10,8 +10,7 @@ export default auth((req: NextRequest) => {
 
   const path = req.nextUrl.pathname;
 
-  const isAuthPage =
-    path.startsWith('/login') || path.startsWith('/register') || path.startsWith('/forgot-password') || path.startsWith('/reset-password');
+  const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password'].some((p) => path.startsWith(p));
 
   const isDashboardPage = path.startsWith('/dashboard');
 
