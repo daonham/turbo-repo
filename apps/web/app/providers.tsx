@@ -2,10 +2,9 @@
 
 import { TooltipProvider } from '@repo/ui';
 import { CircleAlert, CircleCheck, Info, TriangleAlert } from 'lucide-react';
-import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 
-export default function RootProviders({ children }: { children: ReactNode }) {
+export default function RootProviders({ children }: { children: React.ReactNode }) {
   return (
     <TooltipProvider>
       {children}

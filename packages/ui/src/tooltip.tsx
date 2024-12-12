@@ -3,15 +3,15 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { cn } from '@repo/utils';
 import Link from 'next/link';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { Button, buttonVariants } from './button';
 
 export interface TooltipProps extends Omit<TooltipPrimitive.TooltipContentProps, 'content'> {
-  content: ReactNode | string | ((props: { setOpen: (open: boolean) => void }) => ReactNode);
+  content: React.ReactNode | string | ((props: { setOpen: (open: boolean) => void }) => React.ReactNode);
   disableHoverableContent?: TooltipPrimitive.TooltipProps['disableHoverableContent'];
 }
 
-export function TooltipProvider({ children }: { children: ReactNode }) {
+export function TooltipProvider({ children }: { children: React.ReactNode }) {
   return <TooltipPrimitive.Provider delayDuration={150}>{children}</TooltipPrimitive.Provider>;
 }
 
@@ -66,7 +66,7 @@ export function TooltipContent({
   target,
   onClick
 }: {
-  title: ReactNode;
+  title: React.ReactNode;
   cta?: string;
   href?: string;
   target?: string;

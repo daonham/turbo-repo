@@ -1,6 +1,5 @@
 import { cn } from '@repo/utils';
 import { VariantProps, cva } from 'class-variance-authority';
-import { type ComponentProps, type ReactNode } from 'react';
 import { LoadingSpinner } from './icons';
 import { Tooltip } from './tooltip';
 
@@ -23,14 +22,14 @@ export const buttonVariants = cva('transition-all', {
   }
 });
 
-export interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
-  text?: ReactNode | string;
+export interface ButtonProps extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
+  text?: React.ReactNode | string;
   textWrapperClassName?: string;
   loading?: boolean;
-  icon?: ReactNode;
+  icon?: React.ReactNode;
   shortcut?: string;
-  right?: ReactNode;
-  disabledTooltip?: string | ReactNode;
+  right?: React.ReactNode;
+  disabledTooltip?: string | React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({

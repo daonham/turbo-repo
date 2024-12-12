@@ -5,18 +5,7 @@ import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { cn } from '@repo/utils';
 import { cva, VariantProps } from 'class-variance-authority';
 import { PanelLeft } from 'lucide-react';
-import {
-  type ComponentProps,
-  createContext,
-  type CSSProperties,
-  type MouseEventHandler,
-  type ReactNode,
-  use,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import { createContext, use, useCallback, useEffect, useMemo, useState } from 'react';
 import { useMediaQuery } from './hooks';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './sheet';
 import { Tooltip } from './tooltip';
@@ -51,7 +40,7 @@ function useSidebar() {
 }
 
 const SidebarProvider: React.FC<
-  ComponentProps<'div'> & {
+  React.ComponentProps<'div'> & {
     defaultOpen?: boolean;
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
@@ -122,7 +111,7 @@ const SidebarProvider: React.FC<
             '--sidebar-width': SIDEBAR_WIDTH,
             '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
             ...style
-          } as CSSProperties
+          } as React.CSSProperties
         }
         className={cn('group/sidebar-wrapper flex min-h-svh w-full', className)}
         ref={ref}
@@ -154,7 +143,7 @@ const Sidebar: React.FC<
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE
-            } as CSSProperties
+            } as React.CSSProperties
           }
           side={side}
         >
@@ -201,9 +190,9 @@ const Sidebar: React.FC<
 Sidebar.displayName = 'Sidebar';
 
 const SidebarTrigger: React.FC<
-  ComponentProps<'button'> & {
-    onClick?: MouseEventHandler<HTMLButtonElement>;
-    icon?: ReactNode;
+  React.ComponentProps<'button'> & {
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    icon?: React.ReactNode;
   }
 > = ({ ref, className, onClick, icon, ...props }) => {
   const { toggleSidebar } = useSidebar();
@@ -230,22 +219,22 @@ const SidebarTrigger: React.FC<
 };
 SidebarTrigger.displayName = 'SidebarTrigger';
 
-const SidebarInset: React.FC<ComponentProps<'main'>> = ({ ref, className, ...props }) => {
+const SidebarInset: React.FC<React.ComponentProps<'main'>> = ({ ref, className, ...props }) => {
   return <main ref={ref} className={cn('relative flex min-h-svh flex-1 flex-col bg-white', className)} {...props} />;
 };
 SidebarInset.displayName = 'SidebarInset';
 
-const SidebarHeader: React.FC<ComponentProps<'div'>> = ({ ref, className, ...props }) => {
+const SidebarHeader: React.FC<React.ComponentProps<'div'>> = ({ ref, className, ...props }) => {
   return <div ref={ref} data-sidebar="header" className={cn('flex flex-col gap-2 p-2', className)} {...props} />;
 };
 SidebarHeader.displayName = 'SidebarHeader';
 
-const SidebarMenu: React.FC<ComponentProps<'ul'>> = ({ ref, className, ...props }) => (
+const SidebarMenu: React.FC<React.ComponentProps<'ul'>> = ({ ref, className, ...props }) => (
   <ul ref={ref} data-sidebar="menu" className={cn('flex w-full min-w-0 flex-col gap-1', className)} {...props} />
 );
 SidebarMenu.displayName = 'SidebarMenu';
 
-const SidebarMenuItem: React.FC<ComponentProps<'li'>> = ({ ref, className, ...props }) => (
+const SidebarMenuItem: React.FC<React.ComponentProps<'li'>> = ({ ref, className, ...props }) => (
   <li ref={ref} data-sidebar="menu-item" className={cn('group/menu-item relative', className)} {...props} />
 );
 SidebarMenuItem.displayName = 'SidebarMenuItem';
@@ -271,7 +260,7 @@ const sidebarMenuButtonVariants = cva(
 );
 
 const SidebarMenuButton: React.FC<
-  ComponentProps<'button'> & {
+  React.ComponentProps<'button'> & {
     asChild?: boolean;
     isActive?: boolean;
     tooltip?: string;
@@ -308,7 +297,7 @@ const SidebarMenuButton: React.FC<
 };
 SidebarMenuButton.displayName = 'SidebarMenuButton';
 
-const SidebarContent: React.FC<ComponentProps<'div'>> = ({ ref, className, ...props }) => {
+const SidebarContent: React.FC<React.ComponentProps<'div'>> = ({ ref, className, ...props }) => {
   return (
     <div
       ref={ref}
@@ -320,12 +309,12 @@ const SidebarContent: React.FC<ComponentProps<'div'>> = ({ ref, className, ...pr
 };
 SidebarContent.displayName = 'SidebarContent';
 
-const SidebarGroup: React.FC<ComponentProps<'div'>> = ({ ref, className, ...props }) => {
+const SidebarGroup: React.FC<React.ComponentProps<'div'>> = ({ ref, className, ...props }) => {
   return <div ref={ref} data-sidebar="group" className={cn('relative flex w-full min-w-0 flex-col p-2', className)} {...props} />;
 };
 SidebarGroup.displayName = 'SidebarGroup';
 
-const SidebarGroupLabel: React.FC<ComponentProps<'div'> & { asChild?: boolean }> = ({ ref, className, asChild = false, ...props }) => {
+const SidebarGroupLabel: React.FC<React.ComponentProps<'div'> & { asChild?: boolean }> = ({ ref, className, asChild = false, ...props }) => {
   const Comp = asChild ? Slot : 'div';
 
   return (
@@ -343,7 +332,7 @@ const SidebarGroupLabel: React.FC<ComponentProps<'div'> & { asChild?: boolean }>
 };
 SidebarGroupLabel.displayName = 'SidebarGroupLabel';
 
-const SidebarMenuSub: React.FC<ComponentProps<'ul'>> = ({ ref, className, ...props }) => (
+const SidebarMenuSub: React.FC<React.ComponentProps<'ul'>> = ({ ref, className, ...props }) => (
   <ul
     ref={ref}
     data-sidebar="menu-sub"
@@ -357,11 +346,11 @@ const SidebarMenuSub: React.FC<ComponentProps<'ul'>> = ({ ref, className, ...pro
 );
 SidebarMenuSub.displayName = 'SidebarMenuSub';
 
-const SidebarMenuSubItem: React.FC<ComponentProps<'li'>> = ({ ref, ...props }) => <li ref={ref} {...props} />;
+const SidebarMenuSubItem: React.FC<React.ComponentProps<'li'>> = ({ ref, ...props }) => <li ref={ref} {...props} />;
 SidebarMenuSubItem.displayName = 'SidebarMenuSubItem';
 
 const SidebarMenuSubButton: React.FC<
-  ComponentProps<'a'> & {
+  React.ComponentProps<'a'> & {
     asChild?: boolean;
     size?: 'sm' | 'md';
     isActive?: boolean;
@@ -390,7 +379,7 @@ const SidebarMenuSubButton: React.FC<
 SidebarMenuSubButton.displayName = 'SidebarMenuSubButton';
 
 const SidebarMenuAction: React.FC<
-  ComponentProps<'button'> & {
+  React.ComponentProps<'button'> & {
     asChild?: boolean;
     showOnHover?: boolean;
   }
@@ -419,7 +408,7 @@ const SidebarMenuAction: React.FC<
 };
 SidebarMenuAction.displayName = 'SidebarMenuAction';
 
-const SidebarFooter: React.FC<ComponentProps<'div'>> = ({ ref, className, ...props }) => {
+const SidebarFooter: React.FC<React.ComponentProps<'div'>> = ({ ref, className, ...props }) => {
   return <div ref={ref} data-sidebar="footer" className={cn('flex flex-col gap-2 p-2', className)} {...props} />;
 };
 SidebarFooter.displayName = 'SidebarFooter';
