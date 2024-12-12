@@ -6,6 +6,7 @@ export * from './input-otp';
 export * from './label';
 export * from './sheet';
 export * from './sidebar';
+export * from './table';
 export * from './tooltip';
 
 // icons

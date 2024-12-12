@@ -8,6 +8,8 @@ export * from './loading-circle';
 export * from './loading-dots';
 export * from './loading-spinner';
 
+export * from './sort-order';
+
 // brand logos
 export * from './facebook';
 export * from './github';
