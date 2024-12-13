@@ -100,21 +100,21 @@ const data = {
       isActive: true
     },
     {
-      title: 'Blogs',
-      url: '/dashboard/blogs',
+      title: 'Posts',
+      url: '/dashboard/posts',
       icon: ClipboardMinus,
       items: [
         {
-          title: 'All Blogs',
-          url: '/dashboard/blogs'
+          title: 'All posts',
+          url: '/dashboard/posts'
         },
         {
           title: 'Add new',
-          url: '/dashboard/blogs/add'
+          url: '/dashboard/posts/add'
         },
         {
-          title: 'Category',
-          url: '/dashboard/blogs/category'
+          title: 'Categories',
+          url: '/dashboard/posts/categories'
         }
       ]
     },

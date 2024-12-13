@@ -3,7 +3,7 @@ import PageClient from './client';
 
 export default function Page() {
   return (
-    <PageContent title="Blogs">
+    <PageContent title="Posts">
       <PageClient />
     </PageContent>
   );

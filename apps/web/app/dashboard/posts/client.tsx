@@ -2,7 +2,7 @@
 
 import MaxWidthWrapper from '@/components/layout/max-width-wrapper';
 import { Button, Table, useTable } from '@repo/ui';
-import { SquarePlus } from 'lucide-react';
+import { CirclePlus } from 'lucide-react';
 
 export default function PageClient() {
   const columns = [
@@ -55,8 +55,8 @@ export default function PageClient() {
         <Button
           onClick={() => console.log('Add')}
           text="Add new"
-          className="font-medium sm:inline-flex md:w-fit"
-          icon={<SquarePlus className="size-4" />}
+          className="h-9 px-3 font-medium sm:inline-flex md:w-fit"
+          icon={<CirclePlus className="size-4" />}
         />
       </div>
       <div className="w-full">
