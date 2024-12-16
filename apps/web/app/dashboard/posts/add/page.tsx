@@ -1,3 +1,10 @@
+import PageContent from '@/components/layout/page-content';
+import PageClient from './client';
+
 export default function Page() {
-  return <div>Add Blog page</div>;
+  return (
+    <PageContent title="Add new post">
+      <PageClient />
+    </PageContent>
+  );
 }
