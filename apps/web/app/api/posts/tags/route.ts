@@ -12,3 +12,12 @@ export async function GET(request: Request) {
     }
   ]);
 }
+
+export async function POST(request: Request) {
+  const { tag } = await request.json();
+
+  return NextResponse.json({
+    id: Math.random().toString(36).substring(7),
+    name: tag
+  });
+}

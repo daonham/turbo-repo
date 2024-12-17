@@ -32,12 +32,12 @@ export function TagSelect() {
   });
 
   const { watch, setValue } = useFormContext<FormProps>();
-  const [tags, title, content] = watch(['tags', 'title', 'content']);
+  const [tags] = watch(['tags']);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const createTag = async (tag: string) => {
-    const res = await fetch(`/api/tags`, {
+    const res = await fetch(`/api/posts/tags`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ export function TagSelect() {
       setValue('tags', [...tags, newTag]);
       toast.success(`Successfully created tag!`);
       setIsOpen(false);
-      await mutate(`/api/tags`);
+      await mutate(`/api/posts/tags`);
       return true;
     } else {
       const { error } = await res.json();
@@ -104,7 +104,7 @@ export function TagSelect() {
         {selectedTags?.length > 0 ? (
           <div className="my-px flex flex-wrap gap-2">
             {selectedTags.slice(0, 10).map((tag) => (
-              <div className="rounded-xl border-2 border-gray-200 px-2" key={tag.value}>
+              <div className="border-1 rounded-xl border-gray-200 bg-gray-100 px-2 py-px" key={tag.value}>
                 {tag.label}
               </div>
             ))}
