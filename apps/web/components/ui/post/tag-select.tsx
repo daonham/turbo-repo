@@ -1,4 +1,5 @@
 import { FormProps } from '@/app/dashboard/posts/add/form';
+import { TAGS_MAX_PAGE_SIZE } from '@/app/dashboard/posts/schema';
 import { Combobox, Tooltip } from '@repo/ui';
 import { cn } from '@repo/utils';
 import { HelpCircle, Tag } from 'lucide-react';
@@ -7,19 +8,12 @@ import { useFormContext } from 'react-hook-form';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { useDebounce } from 'use-debounce';
-import { TAGS_MAX_PAGE_SIZE, useTags, useTagsCount } from './use-tags';
+import { useTags, useTagsCount } from './use-tags';
 
 type TagProps = {
   id: string;
   name: string;
 };
-
-function getTagOption(tag: TagProps) {
-  return {
-    value: tag.id,
-    label: tag.name
-  };
-}
 
 export function TagSelect() {
   const [search, setSearch] = useState('');
@@ -50,7 +44,7 @@ export function TagSelect() {
       setValue('tags', [...tags, newTag]);
       toast.success(`Successfully created tag!`);
       setIsOpen(false);
-      await mutate(`/api/posts/tags`);
+      await mutate((key) => typeof key === 'string' && key.startsWith('/api/posts/tags'));
       return true;
     } else {
       const { error } = await res.json();
@@ -60,8 +54,8 @@ export function TagSelect() {
     return false;
   };
 
-  const options = useMemo(() => availableTags?.map((tag) => getTagOption(tag)), [availableTags]);
-  const selectedTags = useMemo(() => tags.map((tag) => getTagOption(tag)), [tags]);
+  const options = useMemo(() => availableTags?.map((tag: TagProps) => getTagOption(tag)), [availableTags]);
+  const selectedTags = useMemo(() => tags.map((tag: TagProps) => getTagOption(tag)), [tags]);
 
   return (
     <div>
@@ -90,7 +84,6 @@ export function TagSelect() {
         options={loadingTags ? undefined : options}
         icon={<Tag className="mt-[5px] size-4 text-gray-500" />}
         searchPlaceholder="Search or add tags..."
-        shortcutHint="T"
         buttonProps={{
           className: cn('h-auto py-1.5 px-2.5 w-full text-gray-700 border-gray-300 items-start', selectedTags.length === 0 && 'text-gray-400')
         }}
@@ -117,4 +110,11 @@ export function TagSelect() {
       </Combobox>
     </div>
   );
+}
+
+function getTagOption(tag: TagProps) {
+  return {
+    value: tag.id,
+    label: tag.name
+  };
 }

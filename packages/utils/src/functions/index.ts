@@ -4,3 +4,4 @@ export * from './fetcher';
 export * from './is-click-on-interactive-child';
 export * from './nformatter';
 export * from './time-ago';
+export * from './urls';
