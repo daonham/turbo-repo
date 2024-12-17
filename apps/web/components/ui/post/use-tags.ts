@@ -1,4 +1,4 @@
-import { getTagsCountQuerySchema, getTagsQuerySchema } from '@/app/dashboard/posts/schema';
+import { getTagsCountQuerySchema, getTagsQuerySchema } from '@/app/dashboard/posts/tags/schema';
 import { fetcher } from '@repo/utils';
 import useSWR from 'swr';
 import { z } from 'zod';

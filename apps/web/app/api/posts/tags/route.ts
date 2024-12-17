@@ -1,4 +1,4 @@
-import { createTagBodySchema, getTagsQuerySchema } from '@/app/dashboard/posts/schema';
+import { createTagBodySchema, getTagsQuerySchema } from '@/app/dashboard/posts/tags/schema';
 import client from '@/lib/db';
 import { getSearchParams, nanoid } from '@repo/utils';
 import { NextResponse } from 'next/server';
@@ -40,7 +40,9 @@ export async function GET(req: Request) {
     return NextResponse.json([...results]);
   } catch (error) {
     return NextResponse.json({
-      error: 'Internal Server Error'
+      error: {
+        message: error.message || 'Internal Server Error'
+      }
     });
   }
 }
@@ -68,7 +70,7 @@ export async function POST(request: Request) {
       createdAt: new Date()
     });
 
-    if (!createTag.acknowledged) {
+    if (!createTag.insertedId) {
       throw new Error('Failed to create tag');
     }
 
@@ -84,8 +86,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newTag);
   } catch (error) {
-    return NextResponse.json({
-      error: 'Internal Server Error'
-    });
+    return NextResponse.json(
+      {
+        error: {
+          message: error.message || 'Internal Server Error'
+        }
+      },
+      { status: 409 }
+    );
   }
 }

@@ -113,8 +113,8 @@ const data = {
           url: '/dashboard/posts/add'
         },
         {
-          title: 'Categories',
-          url: '/dashboard/posts/categories'
+          title: 'Tags',
+          url: '/dashboard/posts/tags'
         }
       ]
     },
