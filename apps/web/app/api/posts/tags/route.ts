@@ -1,6 +1,6 @@
 import { createTagBodySchema, getTagsQuerySchema } from '@/app/dashboard/posts/schema';
 import client from '@/lib/db';
-import { getSearchParams } from '@repo/utils';
+import { getSearchParams, nanoid } from '@repo/utils';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     }
 
     const createTag = await db.insertOne({
-      id: `tag_${Math.random().toString(36).substring(2, 9)}`,
+      id: `tag_${nanoid(20)}`,
       name: tag,
       createdAt: new Date()
     });
