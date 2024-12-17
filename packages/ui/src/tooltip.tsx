@@ -64,16 +64,18 @@ export function TooltipContent({
   cta,
   href,
   target,
-  onClick
+  onClick,
+  className
 }: {
   title: React.ReactNode;
   cta?: string;
   href?: string;
   target?: string;
   onClick?: () => void;
+  className?: string;
 }) {
   return (
-    <div className="flex max-w-xs flex-col items-center space-y-3 p-4 text-center">
+    <div className={cn('flex max-w-xs flex-col items-center space-y-3 p-4 text-center', className)}>
       <p className="text-sm text-gray-700">{title}</p>
       {cta &&
         (href ? (

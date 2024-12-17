@@ -5,17 +5,23 @@ import MaxWidthWrapper from './max-width-wrapper';
 export default function PageContent({
   title,
   description,
-  children
+  children,
+  containerClassName,
+  headerClassName,
+  contentClassName
 }: PropsWithChildren<{
   title?: ReactNode;
   description?: ReactNode;
+  containerClassName?: string;
+  headerClassName?: string;
+  contentClassName?: string;
 }>) {
   const hasTitle = !!title;
   const hasDescription = !!description;
 
   return (
-    <div className="bg-white">
-      <MaxWidthWrapper className={cn('my-0', (hasTitle || hasDescription) && 'md:py-3')}>
+    <div className={cn('bg-white', containerClassName)}>
+      <MaxWidthWrapper className={cn('my-0', headerClassName, (hasTitle || hasDescription) && 'md:py-3')}>
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             {(hasTitle || hasDescription) && (
@@ -27,7 +33,7 @@ export default function PageContent({
           </div>
         </div>
       </MaxWidthWrapper>
-      <div className="bg-white pt-2.5 max-md:mt-3">
+      <div className={cn('bg-white pt-2.5 max-md:mt-3', contentClassName)}>
         {hasDescription && (
           <MaxWidthWrapper className="md:hidden">
             <p className="mb-3 mt-1 text-base text-neutral-500">{description}</p>
