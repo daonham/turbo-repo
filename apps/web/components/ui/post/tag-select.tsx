@@ -21,6 +21,7 @@ export function TagSelect() {
 
   const { data: tagsCount } = useTagsCount();
   const useAsync = tagsCount && tagsCount > TAGS_MAX_PAGE_SIZE;
+
   const { tags: availableTags, loading: loadingTags } = useTags({
     query: useAsync ? { search: debouncedSearch } : undefined
   });
