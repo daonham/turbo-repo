@@ -2,6 +2,7 @@ export * from './button';
 export * from './checkbox';
 export * from './collapsible';
 export * from './combobox';
+export * from './date-picker';
 export * from './dropdown-menu';
 export * from './input';
 export * from './input-otp';

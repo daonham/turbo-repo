@@ -1,5 +1,5 @@
 import { TagSelect } from '@/components/ui/post/tag-select';
-import { Button, Input, Label, Popover, Tooltip } from '@repo/ui';
+import { Button, Calendar, Input, Label, Popover, Tooltip } from '@repo/ui';
 import { cn } from '@repo/utils';
 import { Command } from 'cmdk';
 import { Check, ChevronDown, HelpCircle } from 'lucide-react';
@@ -48,7 +48,7 @@ export function FormInner(props: Props) {
     formState: { isDirty, isSubmitting, isSubmitSuccessful, errors }
   } = useFormContext<FormProps>();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [date, setDate] = useState<Date>();
 
   return (
     <form onSubmit={handleSubmit((data) => null)}>
@@ -81,6 +81,7 @@ export function FormInner(props: Props) {
               <div className="absolute inset-0 rounded-xl bg-gray-50 [mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
               <div className="relative flex flex-col gap-6 p-4">
                 <Status />
+                <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
                 <TagSelect />
                 <Button text="Submit" />
               </div>
