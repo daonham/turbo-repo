@@ -6,7 +6,7 @@ import { HTMLProps, isValidElement, PropsWithChildren, ReactNode, useCallback, u
 import { AnimatedSizeContainer } from './animated-size-container';
 import { Button, ButtonProps } from './button';
 import { Checkbox } from './checkbox';
-import { useMediaQuery } from './hooks';
+import { useMediaQuery, useResizeObserver } from './hooks';
 import { Icon, LoadingSpinner } from './icons';
 import { Popover, PopoverProps } from './popover';
 
@@ -252,6 +252,21 @@ const Scroll = ({ children }: PropsWithChildren) => {
     container: ref,
     offset: ['end end', 'start start']
   });
+
+  const resizeObserverEntry = useResizeObserver(ref);
+
+  // when search
+  useEffect(() => {
+    if (ref.current) {
+      const { clientHeight, scrollHeight } = ref.current;
+
+      if (scrollHeight <= clientHeight) {
+        setOpacity(0);
+      } else {
+        setOpacity(scrollYProgress.get());
+      }
+    }
+  }, [resizeObserverEntry, scrollYProgress]);
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
     setOpacity(latest);
