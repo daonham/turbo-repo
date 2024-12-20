@@ -284,13 +284,7 @@ const SidebarMenuButton: React.FC<
     return button;
   }
   return (
-    <Tooltip
-      content={tooltip}
-      hidden={state !== 'collapsed' || isMobile}
-      side="right"
-      align="center"
-      className="bg-gray-800 text-white [&>span]:text-white"
-    >
+    <Tooltip content={tooltip} hidden={state !== 'collapsed' || isMobile} side="right" align="center">
       {button}
     </Tooltip>
   );

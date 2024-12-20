@@ -36,7 +36,7 @@ export function Tooltip({ children, content, side = 'top', disableHoverableConte
           sideOffset={8}
           side={side}
           className={cn(
-            'z-[99] items-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm',
+            'z-[99] items-center overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-md',
             side === 'top' && 'animate-slide-up-fade',
             side === 'right' && 'animate-slide-right-fade',
             side === 'bottom' && 'animate-slide-down-fade',
@@ -47,7 +47,7 @@ export function Tooltip({ children, content, side = 'top', disableHoverableConte
           {...rest}
         >
           {typeof content === 'string' ? (
-            <span className="block max-w-xs text-pretty px-4 py-2 text-center text-sm text-gray-700">{content}</span>
+            <span className="block max-w-xs text-pretty px-2.5 py-1.5 text-center text-sm text-white">{content}</span>
           ) : typeof content === 'function' ? (
             content({ setOpen })
           ) : (
