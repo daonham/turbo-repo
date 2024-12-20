@@ -2,12 +2,13 @@
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { cn } from '@repo/utils';
-import Link from 'next/link';
-import { useState } from 'react';
-import { Button, buttonVariants } from './button';
 
 export interface TooltipProps extends Omit<TooltipPrimitive.TooltipContentProps, 'content'> {
-  content: React.ReactNode | string | ((props: { setOpen: (open: boolean) => void }) => React.ReactNode);
+  delayDuration?: number;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  content: React.ReactNode | string;
   disableHoverableContent?: TooltipPrimitive.TooltipProps['disableHoverableContent'];
 }
 
@@ -15,28 +16,33 @@ export function TooltipProvider({ children }: { children: React.ReactNode }) {
   return <TooltipPrimitive.Provider delayDuration={150}>{children}</TooltipPrimitive.Provider>;
 }
 
-export function Tooltip({ children, content, side = 'top', disableHoverableContent, className, ...rest }: TooltipProps) {
-  const [open, setOpen] = useState(false);
-
+export function Tooltip({
+  children,
+  content,
+  side = 'top',
+  delayDuration,
+  disableHoverableContent,
+  className,
+  open,
+  defaultOpen,
+  onOpenChange,
+  ...rest
+}: TooltipProps) {
   return (
-    <TooltipPrimitive.Root open={open} onOpenChange={setOpen} delayDuration={0} disableHoverableContent={disableHoverableContent}>
-      <TooltipPrimitive.Trigger
-        asChild
-        onClick={() => {
-          setOpen(true);
-        }}
-        onBlur={() => {
-          setOpen(false);
-        }}
-      >
-        {children}
-      </TooltipPrimitive.Trigger>
+    <TooltipPrimitive.Root
+      delayDuration={delayDuration || 0}
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      disableHoverableContent={disableHoverableContent}
+    >
+      <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
       <TooltipPrimitive.Portal>
         <TooltipPrimitive.Content
           sideOffset={8}
           side={side}
           className={cn(
-            'z-[99] items-center overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-md',
+            'z-99 items-center overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-md',
             side === 'top' && 'animate-slide-up-fade',
             side === 'right' && 'animate-slide-right-fade',
             side === 'bottom' && 'animate-slide-down-fade',
@@ -48,50 +54,11 @@ export function Tooltip({ children, content, side = 'top', disableHoverableConte
         >
           {typeof content === 'string' ? (
             <span className="block max-w-xs text-pretty px-2.5 py-1.5 text-center text-sm text-white">{content}</span>
-          ) : typeof content === 'function' ? (
-            content({ setOpen })
           ) : (
             content
           )}
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>
-  );
-}
-
-export function TooltipContent({
-  title,
-  cta,
-  href,
-  target,
-  onClick,
-  className
-}: {
-  title: React.ReactNode;
-  cta?: string;
-  href?: string;
-  target?: string;
-  onClick?: () => void;
-  className?: string;
-}) {
-  return (
-    <div className={cn('flex max-w-xs flex-col items-center space-y-3 p-4 text-center', className)}>
-      <p className="text-sm text-gray-700">{title}</p>
-      {cta &&
-        (href ? (
-          <Link
-            href={href}
-            {...(target ? { target } : {})}
-            className={cn(
-              buttonVariants({ variant: 'primary' }),
-              'flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm'
-            )}
-          >
-            {cta}
-          </Link>
-        ) : onClick ? (
-          <Button onClick={onClick} text={cta} variant="primary" className="h-9" />
-        ) : null)}
-    </div>
   );
 }
