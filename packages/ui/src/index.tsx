@@ -4,6 +4,7 @@ export * from './collapsible';
 export * from './combobox';
 export * from './date-picker';
 export * from './dropdown-menu';
+export * from './file-upload';
 export * from './input';
 export * from './input-otp';
 export * from './label';

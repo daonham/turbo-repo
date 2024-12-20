@@ -1,3 +1,5 @@
+'use client';
+
 import { FormProps } from '@/app/dashboard/posts/add/form';
 import { TAGS_MAX_PAGE_SIZE } from '@/app/dashboard/posts/tags/schema';
 import { Combobox, Tooltip } from '@repo/ui';

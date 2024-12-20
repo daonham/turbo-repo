@@ -1,8 +1,7 @@
-'use client';
-
 import * as PopoverPrimitive from '@radix-ui/react-popover';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { cn } from '@repo/utils';
-import { PropsWithChildren, ReactNode, WheelEventHandler } from 'react';
+import { PropsWithChildren, ReactNode, useEffect, useState, WheelEventHandler } from 'react';
 import { Drawer } from 'vaul';
 import { useMediaQuery } from './hooks';
 
@@ -36,18 +35,28 @@ export function Popover({
 }: PopoverProps) {
   const { isMobile } = useMediaQuery();
 
-  if (mobileOnly || isMobile) {
+  const [isMobileLayout, setIsMobileLayout] = useState(false);
+
+  useEffect(() => {
+    setIsMobileLayout(isMobile);
+  }, [isMobile]);
+
+  if (mobileOnly || isMobileLayout) {
     return (
       <Drawer.Root open={openPopover} onOpenChange={setOpenPopover}>
         <Drawer.Trigger className="sm:hidden" asChild>
           {children}
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 z-50 bg-gray-100 bg-opacity-10 backdrop-blur" />
+          <Drawer.Overlay className="fixed inset-0 z-50 bg-gray-100/50 bg-opacity-10 backdrop-blur" />
           <Drawer.Content
             className="fixed bottom-0 left-0 right-0 z-50 mt-24 rounded-t-[10px] border-t border-gray-200 bg-white"
             onEscapeKeyDown={onEscapeKeyDown}
           >
+            <VisuallyHidden.Root>
+              <Drawer.Title />
+              <Drawer.Description />
+            </VisuallyHidden.Root>
             <div className="sticky top-0 z-20 flex w-full items-center justify-center rounded-t-[10px] bg-inherit">
               <div className="my-3 h-1 w-12 rounded-full bg-gray-300" />
             </div>
