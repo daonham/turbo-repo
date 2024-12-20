@@ -23,7 +23,10 @@ export interface FormProps {
 const DEFAULT_FORM_PROPS = {
   status: 'draft',
   title: '',
-  featureImage: '',
+  featureImage: {
+    file: null,
+    src: ''
+  },
   content: '',
   tags: []
 };
