@@ -2,7 +2,7 @@ import { TagSelect } from '@/components/ui/post/tag-select';
 import { Button, FileUpload, Input, Label, Popover, Tooltip } from '@repo/ui';
 import { cn, formatBytes } from '@repo/utils';
 import { Command } from 'cmdk';
-import { Check, ChevronDown, HelpCircle } from 'lucide-react';
+import { Check, ChevronDown, HelpCircle, X } from 'lucide-react';
 import { useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 
@@ -10,7 +10,7 @@ export interface FormProps {
   status: 'draft' | 'published' | string;
   title: string;
   featureImage: {
-    file: File;
+    file: File | null;
     src: string;
   };
   content: string;
@@ -108,28 +108,41 @@ function FeaturedImage() {
   return (
     <div className="flex flex-col space-y-2">
       <Label>Featured Image</Label>
-      <FileUpload
-        accept="images"
-        className="flex items-center gap-3 rounded-md border border-dashed border-gray-300 p-4"
-        contentClassName="h-15 w-15 rounded-md border border-gray-100"
-        uploadClassName="bg-gray-50"
-        iconClassName="w-5 h-5"
-        variant="plain"
-        imageSrc={watch('featureImage')?.src}
-        readFile
-        onChange={({ src, file }: { src: string; file: File }) => {
-          setValue('featureImage', { src, file });
-        }}
-        content={null}
-        maxFileSizeMB={2}
-      >
-        <div className="flex flex-col gap-1">
-          <div className="text-sm">{watch('featureImage')?.file?.name ?? 'Choose a file or drag & drop it here'}</div>
-          <div className="text-sm text-gray-400">
-            {watch('featureImage')?.file?.size ? formatBytes(watch('featureImage').file.size) : 'JPG, PNG formats, up to 2MB'}
+      <div className="relative">
+        <FileUpload
+          accept="images"
+          className="flex items-center gap-3 rounded-md border border-dashed border-gray-300 p-4"
+          contentClassName="h-15 w-15 rounded-md border border-gray-100"
+          uploadClassName="bg-gray-50"
+          iconClassName="w-5 h-5"
+          variant="plain"
+          imageSrc={watch('featureImage')?.src}
+          readFile
+          onChange={({ src, file }: { src: string; file: File }) => {
+            setValue('featureImage', { src, file });
+          }}
+          content={null}
+          maxFileSizeMB={2}
+        >
+          <div className="flex flex-col gap-1">
+            <div className="text-sm">{watch('featureImage')?.file?.name ?? 'Choose a file or drag & drop it here'}</div>
+            <div className="text-sm text-gray-400">
+              {watch('featureImage')?.file?.size ? formatBytes(watch('featureImage')?.file?.size) : 'JPG, PNG formats, up to 2MB'}
+            </div>
           </div>
-        </div>
-      </FileUpload>
+        </FileUpload>
+        {watch('featureImage')?.src && (
+          <Tooltip content="Remove file">
+            <button
+              className="z-6 absolute right-2 top-2 flex cursor-pointer items-center justify-center p-1 text-gray-400 hover:border-gray-800 hover:text-gray-800"
+              onClick={() => setValue('featureImage', { src: '', file: null })}
+            >
+              <X className="size-5" />
+              <span className="sr-only">Remove file</span>
+            </button>
+          </Tooltip>
+        )}
+      </div>
     </div>
   );
 }

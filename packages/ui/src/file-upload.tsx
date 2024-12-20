@@ -148,13 +148,13 @@ export function FileUpload({
     <label className={cn('group relative', !disabled ? cn(clickToUpload && 'cursor-pointer') : 'cursor-not-allowed', className)}>
       <div className={cn(imageUploadVariants({ variant }), contentClassName)}>
         {loading && (
-          <div className="z-5 absolute inset-0 flex items-center justify-center rounded-[inherit] bg-white">
+          <div className="z-1 absolute inset-0 flex items-center justify-center rounded-[inherit] bg-white">
             <LoadingCircle />
           </div>
         )}
         <div
           className={cn(
-            'z-3 absolute inset-0 flex flex-col items-center justify-center rounded-[inherit] border-2 border-transparent bg-white transition-all',
+            'absolute inset-0 flex flex-col items-center justify-center rounded-[inherit] border-2 border-transparent bg-white transition-all',
             disabled && 'bg-gray-50',
             dragActive && !disabled && 'cursor-copy border-gray-700 bg-gray-50 opacity-100',
             imageSrc ? cn('opacity-0', showHoverOverlay && !disabled && 'group-hover:opacity-100') : cn(!disabled && 'group-hover:bg-gray-50'),
@@ -186,7 +186,7 @@ export function FileUpload({
       </div>
 
       <div
-        className="z-5 absolute inset-0"
+        className="z-1 absolute inset-0"
         onDragOver={(e) => {
           e.preventDefault();
           e.stopPropagation();
