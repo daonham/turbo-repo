@@ -1,5 +1,5 @@
 import { TagSelect } from '@/components/ui/post/tag-select';
-import { Button, FileUpload, Input, Label, Popover, Tooltip } from '@repo/ui';
+import { Button, FileUpload, Input, Label, Popover, RichText, Tooltip } from '@repo/ui';
 import { cn, formatBytes } from '@repo/utils';
 import { Command } from 'cmdk';
 import { Check, ChevronDown, HelpCircle, X } from 'lucide-react';
@@ -59,6 +59,8 @@ export function FormInner(props: Props) {
     formState: { isDirty, isSubmitting, isSubmitSuccessful, errors }
   } = useFormContext<FormProps>();
 
+  const [content, setContent] = useState<string>('');
+
   return (
     <form onSubmit={handleSubmit((data) => null)}>
       <div className="grid w-full grid-cols-[auto_320px] gap-6">
@@ -80,7 +82,7 @@ export function FormInner(props: Props) {
               <FeaturedImage />
               <div className="flex flex-col space-y-2">
                 <Label htmlFor="content">Content</Label>
-                <Input id="content" type="text" placeholder="Enter your content" autoComplete="off" className="max-w-none" />
+                <RichText value={content} onChange={setContent} />
               </div>
             </div>
           </div>
