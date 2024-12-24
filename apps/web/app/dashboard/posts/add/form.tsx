@@ -65,7 +65,7 @@ export function FormInner(props: Props) {
     <form onSubmit={handleSubmit((data) => null)}>
       <div className="grid w-full grid-cols-[auto_320px] gap-6">
         <div className="w-full">
-          <div className="h-[1000px]">
+          <div className="">
             <div className="flex min-h-full flex-col gap-8 py-4">
               <div className="flex flex-col space-y-2">
                 <Label htmlFor="title">Title</Label>
