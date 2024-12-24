@@ -43,9 +43,11 @@ import { Tooltip } from '../tooltip';
 type RichTextProps = {
   onChange: (html: string) => void;
   content: string;
+  className?: string;
+  isStickyToolbar?: boolean;
 };
 
-export function RichText({ onChange, content }: RichTextProps) {
+export function RichText({ onChange, content, className, isStickyToolbar }: RichTextProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -67,7 +69,7 @@ export function RichText({ onChange, content }: RichTextProps) {
     ],
     editorProps: {
       attributes: {
-        class: 'prose px-5 my-5 focus:outline-none max-h-[300px] overflow-y-auto max-w-full',
+        class: 'prose prose-sm sm:prose-base px-5 my-5 focus:outline-none overflow-y-auto max-w-full',
         autocomplete: 'off',
         autocorrect: 'off',
         autocapitalize: 'off'
@@ -82,8 +84,8 @@ export function RichText({ onChange, content }: RichTextProps) {
   });
 
   return (
-    <div className="flex min-h-48 w-full flex-col rounded-md ring-1 ring-inset ring-gray-300">
-      <Toolbar editor={editor} content={content} />
+    <div className={cn('flex min-h-32 w-full flex-col rounded-md border border-gray-300', className)}>
+      <Toolbar editor={editor} isStickyToolbar={isStickyToolbar} />
       <EditorContent editor={editor} />
     </div>
   );
@@ -91,7 +93,7 @@ export function RichText({ onChange, content }: RichTextProps) {
 
 type ToolbarProps = {
   editor: Editor | null;
-  content: string;
+  isStickyToolbar?: boolean;
 };
 
 export type SelectorItem = {
@@ -244,7 +246,7 @@ const HIGHLIGHT_COLORS: ColorMenuItem[] = [
   }
 ];
 
-function Toolbar({ editor }: ToolbarProps) {
+function Toolbar({ editor, isStickyToolbar }: ToolbarProps) {
   if (!editor) return null;
 
   const [openNode, setOpenNode] = useState(false);
@@ -258,7 +260,12 @@ function Toolbar({ editor }: ToolbarProps) {
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) => editor.isActive('highlight', { color }));
 
   return (
-    <div className="flex w-full flex-wrap items-start justify-between gap-5 border-b border-gray-300 px-3 py-2">
+    <div
+      className={cn(
+        'flex w-full flex-wrap items-start justify-between gap-5 rounded-tl-md rounded-tr-md border-b border-gray-300 bg-white px-3 py-2',
+        isStickyToolbar && 'z-1 sticky top-0'
+      )}
+    >
       <div className="flex w-full flex-wrap items-center justify-start gap-1 [&>button]:cursor-pointer">
         <Popover
           openPopover={openNode}

@@ -82,7 +82,7 @@ export function FormInner(props: Props) {
               <FeaturedImage />
               <div className="flex flex-col space-y-2">
                 <Label htmlFor="content">Content</Label>
-                <RichText value={content} onChange={setContent} />
+                <RichText value={content} onChange={setContent} isStickyToolbar={true} className="min-h-80" />
               </div>
             </div>
           </div>
