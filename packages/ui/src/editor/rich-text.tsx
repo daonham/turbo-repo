@@ -47,9 +47,18 @@ type RichTextProps = {
   isStickyToolbar?: boolean;
   classEditorContent?: string;
   stylesEditorContent?: string;
+  excludedToolbarItems?: string[];
 };
 
-export function RichText({ onChange, content, className, isStickyToolbar, stylesEditorContent, classEditorContent }: RichTextProps) {
+export function RichText({
+  onChange,
+  content,
+  className,
+  isStickyToolbar,
+  stylesEditorContent,
+  classEditorContent,
+  excludedToolbarItems
+}: RichTextProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -88,7 +97,7 @@ export function RichText({ onChange, content, className, isStickyToolbar, styles
 
   return (
     <div className={cn('flex w-full flex-col rounded-md border border-gray-300', className)}>
-      <Toolbar editor={editor} isStickyToolbar={isStickyToolbar} />
+      <Toolbar editor={editor} isStickyToolbar={isStickyToolbar} excludedToolbarItems={excludedToolbarItems} />
       <EditorContent editor={editor} />
     </div>
   );
@@ -96,7 +105,8 @@ export function RichText({ onChange, content, className, isStickyToolbar, styles
 
 type ToolbarProps = {
   editor: Editor | null;
-  isStickyToolbar?: boolean;
+  isStickyToolbar?: RichTextProps['isStickyToolbar'];
+  excludedToolbarItems?: RichTextProps['excludedToolbarItems'];
 };
 
 export type SelectorItem = {
@@ -249,7 +259,7 @@ const HIGHLIGHT_COLORS: ColorMenuItem[] = [
   }
 ];
 
-function Toolbar({ editor, isStickyToolbar }: ToolbarProps) {
+function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps) {
   if (!editor) return null;
 
   const [openNode, setOpenNode] = useState(false);
@@ -270,288 +280,312 @@ function Toolbar({ editor, isStickyToolbar }: ToolbarProps) {
       )}
     >
       <div className="flex w-full flex-wrap items-center justify-start gap-1 [&>button]:cursor-pointer">
-        <Popover
-          openPopover={openNode}
-          setOpenPopover={setOpenNode}
-          align="start"
-          content={
-            <Command defaultValue={activeNodeItem.name} tabIndex={0} loop className="focus:outline-none">
-              <Command.List className="flex w-screen flex-col gap-1 px-1 py-0 text-sm sm:w-auto sm:min-w-[160px]">
-                {items.map((item) => (
-                  <Command.Item
-                    key={item.name}
-                    value={item.name}
-                    className={cn(
-                      'my-1 flex cursor-pointer select-none items-center justify-between gap-2 whitespace-nowrap rounded-md p-1 text-sm text-neutral-600',
-                      'data-[selected=true]:bg-gray-100'
-                    )}
-                    onSelect={() => {
-                      item.command(editor);
-                      setOpenNode(false);
-                    }}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <div className="rounded-sm border border-gray-200 p-1">
-                        <item.icon className="size-4" />
-                      </div>
-                      <span>{item.name}</span>
-                    </div>
-                    {item.name === activeNodeItem.name && <Check className="size-4 shrink-0 text-neutral-500" />}
-                  </Command.Item>
-                ))}
-              </Command.List>
-            </Command>
-          }
-        >
-          <button className={cn('flex h-8 items-center gap-1.5 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
-            {activeNodeItem.name}
-            <ChevronDown className="size-4" />
-          </button>
-        </Popover>
-
-        <Button
-          tooltip="Bold"
-          icon={<Bold className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleBold().run();
-          }}
-          isActive={editor.isActive('bold')}
-        />
-
-        <Button
-          tooltip="Italic"
-          icon={<Italic className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleItalic().run();
-          }}
-          isActive={editor.isActive('italic')}
-        />
-
-        <Button
-          tooltip="Underline"
-          icon={<UnderlineIcon className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleUnderline().run();
-          }}
-          isActive={editor.isActive('underline')}
-        />
-
-        <Button
-          tooltip="Strikethrough"
-          icon={<Strikethrough className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleStrike().run();
-          }}
-          isActive={editor.isActive('strike')}
-        />
-
-        <Button
-          tooltip="Code"
-          icon={<Code className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setCode().run();
-          }}
-          isActive={editor.isActive('code')}
-        />
-
-        <Popover
-          popoverContentClassName="drop-shadow-sm"
-          openPopover={openLink}
-          setOpenPopover={setOpenLink}
-          align="start"
-          content={
-            <div className="p-1">
-              <form
-                className="flex items-center gap-2"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const target = e.currentTarget as HTMLFormElement;
-                  const input = target[0] as HTMLInputElement;
-                  const url = getUrlFromStringIfValid(input.value);
-                  if (url) {
-                    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-                    setOpenLink(false);
-                  } else {
-                    toast.error('Invalid URL');
-                  }
-                }}
-              >
-                <Input
-                  autoFocus={false}
-                  className="h-8 flex-1 border-none px-2 py-1.5 ring-0 focus:border-none focus:ring-0"
-                  placeholder="Enter URL"
-                  defaultValue={editor.getAttributes('link').href || ''}
-                />
-                {editor.getAttributes('link').href ? (
-                  <ButtonComponent
-                    type="button"
-                    onClick={() => {
-                      editor.chain().focus().extendMarkRange('link').unsetLink().run();
-                      setOpenLink(false);
-                    }}
-                    variant="outline"
-                    text="Unset link"
-                    className="h-8 w-auto gap-1 px-3 hover:text-red-600"
-                    icon={<Trash className="h-3 w-3" />}
-                  />
-                ) : (
-                  <ButtonComponent
-                    type="submit"
-                    variant="outline"
-                    text="Set link"
-                    className="h-8 w-auto gap-1 bg-gray-100 px-3 hover:bg-gray-200"
-                    icon={<LinkIcon className="h-3 w-3" />}
-                  />
-                )}
-              </form>
-            </div>
-          }
-        >
-          <Button tooltip="Link" icon={<LinkIcon className="size-4" />} isActive={openLink || editor.isActive('link')} />
-        </Popover>
-
-        <Popover
-          openPopover={openColor}
-          setOpenPopover={setOpenColor}
-          align="start"
-          content={
-            <Command tabIndex={0} loop className="focus:outline-none">
-              <Command.List className="flex w-screen flex-col gap-1 text-sm sm:w-auto sm:min-w-[160px]">
-                <Command.Group
-                  value={activeColorItem?.color}
-                  heading="Text color"
-                  className={cn(
-                    'flex flex-col p-1',
-                    '[&>[cmdk-group-heading]]:p-1 [&>[cmdk-group-heading]]:text-xs [&>[cmdk-group-heading]]:text-gray-400',
-                    '[&>[cmdk-group-items]]:grid [&>[cmdk-group-items]]:grid-cols-5 [&>[cmdk-group-items]]:gap-2 [&>[cmdk-group-items]]:p-1'
-                  )}
-                >
-                  {TEXT_COLORS.map(({ name, color }) => (
+        {!excludedToolbarItems?.includes('selector') && (
+          <Popover
+            openPopover={openNode}
+            setOpenPopover={setOpenNode}
+            align="start"
+            content={
+              <Command defaultValue={activeNodeItem.name} tabIndex={0} loop className="focus:outline-none">
+                <Command.List className="flex w-screen flex-col gap-1 px-1 py-0 text-sm sm:w-auto sm:min-w-[160px]">
+                  {items.map((item) => (
                     <Command.Item
-                      key={name}
-                      value={color}
+                      key={item.name}
+                      value={item.name}
                       className={cn(
-                        'flex size-7 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-md border border-gray-200 text-sm text-neutral-600',
+                        'my-1 flex cursor-pointer select-none items-center justify-between gap-2 whitespace-nowrap rounded-md p-1 text-sm text-neutral-600',
                         'data-[selected=true]:bg-gray-100'
                       )}
                       onSelect={() => {
-                        if (color) {
-                          editor.chain().focus().setColor(color).run();
-                        } else {
-                          editor.chain().focus().unsetColor().run();
-                        }
-                        setOpenColor(false);
+                        item.command(editor);
+                        setOpenNode(false);
                       }}
                     >
-                      <span className="font-medium" style={{ color: color || 'inherit' }}>
-                        A
-                      </span>
+                      <div className="flex items-center space-x-2">
+                        <div className="rounded-sm border border-gray-200 p-1">
+                          <item.icon className="size-4" />
+                        </div>
+                        <span>{item.name}</span>
+                      </div>
+                      {item.name === activeNodeItem.name && <Check className="size-4 shrink-0 text-neutral-500" />}
                     </Command.Item>
                   ))}
-                </Command.Group>
-                <Command.Group
-                  value={activeHighlightItem?.color}
-                  heading="Background color"
-                  className={cn(
-                    'flex flex-col p-1',
-                    '[&>[cmdk-group-heading]]:p-1 [&>[cmdk-group-heading]]:text-xs [&>[cmdk-group-heading]]:text-gray-400',
-                    '[&>[cmdk-group-items]]:grid [&>[cmdk-group-items]]:grid-cols-5 [&>[cmdk-group-items]]:gap-2 [&>[cmdk-group-items]]:p-1'
-                  )}
+                </Command.List>
+              </Command>
+            }
+          >
+            <button className={cn('flex h-8 items-center gap-1.5 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
+              {activeNodeItem.name}
+              <ChevronDown className="size-4" />
+            </button>
+          </Popover>
+        )}
+
+        {!excludedToolbarItems?.includes('bold') && (
+          <Button
+            tooltip="Bold"
+            icon={<Bold className="size-4" />}
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleBold().run();
+            }}
+            isActive={editor.isActive('bold')}
+          />
+        )}
+
+        {!excludedToolbarItems?.includes('italic') && (
+          <Button
+            tooltip="Italic"
+            icon={<Italic className="size-4" />}
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleItalic().run();
+            }}
+            isActive={editor.isActive('italic')}
+          />
+        )}
+
+        {!excludedToolbarItems?.includes('underline') && (
+          <Button
+            tooltip="Underline"
+            icon={<UnderlineIcon className="size-4" />}
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleUnderline().run();
+            }}
+            isActive={editor.isActive('underline')}
+          />
+        )}
+
+        {!excludedToolbarItems?.includes('strikethrough') && (
+          <Button
+            tooltip="Strikethrough"
+            icon={<Strikethrough className="size-4" />}
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleStrike().run();
+            }}
+            isActive={editor.isActive('strike')}
+          />
+        )}
+
+        {!excludedToolbarItems?.includes('code') && (
+          <Button
+            tooltip="Code"
+            icon={<Code className="size-4" />}
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().setCode().run();
+            }}
+            isActive={editor.isActive('code')}
+          />
+        )}
+
+        {!excludedToolbarItems?.includes('link') && (
+          <Popover
+            popoverContentClassName="drop-shadow-sm"
+            openPopover={openLink}
+            setOpenPopover={setOpenLink}
+            align="start"
+            content={
+              <div className="p-1">
+                <form
+                  className="flex items-center gap-2"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const target = e.currentTarget as HTMLFormElement;
+                    const input = target[0] as HTMLInputElement;
+                    const url = getUrlFromStringIfValid(input.value);
+                    if (url) {
+                      editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+                      setOpenLink(false);
+                    } else {
+                      toast.error('Invalid URL');
+                    }
+                  }}
                 >
-                  {HIGHLIGHT_COLORS.map(({ name, color }) => (
-                    <Command.Item
-                      key={name}
-                      value={color}
-                      className={cn(
-                        'flex size-7 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-md border border-gray-200 text-sm text-neutral-600',
-                        'data-[selected=true]:bg-gray-100'
-                      )}
-                      onSelect={() => {
-                        if (color) {
-                          editor.commands.unsetHighlight();
-                          editor.chain().focus().setHighlight({ color }).run();
-                        } else {
-                          editor.commands.unsetHighlight();
-                        }
-                        setOpenColor(false);
+                  <Input
+                    autoFocus={false}
+                    className="h-8 flex-1 border-none px-2 py-1.5 ring-0 focus:border-none focus:ring-0"
+                    placeholder="Enter URL"
+                    defaultValue={editor.getAttributes('link').href || ''}
+                  />
+                  {editor.getAttributes('link').href ? (
+                    <ButtonComponent
+                      type="button"
+                      onClick={() => {
+                        editor.chain().focus().extendMarkRange('link').unsetLink().run();
+                        setOpenLink(false);
                       }}
-                      style={{ backgroundColor: color }}
-                    ></Command.Item>
-                  ))}
-                </Command.Group>
-              </Command.List>
-            </Command>
-          }
-        >
-          <button className={cn('flex h-8 items-center gap-1 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
-            <span
-              className="flex size-6 items-center justify-center rounded-sm border border-gray-200"
-              style={{
-                color: activeColorItem?.color || 'inherit',
-                backgroundColor: activeHighlightItem?.color || 'transparent'
+                      variant="outline"
+                      text="Unset link"
+                      className="h-8 w-auto gap-1 px-3 hover:text-red-600"
+                      icon={<Trash className="h-3 w-3" />}
+                    />
+                  ) : (
+                    <ButtonComponent
+                      type="submit"
+                      variant="outline"
+                      text="Set link"
+                      className="h-8 w-auto gap-1 bg-gray-100 px-3 hover:bg-gray-200"
+                      icon={<LinkIcon className="h-3 w-3" />}
+                    />
+                  )}
+                </form>
+              </div>
+            }
+          >
+            <Button tooltip="Link" icon={<LinkIcon className="size-4" />} isActive={openLink || editor.isActive('link')} />
+          </Popover>
+        )}
+
+        {!excludedToolbarItems?.includes('color') && (
+          <Popover
+            openPopover={openColor}
+            setOpenPopover={setOpenColor}
+            align="start"
+            content={
+              <Command tabIndex={0} loop className="focus:outline-none">
+                <Command.List className="flex w-screen flex-col gap-1 text-sm sm:w-auto sm:min-w-[160px]">
+                  <Command.Group
+                    value={activeColorItem?.color}
+                    heading="Text color"
+                    className={cn(
+                      'flex flex-col p-1',
+                      '[&>[cmdk-group-heading]]:p-1 [&>[cmdk-group-heading]]:text-xs [&>[cmdk-group-heading]]:text-gray-400',
+                      '[&>[cmdk-group-items]]:grid [&>[cmdk-group-items]]:grid-cols-5 [&>[cmdk-group-items]]:gap-2 [&>[cmdk-group-items]]:p-1'
+                    )}
+                  >
+                    {TEXT_COLORS.map(({ name, color }) => (
+                      <Command.Item
+                        key={name}
+                        value={color}
+                        className={cn(
+                          'flex size-7 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-md border border-gray-200 text-sm text-neutral-600',
+                          'data-[selected=true]:bg-gray-100'
+                        )}
+                        onSelect={() => {
+                          if (color) {
+                            editor.chain().focus().setColor(color).run();
+                          } else {
+                            editor.chain().focus().unsetColor().run();
+                          }
+                          setOpenColor(false);
+                        }}
+                      >
+                        <span className="font-medium" style={{ color: color || 'inherit' }}>
+                          A
+                        </span>
+                      </Command.Item>
+                    ))}
+                  </Command.Group>
+                  <Command.Group
+                    value={activeHighlightItem?.color}
+                    heading="Background color"
+                    className={cn(
+                      'flex flex-col p-1',
+                      '[&>[cmdk-group-heading]]:p-1 [&>[cmdk-group-heading]]:text-xs [&>[cmdk-group-heading]]:text-gray-400',
+                      '[&>[cmdk-group-items]]:grid [&>[cmdk-group-items]]:grid-cols-5 [&>[cmdk-group-items]]:gap-2 [&>[cmdk-group-items]]:p-1'
+                    )}
+                  >
+                    {HIGHLIGHT_COLORS.map(({ name, color }) => (
+                      <Command.Item
+                        key={name}
+                        value={color}
+                        className={cn(
+                          'flex size-7 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-md border border-gray-200 text-sm text-neutral-600',
+                          'data-[selected=true]:bg-gray-100'
+                        )}
+                        onSelect={() => {
+                          if (color) {
+                            editor.commands.unsetHighlight();
+                            editor.chain().focus().setHighlight({ color }).run();
+                          } else {
+                            editor.commands.unsetHighlight();
+                          }
+                          setOpenColor(false);
+                        }}
+                        style={{ backgroundColor: color }}
+                      ></Command.Item>
+                    ))}
+                  </Command.Group>
+                </Command.List>
+              </Command>
+            }
+          >
+            <button className={cn('flex h-8 items-center gap-1 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
+              <span
+                className="flex size-6 items-center justify-center rounded-sm border border-gray-200"
+                style={{
+                  color: activeColorItem?.color || 'inherit',
+                  backgroundColor: activeHighlightItem?.color || 'transparent'
+                }}
+              >
+                A
+              </span>
+              <ChevronDown className="size-4" />
+            </button>
+          </Popover>
+        )}
+
+        {!excludedToolbarItems?.includes('align') && (
+          <>
+            <Button
+              tooltip="Align Left"
+              icon={<AlignLeft className="size-4" />}
+              onClick={(e) => {
+                e.preventDefault();
+                editor.chain().focus().setTextAlign('left').run();
               }}
-            >
-              A
-            </span>
-            <ChevronDown className="size-4" />
-          </button>
-        </Popover>
+              isActive={editor.isActive({ textAlign: 'left' })}
+            />
 
-        <Button
-          tooltip="Align Left"
-          icon={<AlignLeft className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setTextAlign('left').run();
-          }}
-          isActive={editor.isActive({ textAlign: 'left' })}
-        />
+            <Button
+              tooltip="Align Center"
+              icon={<AlignCenter className="size-4" />}
+              onClick={(e) => {
+                e.preventDefault();
+                editor.chain().focus().setTextAlign('center').run();
+              }}
+              isActive={editor.isActive({ textAlign: 'center' })}
+            />
 
-        <Button
-          tooltip="Align Center"
-          icon={<AlignCenter className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setTextAlign('center').run();
-          }}
-          isActive={editor.isActive({ textAlign: 'center' })}
-        />
+            <Button
+              tooltip="Align Right"
+              icon={<AlignRight className="size-4" />}
+              onClick={(e) => {
+                e.preventDefault();
+                editor.chain().focus().setTextAlign('right').run();
+              }}
+              isActive={editor.isActive({ textAlign: 'right' })}
+            />
+          </>
+        )}
 
-        <Button
-          tooltip="Align Right"
-          icon={<AlignRight className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setTextAlign('right').run();
-          }}
-          isActive={editor.isActive({ textAlign: 'right' })}
-        />
+        {!excludedToolbarItems?.includes('undo') && (
+          <>
+            <Button
+              className="ml-auto"
+              tooltip="Undo"
+              icon={<Undo className="size-4" />}
+              onClick={(e) => {
+                e.preventDefault();
+                editor.chain().focus().undo().run();
+              }}
+              isActive={editor.isActive('undo')}
+            />
 
-        <Button
-          className="ml-auto"
-          tooltip="Undo"
-          icon={<Undo className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().undo().run();
-          }}
-          isActive={editor.isActive('undo')}
-        />
-
-        <Button
-          tooltip="Redo"
-          icon={<Redo className="size-4" />}
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().redo().run();
-          }}
-          isActive={editor.isActive('redo')}
-        />
+            <Button
+              tooltip="Redo"
+              icon={<Redo className="size-4" />}
+              onClick={(e) => {
+                e.preventDefault();
+                editor.chain().focus().redo().run();
+              }}
+              isActive={editor.isActive('redo')}
+            />
+          </>
+        )}
       </div>
     </div>
   );
