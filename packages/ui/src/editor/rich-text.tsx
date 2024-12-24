@@ -164,13 +164,13 @@ function Toolbar({ editor }: ToolbarProps) {
           align="start"
           content={
             <Command defaultValue={activeNodeItem.name} tabIndex={0} loop className="focus:outline-none">
-              <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[160px]">
+              <Command.List className="flex w-screen flex-col gap-1 px-1 py-0 text-sm sm:w-auto sm:min-w-[160px]">
                 {items.map((item) => (
                   <Command.Item
                     key={item.name}
                     value={item.name}
                     className={cn(
-                      'flex cursor-pointer select-none items-center justify-between gap-2 whitespace-nowrap rounded-md p-1.5 text-sm text-neutral-600',
+                      'my-1 flex cursor-pointer select-none items-center justify-between gap-2 whitespace-nowrap rounded-md p-1 text-sm text-neutral-600',
                       'data-[selected=true]:bg-gray-100'
                     )}
                     onSelect={() => {
@@ -191,15 +191,15 @@ function Toolbar({ editor }: ToolbarProps) {
             </Command>
           }
         >
-          <button className={cn('flex items-center gap-1 rounded-md p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
+          <button className={cn('flex h-8 items-center gap-1.5 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
             {activeNodeItem.name}
-            <ChevronDown className="h-4 w-4" />
+            <ChevronDown className="size-4" />
           </button>
         </Popover>
 
         <Button
           tooltip="Bold"
-          icon={<Bold className="h-5 w-5" />}
+          icon={<Bold className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleBold().run();
@@ -209,7 +209,7 @@ function Toolbar({ editor }: ToolbarProps) {
 
         <Button
           tooltip="Italic"
-          icon={<Italic className="h-5 w-5" />}
+          icon={<Italic className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleItalic().run();
@@ -219,7 +219,7 @@ function Toolbar({ editor }: ToolbarProps) {
 
         <Button
           tooltip="Underline"
-          icon={<UnderlineIcon className="h-5 w-5" />}
+          icon={<UnderlineIcon className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleUnderline().run();
@@ -229,7 +229,7 @@ function Toolbar({ editor }: ToolbarProps) {
 
         <Button
           tooltip="Strikethrough"
-          icon={<Strikethrough className="h-5 w-5" />}
+          icon={<Strikethrough className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleStrike().run();
@@ -239,7 +239,7 @@ function Toolbar({ editor }: ToolbarProps) {
 
         <Button
           tooltip="Code"
-          icon={<Code className="h-5 w-5" />}
+          icon={<Code className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().setCode().run();
@@ -262,7 +262,7 @@ function Toolbar({ editor }: ToolbarProps) {
                   const input = target[0] as HTMLInputElement;
                   const url = getUrlFromStringIfValid(input.value);
                   if (url) {
-                    editor.chain().focus().setLink({ href: url }).run();
+                    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
                     setOpenLink(false);
                   } else {
                     toast.error('Invalid URL');
@@ -279,7 +279,7 @@ function Toolbar({ editor }: ToolbarProps) {
                   <ButtonComponent
                     type="button"
                     onClick={() => {
-                      editor.chain().focus().unsetLink().run();
+                      editor.chain().focus().extendMarkRange('link').unsetLink().run();
                       setOpenLink(false);
                     }}
                     variant="outline"
@@ -292,7 +292,7 @@ function Toolbar({ editor }: ToolbarProps) {
                     type="submit"
                     variant="outline"
                     text="Set link"
-                    className="h-8 w-auto gap-1 px-3"
+                    className="h-8 w-auto gap-1 bg-gray-100 px-3 hover:bg-gray-200"
                     icon={<LinkIcon className="h-3 w-3" />}
                   />
                 )}
@@ -300,12 +300,12 @@ function Toolbar({ editor }: ToolbarProps) {
             </div>
           }
         >
-          <Button tooltip="Link" icon={<LinkIcon className="h-5 w-5" />} isActive={openLink || editor.isActive('link')} />
+          <Button tooltip="Link" icon={<LinkIcon className="size-4" />} isActive={openLink || editor.isActive('link')} />
         </Popover>
 
         <Button
           tooltip="Align Left"
-          icon={<AlignLeft className="h-5 w-5" />}
+          icon={<AlignLeft className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().setTextAlign('left').run();
@@ -315,7 +315,7 @@ function Toolbar({ editor }: ToolbarProps) {
 
         <Button
           tooltip="Align Center"
-          icon={<AlignCenter className="h-5 w-5" />}
+          icon={<AlignCenter className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().setTextAlign('center').run();
@@ -325,7 +325,7 @@ function Toolbar({ editor }: ToolbarProps) {
 
         <Button
           tooltip="Align Right"
-          icon={<AlignRight className="h-5 w-5" />}
+          icon={<AlignRight className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().setTextAlign('right').run();
@@ -334,8 +334,9 @@ function Toolbar({ editor }: ToolbarProps) {
         />
 
         <Button
+          className="ml-auto"
           tooltip="Undo"
-          icon={<Undo className="h-5 w-5" />}
+          icon={<Undo className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().undo().run();
@@ -345,7 +346,7 @@ function Toolbar({ editor }: ToolbarProps) {
 
         <Button
           tooltip="Redo"
-          icon={<Redo className="h-5 w-5" />}
+          icon={<Redo className="size-4" />}
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().redo().run();
@@ -373,7 +374,10 @@ function Button({ tooltip, className, isActive, icon, ...props }: React.Componen
 
   if (tooltip) {
     return (
-      <Tooltip className="rounded-md border-gray-200 bg-gray-50 shadow" content={<div className="px-2 py-1 text-xs text-gray-500">{tooltip}</div>}>
+      <Tooltip
+        className="rounded-md border-gray-200 bg-gray-50 shadow-none"
+        content={<div className="px-2 py-1 text-xs text-gray-500">{tooltip}</div>}
+      >
         {element}
       </Tooltip>
     );
