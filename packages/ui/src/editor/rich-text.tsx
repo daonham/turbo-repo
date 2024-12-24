@@ -367,7 +367,14 @@ type ButtonProps = {
 
 function Button({ tooltip, className, isActive, icon, ...props }: React.ComponentProps<'button'> & ButtonProps) {
   const element = (
-    <button {...props} className={cn('rounded-md p-2 text-white outline-none', isActive ? 'bg-gray-700 p-2 text-white' : 'text-gray-500', className)}>
+    <button
+      {...props}
+      className={cn(
+        'flex size-8 items-center justify-center rounded-md text-white outline-none',
+        isActive ? 'bg-gray-700 p-2 text-white' : 'text-gray-500',
+        className
+      )}
+    >
       {icon}
     </button>
   );
