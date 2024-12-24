@@ -1,8 +1,11 @@
 'use client';
 
 import { cn, getUrlFromStringIfValid } from '@repo/utils';
+import { Color } from '@tiptap/extension-color';
+import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
+import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor, type Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -47,6 +50,11 @@ export function RichText({ onChange, content }: RichTextProps) {
     extensions: [
       StarterKit,
       Underline,
+      TextStyle,
+      Color,
+      Highlight.configure({
+        multicolor: true
+      }),
       TextAlign.configure({
         types: ['heading', 'paragraph']
       }),
@@ -91,6 +99,11 @@ export type SelectorItem = {
   icon: LucideIcon;
   command: (editor: ReturnType<typeof useEditor>['editor']) => void;
   isActive: (editor: ReturnType<typeof useEditor>['editor']) => boolean;
+};
+
+export type ColorMenuItem = {
+  name: string;
+  color: string;
 };
 
 const items: SelectorItem[] = [
@@ -145,15 +158,104 @@ const items: SelectorItem[] = [
   }
 ];
 
+const TEXT_COLORS: ColorMenuItem[] = [
+  {
+    name: 'Default',
+    color: ''
+  },
+  {
+    name: 'Gray',
+    color: 'rgb(120, 119, 116)'
+  },
+  {
+    name: 'Brown',
+    color: 'rgb(159, 107, 83)'
+  },
+  {
+    name: 'Orange',
+    color: 'rgb(217, 115, 13)'
+  },
+  {
+    name: 'Yellow',
+    color: 'rgb(203, 145, 47)'
+  },
+  {
+    name: 'Green',
+    color: 'rgb(68, 131, 97)'
+  },
+  {
+    name: 'Blue',
+    color: 'rgb(51, 126, 169)'
+  },
+  {
+    name: 'Purple',
+    color: 'rgb(144, 101, 176)'
+  },
+  {
+    name: 'Pink',
+    color: 'rgb(193, 76, 138)'
+  },
+  {
+    name: 'Red',
+    color: 'rgb(212, 76, 71)'
+  }
+];
+
+const HIGHLIGHT_COLORS: ColorMenuItem[] = [
+  {
+    name: 'Default',
+    color: ''
+  },
+  {
+    name: 'Gray',
+    color: 'rgb(241, 241, 239)'
+  },
+  {
+    name: 'Brown',
+    color: 'rgb(244, 238, 238)'
+  },
+  {
+    name: 'Orange',
+    color: 'rgb(251, 236, 221)'
+  },
+  {
+    name: 'Yellow',
+    color: 'rgb(251, 243, 219)'
+  },
+  {
+    name: 'Green',
+    color: 'rgb(237, 243, 236)'
+  },
+  {
+    name: 'Blue',
+    color: 'rgb(231, 243, 248)'
+  },
+  {
+    name: 'Purple',
+    color: 'rgba(244, 240, 247, 0.8)'
+  },
+  {
+    name: 'Pink',
+    color: 'rgba(249, 238, 243, 0.8)'
+  },
+  {
+    name: 'Red',
+    color: 'rgb(253, 235, 236)'
+  }
+];
+
 function Toolbar({ editor }: ToolbarProps) {
   if (!editor) return null;
 
   const [openNode, setOpenNode] = useState(false);
   const [openLink, setOpenLink] = useState(false);
+  const [openColor, setOpenColor] = useState(false);
 
   const activeNodeItem = items.filter((item) => item.isActive(editor)).pop() ?? {
     name: 'Multiple'
   };
+  const activeColorItem = TEXT_COLORS.find(({ color }) => editor.isActive('textStyle', { color }));
+  const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) => editor.isActive('highlight', { color }));
 
   return (
     <div className="flex w-full flex-wrap items-start justify-between gap-5 border-b border-gray-300 px-3 py-2">
@@ -301,6 +403,93 @@ function Toolbar({ editor }: ToolbarProps) {
           }
         >
           <Button tooltip="Link" icon={<LinkIcon className="size-4" />} isActive={openLink || editor.isActive('link')} />
+        </Popover>
+
+        <Popover
+          openPopover={openColor}
+          setOpenPopover={setOpenColor}
+          align="start"
+          content={
+            <Command tabIndex={0} loop className="focus:outline-none">
+              <Command.List className="flex w-screen flex-col gap-1 text-sm sm:w-auto sm:min-w-[160px]">
+                <Command.Group
+                  value={activeColorItem?.color}
+                  heading="Text color"
+                  className={cn(
+                    'flex flex-col p-1',
+                    '[&>[cmdk-group-heading]]:p-1 [&>[cmdk-group-heading]]:text-xs [&>[cmdk-group-heading]]:text-gray-400',
+                    '[&>[cmdk-group-items]]:grid [&>[cmdk-group-items]]:grid-cols-5 [&>[cmdk-group-items]]:gap-2 [&>[cmdk-group-items]]:p-1'
+                  )}
+                >
+                  {TEXT_COLORS.map(({ name, color }) => (
+                    <Command.Item
+                      key={name}
+                      value={color}
+                      className={cn(
+                        'flex size-7 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-md border border-gray-200 text-sm text-neutral-600',
+                        'data-[selected=true]:bg-gray-100'
+                      )}
+                      onSelect={() => {
+                        if (color) {
+                          editor.chain().focus().setColor(color).run();
+                        } else {
+                          editor.chain().focus().unsetColor().run();
+                        }
+                        setOpenColor(false);
+                      }}
+                    >
+                      <span className="font-medium" style={{ color: color || 'inherit' }}>
+                        A
+                      </span>
+                    </Command.Item>
+                  ))}
+                </Command.Group>
+                <Command.Group
+                  value={activeHighlightItem?.color}
+                  heading="Background color"
+                  className={cn(
+                    'flex flex-col p-1',
+                    '[&>[cmdk-group-heading]]:p-1 [&>[cmdk-group-heading]]:text-xs [&>[cmdk-group-heading]]:text-gray-400',
+                    '[&>[cmdk-group-items]]:grid [&>[cmdk-group-items]]:grid-cols-5 [&>[cmdk-group-items]]:gap-2 [&>[cmdk-group-items]]:p-1'
+                  )}
+                >
+                  {HIGHLIGHT_COLORS.map(({ name, color }) => (
+                    <Command.Item
+                      key={name}
+                      value={color}
+                      className={cn(
+                        'flex size-7 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-md border border-gray-200 text-sm text-neutral-600',
+                        'data-[selected=true]:bg-gray-100'
+                      )}
+                      onSelect={() => {
+                        if (color) {
+                          editor.commands.unsetHighlight();
+                          editor.chain().focus().setHighlight({ color }).run();
+                        } else {
+                          editor.commands.unsetHighlight();
+                        }
+                        setOpenColor(false);
+                      }}
+                      style={{ backgroundColor: color }}
+                    ></Command.Item>
+                  ))}
+                </Command.Group>
+              </Command.List>
+            </Command>
+          }
+        >
+          <button className={cn('flex h-8 items-center gap-1 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
+            <span
+              className="flex size-6 items-center justify-center rounded-sm border border-gray-200"
+              style={{
+                color: activeColorItem?.color || 'inherit',
+                backgroundColor: activeHighlightItem?.color || 'transparent'
+              }}
+            >
+              A
+            </span>
+            <ChevronDown className="size-4" />
+          </button>
         </Popover>
 
         <Button
