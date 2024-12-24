@@ -45,9 +45,11 @@ type RichTextProps = {
   content: string;
   className?: string;
   isStickyToolbar?: boolean;
+  classEditorContent?: string;
+  stylesEditorContent?: string;
 };
 
-export function RichText({ onChange, content, className, isStickyToolbar }: RichTextProps) {
+export function RichText({ onChange, content, className, isStickyToolbar, stylesEditorContent, classEditorContent }: RichTextProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -69,7 +71,8 @@ export function RichText({ onChange, content, className, isStickyToolbar }: Rich
     ],
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose-base px-5 my-5 focus:outline-none overflow-y-auto max-w-full',
+        class: cn('prose px-5 my-5 focus:outline-none overflow-y-auto max-w-full h-28', classEditorContent),
+        style: stylesEditorContent || '',
         autocomplete: 'off',
         autocorrect: 'off',
         autocapitalize: 'off'
