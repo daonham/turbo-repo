@@ -87,7 +87,7 @@ export function RichText({ onChange, content, className, isStickyToolbar, styles
   });
 
   return (
-    <div className={cn('flex min-h-32 w-full flex-col rounded-md border border-gray-300', className)}>
+    <div className={cn('flex w-full flex-col rounded-md border border-gray-300', className)}>
       <Toolbar editor={editor} isStickyToolbar={isStickyToolbar} />
       <EditorContent editor={editor} />
     </div>
