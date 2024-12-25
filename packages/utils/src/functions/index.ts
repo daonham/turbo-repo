@@ -1,5 +1,6 @@
 export * from './cn';
 export * from './deep-equal';
+export * from './fetch-with-timeout';
 export * from './fetcher';
 export * from './format-bytes';
 export * from './is-click-on-interactive-child';

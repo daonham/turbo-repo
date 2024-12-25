@@ -21,6 +21,7 @@
     "@tailwindcss/postcss": "4.0.0-beta.6",
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.34.3",
+    "aws4fetch": "^1.0.20",
     "cmdk": "^1.0.4",
     "lucide-react": "^0.469.0",
     "mongodb": "^6.12.0",
