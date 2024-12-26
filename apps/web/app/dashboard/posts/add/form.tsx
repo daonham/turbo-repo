@@ -1,4 +1,5 @@
 import { TagSelect } from '@/components/ui/post/tag-select';
+import { uploadCloud } from '@/lib/api/storage';
 import { Button, FileUpload, Input, Label, Popover, RichText, Tooltip } from '@repo/ui';
 import { cn, formatBytes } from '@repo/utils';
 import { Command } from 'cmdk';
@@ -88,19 +89,7 @@ export function FormInner(props: Props) {
                   isStickyToolbar={true}
                   className="min-h-80"
                   classEditorContent="h-full"
-                  onUploadImage={async (url: string) => {
-                    const res = await fetch('/api/storage', {
-                      method: 'POST',
-                      body: JSON.stringify({
-                        image: url,
-                        path: 'posts'
-                      })
-                    });
-
-                    const upload = await res.json();
-
-                    return upload?.url || '';
-                  }}
+                  onUploadImage={async (url: string) => uploadCloud({ image: url, path: 'posts' })}
                 />
               </div>
             </div>
