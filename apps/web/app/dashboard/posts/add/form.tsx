@@ -82,7 +82,26 @@ export function FormInner(props: Props) {
               <FeaturedImage />
               <div className="flex flex-col space-y-2">
                 <Label htmlFor="content">Content</Label>
-                <RichText value={content} onChange={setContent} isStickyToolbar={true} className="min-h-80" classEditorContent="h-full" />
+                <RichText
+                  value={content}
+                  onChange={setContent}
+                  isStickyToolbar={true}
+                  className="min-h-80"
+                  classEditorContent="h-full"
+                  onUploadImage={async (url: string) => {
+                    const res = await fetch('/api/storage', {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        image: url,
+                        path: 'posts'
+                      })
+                    });
+
+                    const upload = await res.json();
+
+                    return upload?.url || '';
+                  }}
+                />
               </div>
             </div>
           </div>

@@ -37,7 +37,7 @@ import {
   UnderlineIcon,
   Undo
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 import { Button as ButtonComponent } from '../button';
 import { FileUpload } from '../file-upload';
@@ -53,6 +53,7 @@ type RichTextProps = {
   classEditorContent?: string;
   stylesEditorContent?: string;
   excludedToolbarItems?: string[];
+  onUploadImage?: (url: string) => Promise<string>;
 };
 
 export function RichText({
@@ -62,7 +63,8 @@ export function RichText({
   isStickyToolbar,
   stylesEditorContent,
   classEditorContent,
-  excludedToolbarItems
+  excludedToolbarItems,
+  onUploadImage
 }: RichTextProps) {
   const editor = useEditor({
     extensions: [
@@ -109,7 +111,7 @@ export function RichText({
 
   return (
     <div className={cn('flex w-full flex-col rounded-md border border-gray-300', className)}>
-      <Toolbar editor={editor} isStickyToolbar={isStickyToolbar} excludedToolbarItems={excludedToolbarItems} />
+      <Toolbar editor={editor} isStickyToolbar={isStickyToolbar} excludedToolbarItems={excludedToolbarItems} onUploadImage={onUploadImage} />
       <EditorContent editor={editor} />
     </div>
   );
@@ -119,13 +121,14 @@ type ToolbarProps = {
   editor: Editor | null;
   isStickyToolbar?: RichTextProps['isStickyToolbar'];
   excludedToolbarItems?: RichTextProps['excludedToolbarItems'];
+  onUploadImage?: RichTextProps['onUploadImage'];
 };
 
 export type SelectorItem = {
   name: string;
   icon: LucideIcon;
-  command: (editor: ReturnType<typeof useEditor>['editor']) => void;
-  isActive: (editor: ReturnType<typeof useEditor>['editor']) => boolean;
+  command: (editor: any) => void;
+  isActive: (editor: any) => boolean;
 };
 
 export type ColorMenuItem = {
@@ -271,7 +274,7 @@ const HIGHLIGHT_COLORS: ColorMenuItem[] = [
   }
 ];
 
-function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps) {
+function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage }: ToolbarProps) {
   if (!editor) return null;
 
   const [openNode, setOpenNode] = useState(false);
@@ -279,12 +282,32 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
   const [openColor, setOpenColor] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [imageType, setImageType] = useState('upload');
+  const [imageLoading, setImageLoading] = useState(false);
 
   const activeNodeItem = items.filter((item) => item.isActive(editor)).pop() ?? {
     name: 'Multiple'
   };
   const activeColorItem = TEXT_COLORS.find(({ color }) => editor.isActive('textStyle', { color }));
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) => editor.isActive('highlight', { color }));
+
+  const checkIsUrlImage = useCallback((url: string) => {
+    return new Promise(function (resolve, reject) {
+      const img = new Image();
+      img.src = url;
+      img.setAttribute('crossOrigin', 'anonymous');
+
+      img.onload = function () {
+        if (img?.width) {
+          resolve(true);
+        } else {
+          reject(false);
+        }
+      };
+      img.onerror = function () {
+        reject(false);
+      };
+    });
+  }, []);
 
   return (
     <div
@@ -502,13 +525,22 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
                       uploadClassName="bg-gray-50"
                       iconClassName="w-5 h-5"
                       variant="plain"
-                      imageSrc={''}
+                      imageSrc={editor.getAttributes('image')?.src || ''}
+                      loading={imageLoading}
                       readFile
-                      onChange={({ src, file }: { src: string; file: File }) => {
+                      onChange={async ({ src, file }: { src: string; file: File }) => {
+                        let url = src;
+
+                        if (onUploadImage) {
+                          setImageLoading(true);
+                          url = await onUploadImage(src);
+                          setImageLoading(false);
+                        }
+
                         editor
                           .chain()
                           .focus()
-                          .setImage({ src, alt: file.name || '' })
+                          .setImage({ src: url, alt: file.name || '' })
                           .run();
                         setOpenImage(false);
                       }}
@@ -525,25 +557,49 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
                       className="flex flex-col gap-2"
                       onSubmit={async (e) => {
                         e.preventDefault();
+
                         const target = e.currentTarget as HTMLFormElement;
                         const input = target[0] as HTMLInputElement;
+                        let url = input.value;
 
-                        const img = new Image();
-                        img.src = input.value;
+                        setImageLoading(true);
 
-                        if (img?.width) {
-                          editor.chain().focus().setImage({ src: input.value, alt: '' }).run();
-                          setOpenImage(false);
-                        } else {
-                          toast.error('Invalid Image URL');
-                        }
+                        checkIsUrlImage(url)
+                          .then(async (value) => {
+                            if (value) {
+                              if (onUploadImage) {
+                                url = await onUploadImage(input.value);
+                              }
+                              editor.chain().focus().setImage({ src: url, alt: '' }).run();
+                              setOpenImage(false);
+                            } else {
+                              toast.error('Invalid Image URL');
+                            }
+                          })
+                          .catch((error) => {
+                            toast.error('Invalid Image URL');
+                          })
+                          .finally(() => {
+                            setImageLoading(false);
+                          });
                       }}
                     >
                       <div className="flex w-full gap-2">
                         <div className="flex-1">
-                          <Input autoFocus={false} className="h-8 max-w-none flex-1 px-2 py-1.5" placeholder="Enter URL" />
+                          <Input
+                            autoFocus={false}
+                            className="h-8 max-w-none flex-1 px-2 py-1.5"
+                            placeholder="Enter URL"
+                            defaultValue={editor.getAttributes('image')?.src || ''}
+                          />
                         </div>
-                        <ButtonComponent type="submit" text="Import" className="h-8 w-auto gap-1" icon={<LinkIcon className="h-3 w-3" />} />
+                        <ButtonComponent
+                          loading={imageLoading}
+                          type="submit"
+                          text="Import"
+                          className="h-8 w-auto gap-1"
+                          icon={<LinkIcon className="h-3 w-3" />}
+                        />
                       </div>
                       <div className="flex items-center gap-1 text-gray-500">
                         <Info className="size-3.5" />
