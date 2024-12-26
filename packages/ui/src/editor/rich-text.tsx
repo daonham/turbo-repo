@@ -3,6 +3,7 @@
 import { cn, getUrlFromStringIfValid } from '@repo/utils';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
+import ImageExtension from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
@@ -21,6 +22,9 @@ import {
   Heading1,
   Heading2,
   Heading3,
+  HelpCircle,
+  Image as ImageIcon,
+  Info,
   Italic,
   Link as LinkIcon,
   ListOrdered,
@@ -36,6 +40,7 @@ import {
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 import { Button as ButtonComponent } from '../button';
+import { FileUpload } from '../file-upload';
 import { Input } from '../input';
 import { Popover } from '../popover';
 import { Tooltip } from '../tooltip';
@@ -63,6 +68,13 @@ export function RichText({
     extensions: [
       StarterKit,
       Underline,
+      ImageExtension.configure({
+        inline: true,
+        allowBase64: true,
+        HTMLAttributes: {
+          class: 'h-auto max-w-full not-prose m-0 inline-block'
+        }
+      }),
       TextStyle,
       Color,
       Highlight.configure({
@@ -265,6 +277,8 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
   const [openNode, setOpenNode] = useState(false);
   const [openLink, setOpenLink] = useState(false);
   const [openColor, setOpenColor] = useState(false);
+  const [openImage, setOpenImage] = useState(false);
+  const [imageType, setImageType] = useState('upload');
 
   const activeNodeItem = items.filter((item) => item.isActive(editor)).pop() ?? {
     name: 'Multiple'
@@ -388,7 +402,13 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
             setOpenPopover={setOpenLink}
             align="start"
             content={
-              <div className="p-1">
+              <div className="w-[350px] p-4">
+                <div className="mb-1 flex items-center gap-2">
+                  <p className="text-sm font-medium text-gray-700">Link</p>
+                  <Tooltip content="Paste the URL you want to import">
+                    <HelpCircle className="h-4 w-4 text-gray-500" />
+                  </Tooltip>
+                </div>
                 <form
                   className="flex items-center gap-2"
                   onSubmit={(e) => {
@@ -404,12 +424,14 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
                     }
                   }}
                 >
-                  <Input
-                    autoFocus={false}
-                    className="h-8 flex-1 border-none px-2 py-1.5 ring-0 focus:border-none focus:ring-0"
-                    placeholder="Enter URL"
-                    defaultValue={editor.getAttributes('link').href || ''}
-                  />
+                  <div className="flex-1">
+                    <Input
+                      autoFocus={false}
+                      className="h-8 max-w-none flex-1 px-2 py-1.5"
+                      placeholder="Enter URL"
+                      defaultValue={editor.getAttributes('link').href || ''}
+                    />
+                  </div>
                   {editor.getAttributes('link').href ? (
                     <ButtonComponent
                       type="button"
@@ -417,7 +439,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
                         editor.chain().focus().extendMarkRange('link').unsetLink().run();
                         setOpenLink(false);
                       }}
-                      variant="outline"
+                      variant="secondary"
                       text="Unset link"
                       className="h-8 w-auto gap-1 px-3 hover:text-red-600"
                       icon={<Trash className="h-3 w-3" />}
@@ -425,7 +447,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
                   ) : (
                     <ButtonComponent
                       type="submit"
-                      variant="outline"
+                      variant="secondary"
                       text="Set link"
                       className="h-8 w-auto gap-1 bg-gray-100 px-3 hover:bg-gray-200"
                       icon={<LinkIcon className="h-3 w-3" />}
@@ -436,6 +458,104 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems }: ToolbarProps
             }
           >
             <Button tooltip="Link" icon={<LinkIcon className="size-4" />} isActive={openLink || editor.isActive('link')} />
+          </Popover>
+        )}
+
+        {!excludedToolbarItems?.includes('image') && (
+          <Popover
+            popoverContentClassName="drop-shadow-sm"
+            openPopover={openImage}
+            setOpenPopover={setOpenImage}
+            align="start"
+            content={
+              <div className="w-[350px] p-1">
+                <div className="flex gap-2 border-b border-gray-200 text-sm">
+                  {[
+                    {
+                      id: 'upload',
+                      name: 'Upload'
+                    },
+                    {
+                      id: 'url',
+                      name: 'URL'
+                    }
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className={cn(
+                        'cursor-pointer px-3 py-2 text-neutral-400 duration-75',
+                        item.id === imageType ? 'font-medium text-gray-800' : 'hover:text-neutral-700'
+                      )}
+                      onClick={() => setImageType(item.id)}
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
+                <div className="p-2">
+                  {imageType === 'upload' && (
+                    <FileUpload
+                      accept="images"
+                      className="flex items-center gap-3"
+                      contentClassName="h-15 w-15 rounded-md border border-gray-100"
+                      uploadClassName="bg-gray-50"
+                      iconClassName="w-5 h-5"
+                      variant="plain"
+                      imageSrc={''}
+                      readFile
+                      onChange={({ src, file }: { src: string; file: File }) => {
+                        editor
+                          .chain()
+                          .focus()
+                          .setImage({ src, alt: file.name || '' })
+                          .run();
+                        setOpenImage(false);
+                      }}
+                      maxFileSizeMB={2}
+                    >
+                      <div className="flex flex-col gap-1">
+                        <div className="text-sm">Choose a file or drag & drop it here</div>
+                        <div className="text-sm text-gray-400">JPG, PNG formats, up to 2MB</div>
+                      </div>
+                    </FileUpload>
+                  )}
+                  {imageType === 'url' && (
+                    <form
+                      className="flex flex-col gap-2"
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        const target = e.currentTarget as HTMLFormElement;
+                        const input = target[0] as HTMLInputElement;
+
+                        const img = new Image();
+                        img.src = input.value;
+
+                        if (img?.width) {
+                          editor.chain().focus().setImage({ src: input.value, alt: '' }).run();
+                          setOpenImage(false);
+                        } else {
+                          toast.error('Invalid Image URL');
+                        }
+                      }}
+                    >
+                      <div className="flex w-full gap-2">
+                        <div className="flex-1">
+                          <Input autoFocus={false} className="h-8 max-w-none flex-1 px-2 py-1.5" placeholder="Enter URL" />
+                        </div>
+                        <ButtonComponent type="submit" text="Import" className="h-8 w-auto gap-1" icon={<LinkIcon className="h-3 w-3" />} />
+                      </div>
+                      <div className="flex items-center gap-1 text-gray-500">
+                        <Info className="size-3.5" />
+                        <p className="text-xs">Paste the URL of the image you want to import</p>
+                      </div>
+                    </form>
+                  )}
+                </div>
+              </div>
+            }
+          >
+            <Button tooltip="Upload Image" icon={<ImageIcon className="size-4" />} isActive={editor.isActive('image')} />
           </Popover>
         )}
 
@@ -613,15 +733,16 @@ function Button({ tooltip, className, isActive, icon, ...props }: React.Componen
   );
 
   if (tooltip) {
-    return (
-      <Tooltip
-        className="rounded-md border-gray-200 bg-gray-50 shadow-none"
-        content={<div className="px-2 py-1 text-xs text-gray-500">{tooltip}</div>}
-      >
-        {element}
-      </Tooltip>
-    );
+    return <TooltipWrapper tooltip={tooltip}>{element}</TooltipWrapper>;
   }
 
   return element;
+}
+
+function TooltipWrapper({ tooltip, children }: React.ComponentProps<'button'> & ButtonProps) {
+  return (
+    <Tooltip className="rounded-md border-gray-200 bg-gray-50 shadow-none" content={<div className="px-2 py-1 text-xs text-gray-500">{tooltip}</div>}>
+      {children}
+    </Tooltip>
+  );
 }
