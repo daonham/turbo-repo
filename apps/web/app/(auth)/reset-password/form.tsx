@@ -3,14 +3,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 import { Button, Input, Label } from '@repo/ui';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { resetPasswordAction } from './actions';
 import { schema } from './schema';
 
 export function ResetPasswordForm() {
   const router = useRouter();
-  const { token } = useParams<{ token: string }>();
+  const searchParams = useSearchParams();
 
   const {
     handleSubmitWithAction,
@@ -39,7 +39,7 @@ export function ResetPasswordForm() {
   return (
     <div>
       <form onSubmit={handleSubmitWithAction}>
-        <input type="hidden" value={token} {...register('token')} />
+        <input type="hidden" value={searchParams.get('token') || ''} {...register('token')} />
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="password">Password</Label>

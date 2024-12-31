@@ -1,90 +1,51 @@
-import { verifyPasswordHash } from '@/lib/auth/password';
+import { sendEmail } from '@/emails';
+import ResetPasswordLink from '@/emails/reset-password-link';
+import VerifyEmail from '@/emails/verify-email';
 import client from '@/lib/db';
-import { MongoDBAdapter } from '@auth/mongodb-adapter';
-import NextAuth, { AuthError } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import Google from 'next-auth/providers/google';
-import { cache } from 'react';
-import authConfig from './auth.config';
-import { getDefaultUserRole } from './utils';
+import { betterAuth } from 'better-auth';
+import { mongodbAdapter } from 'better-auth/adapters/mongodb';
+import { nextCookies } from 'better-auth/next-js';
+import { admin } from 'better-auth/plugins';
 
-declare module 'next-auth' {
-  interface User {
-    role?: string;
-  }
-}
-
-const {
-  auth: uncachedAuth,
-  handlers,
-  signIn,
-  signOut
-} = NextAuth({
-  adapter: MongoDBAdapter(client, {
-    databaseName: process.env.MONGODB_DB_NAME
-  }),
-  session: { strategy: 'jwt' },
-  ...authConfig,
-  providers: [
-    Google({
-      allowDangerousEmailAccountLinking: true
-    }),
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        email: { type: 'email' },
-        password: { type: 'password' }
-      },
-      async authorize(credentials) {
-        const { email, password } = credentials as any;
-
-        if (!email || !password) {
-          throw new AuthError('Email and password are required');
-        }
-
-        const user = await client.db(process.env.MONGODB_DB_NAME).collection('users').findOne({ email: email });
-
-        if (!user || !user.password) {
-          throw new AuthError('Please provide an email and password.');
-        }
-
-        const passwordMatch = verifyPasswordHash(user.password, password);
-
-        if (!passwordMatch) {
-          throw new AuthError('Password is incorrect.');
-        }
-
-        if (!user.emailVerified) {
-          throw new AuthError('Please verify your email address.');
-        }
-
-        return {
-          id: user.id,
-          name: user.name,
+export const auth = betterAuth({
+  database: mongodbAdapter(client.db(process.env.MONGODB_DB_NAME)),
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: true,
+    autoSignIn: false,
+    sendResetPassword: async ({ user, url }) => {
+      await sendEmail({
+        subject: `Password reset instructions`,
+        email: user.email,
+        react: ResetPasswordLink({
           email: user.email,
-          image: user?.image || '',
-          role: user?.role || ''
-        };
-      }
-    })
-  ],
-  events: {
-    async createUser({ user }) {
-      // Important: run only with OAuth callback, not run in credentials provider.
-      // Create role to database.
-      const role = getDefaultUserRole(user.email);
-
-      // Update role to database.
-      await client.db(process.env.MONGODB_DB_NAME).collection('users').updateOne(
-        {
-          email: user.email
-        },
-        { $set: { role } }
-      );
+          url: url
+        })
+      });
     }
-  }
+  },
+  socialProviders: {
+    google: {
+      clientId: process.env.BETTER_AUTH_GOOGLE_ID as string,
+      clientSecret: process.env.BETTER_AUTH_GOOGLE_SECRET as string
+    }
+  },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendEmail({
+        subject: `Verify your account`,
+        email: user.email,
+        react: VerifyEmail({
+          email: user.email,
+          url
+        })
+      });
+    }
+  },
+  account: {
+    accountLinking: {
+      trustedProviders: ['google']
+    }
+  },
+  plugins: [nextCookies(), admin()]
 });
-
-const auth = cache(uncachedAuth);
-
-export { auth, handlers, signIn, signOut };

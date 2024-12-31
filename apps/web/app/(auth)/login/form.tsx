@@ -1,5 +1,6 @@
 'use client';
 
+import { signIn } from '@/lib/auth/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 import { Button, Input, Label } from '@repo/ui';
@@ -8,7 +9,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
-import { googleLoginAction, loginAction } from './actions';
+import { loginAction } from './actions';
 import { schema } from './schema';
 
 export function LoginForm() {
@@ -90,7 +91,17 @@ export function LoginForm() {
       </form>
 
       <div className="flex flex-col items-center pt-0">
-        <Button variant="secondary" onClick={googleLoginAction} text="Sign in with Google" icon={<Google className="size-4" />} />
+        <Button
+          variant="secondary"
+          onClick={() =>
+            signIn.social({
+              provider: 'google',
+              callbackURL: '/dashboard'
+            })
+          }
+          text="Sign in with Google"
+          icon={<Google className="size-4" />}
+        />
       </div>
     </div>
   );

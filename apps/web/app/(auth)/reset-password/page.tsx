@@ -1,40 +1,21 @@
-import client from '@/lib/db';
-import { InputPassword } from '@repo/ui';
-import { createHash } from 'crypto';
 import { ResetPasswordForm } from './form';
 
 export const runtime = 'nodejs';
 
 interface Props {
-  params: Promise<{
-    token: string;
+  searchParams: Promise<{
+    error: string;
   }>;
 }
 
-const isValidToken = async (token: string) => {
-  const hashedToken = createHash('sha256').update(token).digest('hex');
-
-  const result = await client
-    .db(process.env.MONGODB_DB_NAME)
-    .collection('passwordResetToken')
-    .findOne({ token: hashedToken, expiresAt: { $gt: new Date() } });
-
-  return !!result;
-};
-
-export default async function Page({ params }: Props) {
-  const { token } = await params;
-
-  const isValid = await isValidToken(token);
+export default async function Page({ searchParams }: Props) {
+  const { error } = await searchParams;
 
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-gray-100">
       <div className="shadow-xs flex w-full max-w-sm flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-6">
-        {!isValid ? (
+        {error ? (
           <div className="flex flex-col items-center space-y-2">
-            <div className="flex size-12 items-center justify-center rounded-xl border border-gray-200 bg-gray-50">
-              <InputPassword className="size-5 text-gray-800" />
-            </div>
             <h1 className="text-center text-lg font-semibold text-gray-800">Invalid Reset Token</h1>
             <p className="text-center text-sm text-gray-500">The password reset token is invalid or expired. Please request a new one.</p>
           </div>

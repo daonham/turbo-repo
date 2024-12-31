@@ -28,7 +28,7 @@ import {
   SidebarTrigger
 } from '@repo/ui';
 
-import { logoutAction } from '@/app/dashboard/actions';
+import { signOut, useSession } from '@/lib/auth/client';
 import {
   Activity,
   Bolt,
@@ -49,9 +49,8 @@ import {
   Users,
   Workflow
 } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Fragment } from 'react';
 
 const data = {
@@ -177,6 +176,8 @@ const data = {
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
   const { data: session } = useSession();
 
   const pathname = usePathname();
@@ -359,7 +360,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </DropdownMenuItem>
                   ))}
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logoutAction} className="cursor-pointer gap-2 rounded-md p-2 text-red-600 hover:bg-gray-200">
+                  <DropdownMenuItem
+                    onClick={() =>
+                      signOut({
+                        fetchOptions: {
+                          onSuccess: () => {
+                            router.push('/login'); // redirect to login page
+                          }
+                        }
+                      })
+                    }
+                    className="cursor-pointer gap-2 rounded-md p-2 text-red-600 hover:bg-gray-200"
+                  >
                     <LogOut className="size-4" />
                     <span className="truncate text-sm">Logout</span>
                   </DropdownMenuItem>
