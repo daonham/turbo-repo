@@ -28,7 +28,7 @@ import {
   SidebarTrigger
 } from '@repo/ui';
 
-import { signOut } from '@/lib/auth/client';
+import { authClient } from '@/lib/auth/client';
 import {
   Activity,
   Bolt,
@@ -360,7 +360,7 @@ export default function AdminLayout({ user, children }: { user: any; children: R
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={() =>
-                      signOut({
+                      authClient.signOut({
                         fetchOptions: {
                           onSuccess: () => {
                             router.push('/login'); // redirect to login page

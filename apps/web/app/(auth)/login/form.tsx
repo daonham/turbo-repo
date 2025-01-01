@@ -1,6 +1,6 @@
 'use client';
 
-import { signIn } from '@/lib/auth/client';
+import { authClient } from '@/lib/auth/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 import { Button, Input, Label } from '@repo/ui';
@@ -94,7 +94,7 @@ export function LoginForm() {
         <Button
           variant="secondary"
           onClick={() =>
-            signIn.social({
+            authClient.signIn.social({
               provider: 'google',
               callbackURL: searchParams.get('from') || '/dashboard'
             })
