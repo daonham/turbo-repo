@@ -42,7 +42,7 @@ export function LoginForm() {
   });
 
   useEffect(() => {
-    // If next-auth callback error. set error page in next-auth options
+    // If provider login callback error.
     const error = searchParams?.get('error');
     if (error) {
       toast.error('An unexpected error occurred. Please try again later.');
@@ -96,7 +96,7 @@ export function LoginForm() {
           onClick={() =>
             signIn.social({
               provider: 'google',
-              callbackURL: '/dashboard'
+              callbackURL: searchParams.get('from') || '/dashboard'
             })
           }
           text="Sign in with Google"
