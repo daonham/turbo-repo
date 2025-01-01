@@ -11,6 +11,10 @@ export default async function Layout({
     headers: await headers()
   });
 
+  if (!session) {
+    return <div>Not authenticated</div>;
+  }
+
   return (
     <div className="size-full bg-white">
       <AdminLayout user={session?.user}>{children}</AdminLayout>
