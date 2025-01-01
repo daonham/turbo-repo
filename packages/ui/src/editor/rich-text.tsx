@@ -412,7 +412,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
             icon={<Code className="size-4" />}
             onClick={(e) => {
               e.preventDefault();
-              editor.chain().focus().setCode().run();
+              editor.chain().focus().toggleCode().run();
             }}
             isActive={editor.isActive('code')}
           />
