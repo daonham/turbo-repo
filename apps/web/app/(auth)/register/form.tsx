@@ -21,7 +21,7 @@ export function RegisterForm() {
     },
     actionProps: {
       onSuccess: () => {
-        toast.success('Please verify your email address');
+        toast.success('Please check your email to verify your account before logging in.');
       },
       onError: ({ error }) => {
         if (error?.serverError) {
