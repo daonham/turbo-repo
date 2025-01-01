@@ -1,7 +1,7 @@
 import { createAuthClient } from 'better-auth/react';
 import { toast } from 'sonner';
 
-export const { signIn, signUp, signOut, useSession, forgetPassword, resetPassword } = createAuthClient({
+export const { signIn, signUp, signOut, useSession } = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_APP_URL,
   fetchOptions: {
     onError: async (context) => {

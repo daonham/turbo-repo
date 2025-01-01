@@ -39,7 +39,7 @@ export function ResetPasswordForm() {
   return (
     <div>
       <form onSubmit={handleSubmitWithAction}>
-        <input type="hidden" value={searchParams.get('token') || ''} {...register('token')} />
+        <Input type="hidden" value={searchParams.get('token') || ''} {...register('token')} error={errors.token?.message} />
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="password">Password</Label>

@@ -28,7 +28,7 @@ import {
   SidebarTrigger
 } from '@repo/ui';
 
-import { signOut, useSession } from '@/lib/auth/client';
+import { signOut } from '@/lib/auth/client';
 import {
   Activity,
   Bolt,
@@ -175,10 +175,8 @@ const data = {
   ]
 };
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({ user, children }: { user: any; children: React.ReactNode }) {
   const router = useRouter();
-
-  const { data: session } = useSession();
 
   const pathname = usePathname();
 
@@ -329,8 +327,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                       <Image src="/sophia.png" alt="Profile picture" width={32} height={32} />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-medium text-gray-800">{session?.user?.name}</span>
-                      <span className="truncate text-xs text-gray-500">{session?.user?.email}</span>
+                      <span className="truncate font-medium text-gray-800">{user?.name}</span>
+                      <span className="truncate text-xs text-gray-500">{user?.email}</span>
                     </div>
                     <ChevronRight className="ml-auto" />
                   </SidebarMenuButton>
@@ -344,7 +342,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 >
                   <div className="flex items-center gap-2 p-2">
                     <span className="flex-1 truncate text-xs text-gray-600">
-                      You login with role: <span className="font-medium text-gray-800">{session?.user?.role}</span>
+                      You login with role: <span className="font-medium text-gray-800">{user?.role}</span>
                     </span>
                   </div>
                   <DropdownMenuSeparator />

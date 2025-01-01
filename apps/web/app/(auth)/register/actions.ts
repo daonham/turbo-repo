@@ -14,6 +14,10 @@ export const registerAction = actionClient.schema(schema).action(async ({ parsed
     throw new Error('Too many requests. Please try again later.');
   }
 
+  if (email.includes('+') && email.endsWith('@gmail.com')) {
+    throw new Error('Email addresses with + are not allowed. Please use your work email instead.');
+  }
+
   await auth.api.signUpEmail({
     body: {
       email,
