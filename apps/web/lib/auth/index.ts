@@ -47,5 +47,9 @@ export const auth = betterAuth({
       trustedProviders: ['google']
     }
   },
-  plugins: [nextCookies(), admin()]
+  plugins: [nextCookies(), admin()],
+  rateLimit: {
+    window: 10, // time window in seconds
+    max: 100 // max requests in the window
+  }
 });
