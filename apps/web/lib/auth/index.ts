@@ -2,8 +2,10 @@ import { sendEmail } from '@/emails';
 import ResetPasswordLink from '@/emails/reset-password-link';
 import VerifyEmail from '@/emails/verify-email';
 import client from '@/lib/db';
+import { isStoraged, storage } from '@/lib/storage';
 import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
+import { createAuthMiddleware } from 'better-auth/api';
 import { nextCookies } from 'better-auth/next-js';
 import { admin } from 'better-auth/plugins';
 
@@ -47,6 +49,17 @@ export const auth = betterAuth({
       enabled: true,
       trustedProviders: ['google']
     }
+  },
+  hooks: {
+    after: createAuthMiddleware(async (ctx) => {
+      if (ctx.path.startsWith('/callback/:id')) {
+        const newSession = ctx.context.newSession;
+        if (newSession?.user?.image && !isStoraged(newSession?.user?.image)) {
+          const { url } = await storage.upload(`avatars/${newSession.user.id}`, newSession.user.image);
+          await ctx.context.internalAdapter.updateUser(newSession.user.id, { image: url });
+        }
+      }
+    })
   },
   plugins: [nextCookies(), admin()],
   rateLimit: {
