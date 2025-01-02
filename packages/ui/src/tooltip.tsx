@@ -42,7 +42,7 @@ export function Tooltip({
           sideOffset={8}
           side={side}
           className={cn(
-            'z-99 items-center overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-md',
+            'z-99 items-center overflow-hidden rounded-md border border-gray-700 bg-gray-800 shadow-md',
             side === 'top' && 'animate-slide-up-fade',
             side === 'right' && 'animate-slide-right-fade',
             side === 'bottom' && 'animate-slide-down-fade',
@@ -53,7 +53,7 @@ export function Tooltip({
           {...rest}
         >
           {typeof content === 'string' ? (
-            <span className="block max-w-xs text-pretty px-2.5 py-1.5 text-center text-sm text-white">{content}</span>
+            <span className="block max-w-xs text-pretty px-2 py-1 text-center text-xs font-medium leading-normal text-white">{content}</span>
           ) : (
             content
           )}

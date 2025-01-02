@@ -1,29 +1,22 @@
 import { TagSelect } from '@/components/ui/post/tag-select';
 import { uploadCloud } from '@/lib/api/storage';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, FileUpload, Input, Label, Popover, RichText, Tooltip } from '@repo/ui';
 import { cn, formatBytes } from '@repo/utils';
+import slugify from '@sindresorhus/slugify';
 import { Command } from 'cmdk';
-import { Check, ChevronDown, HelpCircle, X } from 'lucide-react';
+import { Check, ChevronDown, HelpCircle, Shuffle, X } from 'lucide-react';
 import { useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { z } from 'zod';
+import { schema } from './schema';
 
-export interface FormProps {
-  status: 'draft' | 'published' | string;
-  title: string;
-  featureImage: {
-    file: File | null;
-    src: string;
-  };
-  content: string;
-  tags: {
-    id: string;
-    name: string;
-  }[];
-}
+type FormProps = z.infer<typeof schema>;
 
 const DEFAULT_FORM_PROPS = {
   status: 'draft',
   title: '',
+  slug: '',
   featureImage: {
     file: null,
     src: ''
@@ -38,6 +31,7 @@ type Props = {
 
 export function Form(props: Props) {
   const form = useForm<FormProps>({
+    resolver: zodResolver(schema),
     defaultValues: props?.form || DEFAULT_FORM_PROPS
   });
 
@@ -80,6 +74,7 @@ export function FormInner(props: Props) {
                   error={errors.title?.message}
                 />
               </div>
+              <Link />
               <FeaturedImage />
               <div className="flex flex-col space-y-2">
                 <Label htmlFor="content">Content</Label>
@@ -109,6 +104,56 @@ export function FormInner(props: Props) {
         </div>
       </div>
     </form>
+  );
+}
+
+function Link() {
+  const {
+    watch,
+    setValue,
+    register,
+    formState: { errors }
+  } = useFormContext<FormProps>();
+
+  return (
+    <div className="flex flex-col space-y-2">
+      <div className="flex items-end justify-between">
+        <Label>Link</Label>
+        <button
+          className="flex cursor-pointer items-center gap-1 text-xs text-gray-500 hover:text-gray-700"
+          type="button"
+          onClick={() => setValue('slug', slugify(watch('title')))}
+        >
+          <Shuffle className="size-3" />
+          Generate
+        </button>
+      </div>
+      <div>
+        <div
+          className={cn(
+            'flex w-full items-center overflow-hidden rounded-md border border-gray-300',
+            errors.slug?.message && 'border-red-500 focus:border-red-500 focus:ring-red-500'
+          )}
+        >
+          <div className="flex h-full flex-col border-r border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-700">{`${process.env.NEXT_PUBLIC_APP_URL?.replace(/^https?:\/\//, '')}/blog/`}</div>
+          <div className="flex-1">
+            <Input
+              className="max-w-none border-none ring-0"
+              type="text"
+              placeholder="Enter your link"
+              autoComplete="off"
+              autoCapitalize="none"
+              {...register('slug')}
+            />
+          </div>
+        </div>
+        {errors.slug?.message && (
+          <span className="mt-2 block text-sm text-red-500" role="alert" aria-live="assertive">
+            {errors.slug?.message}
+          </span>
+        )}
+      </div>
+    </div>
   );
 }
 

@@ -796,9 +796,5 @@ function Button({ tooltip, className, isActive, icon, ...props }: React.Componen
 }
 
 function TooltipWrapper({ tooltip, children }: React.ComponentProps<'button'> & ButtonProps) {
-  return (
-    <Tooltip className="rounded-md border-gray-200 bg-gray-50 shadow-none" content={<div className="px-2 py-1 text-xs text-gray-500">{tooltip}</div>}>
-      {children}
-    </Tooltip>
-  );
+  return <Tooltip content={tooltip}>{children}</Tooltip>;
 }
