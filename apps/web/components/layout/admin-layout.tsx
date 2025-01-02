@@ -323,8 +323,14 @@ export default function AdminLayout({ user, children }: { user: any; children: R
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton size="lg" className="data-[state=open]:bg-gray-100 group-data-[collapsible=icon]:rounded-full">
-                    <div className="border-1 aspect-square size-8 items-center justify-center overflow-hidden rounded-full border-gray-200 bg-yellow-100">
-                      <Image src={user?.image || '/sophia.png'} alt={user?.name || 'Profile picture'} width={32} height={32} />
+                    <div className="aspect-square size-8">
+                      <Image
+                        className="border-1 size-full rounded-full border-gray-200 bg-yellow-100 object-cover object-center"
+                        src={user?.image || '/sophia.png'}
+                        alt={user?.name || 'Profile picture'}
+                        width={32}
+                        height={32}
+                      />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-medium text-gray-800">{user?.name}</span>
