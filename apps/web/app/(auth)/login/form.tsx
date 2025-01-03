@@ -66,7 +66,7 @@ export function LoginForm() {
             />
           </div>
           <div className="flex flex-col space-y-1.5">
-            <div className="flex justify-between">
+            <div className="flex items-end justify-between">
               <Label htmlFor="password">Password</Label>
               <Link
                 href={`/forgot-password?email=${encodeURIComponent(getValues('email') || '')}`}
