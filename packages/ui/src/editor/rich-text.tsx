@@ -435,6 +435,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
                 <form
                   className="flex items-center gap-2"
                   onSubmit={(e) => {
+                    e.stopPropagation();
                     e.preventDefault();
                     const target = e.currentTarget as HTMLFormElement;
                     const input = target[0] as HTMLInputElement;
@@ -463,7 +464,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
                         setOpenLink(false);
                       }}
                       variant="secondary"
-                      text="Unset link"
+                      text="Unset"
                       className="h-8 w-auto gap-1 px-3 hover:text-red-600"
                       icon={<Trash className="h-3 w-3" />}
                     />
@@ -471,7 +472,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
                     <ButtonComponent
                       type="submit"
                       variant="secondary"
-                      text="Set link"
+                      text="Enter"
                       className="h-8 w-auto gap-1 bg-gray-100 px-3 hover:bg-gray-200"
                       icon={<LinkIcon className="h-3 w-3" />}
                     />
@@ -556,6 +557,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
                     <form
                       className="flex flex-col gap-2"
                       onSubmit={async (e) => {
+                        e.stopPropagation();
                         e.preventDefault();
 
                         const target = e.currentTarget as HTMLFormElement;
