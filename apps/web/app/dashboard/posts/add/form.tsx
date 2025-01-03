@@ -23,7 +23,7 @@ const DEFAULT_FORM_PROPS = {
   },
   content: '',
   tags: []
-};
+} as FormProps;
 
 type Props = {
   form?: FormProps;
@@ -109,8 +109,8 @@ export function FormInner(props: Props) {
 
 function Link() {
   const {
-    watch,
     setValue,
+    getValues,
     register,
     formState: { errors }
   } = useFormContext<FormProps>();
@@ -122,7 +122,7 @@ function Link() {
         <button
           className="flex cursor-pointer items-center gap-1 text-xs text-gray-500 hover:text-gray-700"
           type="button"
-          onClick={() => setValue('slug', slugify(watch('title')))}
+          onClick={() => setValue('slug', slugify(getValues('title')))}
         >
           <Shuffle className="size-3" />
           Generate

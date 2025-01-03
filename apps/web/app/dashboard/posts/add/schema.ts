@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const schema = z.object({
+  status: z.enum(['draft', 'published']),
   title: z.string().nonempty({
     message: 'Title is required.'
   }),
