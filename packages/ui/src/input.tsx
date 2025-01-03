@@ -18,7 +18,7 @@ const Input: React.FC<
           ref={ref}
           type={isPasswordVisible ? 'text' : type}
           className={cn(
-            'w-full max-w-md rounded-md border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-600 focus:outline-none focus:ring-gray-600 sm:text-sm',
+            'w-full max-w-md rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-600 focus:outline-none focus:ring-gray-600 sm:text-sm',
             error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
             className
           )}
@@ -26,17 +26,9 @@ const Input: React.FC<
         />
 
         <div className="group">
-          {error && (
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex flex-none items-center px-2.5">
-              <AlertCircle className={cn('size-5 text-white', type === 'password' && 'transition-opacity group-hover:opacity-0')} fill="#ef4444" />
-            </div>
-          )}
           {type === 'password' && (
             <button
-              className={cn(
-                'absolute inset-y-0 right-0 flex cursor-pointer items-center px-3',
-                error && 'opacity-0 transition-opacity group-hover:opacity-100'
-              )}
+              className="absolute inset-y-0 right-0 flex cursor-pointer items-center px-3"
               type="button"
               onClick={() => toggleIsPasswordVisible()}
               aria-label={isPasswordVisible ? 'Hide password' : 'Show Password'}
@@ -52,9 +44,10 @@ const Input: React.FC<
       </div>
 
       {error && (
-        <span className="mt-2 block text-sm text-red-500" role="alert" aria-live="assertive">
-          {error}
-        </span>
+        <div className="mt-2 flex gap-1 text-sm text-red-500" role="alert" aria-live="assertive">
+          <AlertCircle className="mt-0.5 size-4 text-red-500" />
+          <span className="flex-1">{error}</span>
+        </div>
       )}
     </div>
   );

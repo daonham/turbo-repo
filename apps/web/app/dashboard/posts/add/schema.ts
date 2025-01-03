@@ -13,17 +13,21 @@ export const schema = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
       message: 'Invalid link format.'
     }),
-  featureImage: z.object({
-    file: z.any(),
-    src: z.string().optional()
-  }),
+  featureImage: z
+    .object({
+      file: z.any(),
+      src: z.string()
+    })
+    .optional(),
   content: z.string().nonempty({
     message: 'Content is required.'
   }),
-  tags: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string()
-    })
-  )
+  tags: z
+    .array(
+      z.object({
+        id: z.string(),
+        name: z.string()
+      })
+    )
+    .optional()
 });

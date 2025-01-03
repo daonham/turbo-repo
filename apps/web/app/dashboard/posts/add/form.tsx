@@ -5,7 +5,7 @@ import { Button, FileUpload, Input, Label, Popover, RichText, Tooltip } from '@r
 import { cn, formatBytes } from '@repo/utils';
 import slugify from '@sindresorhus/slugify';
 import { Command } from 'cmdk';
-import { Check, ChevronDown, HelpCircle, Shuffle, X } from 'lucide-react';
+import { AlertCircle, Check, ChevronDown, HelpCircle, Shuffle, X } from 'lucide-react';
 import { useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { z } from 'zod';
@@ -51,13 +51,12 @@ export function FormInner(props: Props) {
     setValue,
     setError,
     clearErrors,
+    getValues,
     formState: { isDirty, isSubmitting, isSubmitSuccessful, errors }
   } = useFormContext<FormProps>();
 
-  const [content, setContent] = useState<string>('');
-
   return (
-    <form onSubmit={handleSubmit((data) => null)}>
+    <form onSubmit={handleSubmit((data) => console.log('formData', data))}>
       <div className="grid w-full grid-cols-[auto_320px] gap-6">
         <div className="w-full">
           <div className="">
@@ -79,13 +78,19 @@ export function FormInner(props: Props) {
               <div className="flex flex-col space-y-2">
                 <Label htmlFor="content">Content</Label>
                 <RichText
-                  value={content}
-                  onChange={setContent}
+                  className={cn('min-h-80', errors.content?.message && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
+                  value={watch('content')}
+                  onChange={(content: string) => setValue('content', content)}
                   isStickyToolbar={true}
-                  className="min-h-80"
                   classEditorContent="h-full"
                   onUploadImage={async (url: string) => uploadCloud({ image: url, path: 'posts' })}
                 />
+                {errors.content?.message && (
+                  <div className="mt-2 flex gap-1 text-sm text-red-500" role="alert" aria-live="assertive">
+                    <AlertCircle className="mt-0.5 size-4 text-red-500" />
+                    <span className="flex-1">{errors.content.message}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -148,9 +153,10 @@ function Link() {
           </div>
         </div>
         {errors.slug?.message && (
-          <span className="mt-2 block text-sm text-red-500" role="alert" aria-live="assertive">
-            {errors.slug?.message}
-          </span>
+          <div className="mt-2 flex gap-1 text-sm text-red-500" role="alert" aria-live="assertive">
+            <AlertCircle className="mt-0.5 size-4 text-red-500" />
+            <span className="flex-1">{errors.slug.message}</span>
+          </div>
         )}
       </div>
     </div>
