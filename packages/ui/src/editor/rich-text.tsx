@@ -27,6 +27,7 @@ import {
   Info,
   Italic,
   Link as LinkIcon,
+  List,
   ListOrdered,
   LucideIcon,
   Redo,
@@ -164,7 +165,7 @@ const items: SelectorItem[] = [
   },
   {
     name: 'Bullet List',
-    icon: ListOrdered,
+    icon: List,
     command: (editor) => editor.chain().focus().clearNodes().toggleBulletList().run(),
     isActive: (editor) => editor.isActive('bulletList')
   },
