@@ -177,6 +177,7 @@ function FeaturedImage() {
           uploadClassName="bg-gray-50"
           iconClassName="w-5 h-5"
           variant="plain"
+          showHoverOverlay={false}
           imageSrc={watch('featureImage')?.src}
           readFile
           onChange={({ src, file }: { src: string; file: File }) => {

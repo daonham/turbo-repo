@@ -20,7 +20,7 @@ export default function PageContent({
   const hasDescription = !!description;
 
   return (
-    <div className={cn('bg-white', containerClassName)}>
+    <div className={cn('bg-white pt-3', containerClassName)}>
       <MaxWidthWrapper className={cn('my-0', headerClassName, (hasTitle || hasDescription) && 'md:py-3')}>
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
