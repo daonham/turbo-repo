@@ -140,7 +140,7 @@ function Link() {
             errors.slug?.message && 'border-red-500 focus:border-red-500 focus:ring-red-500'
           )}
         >
-          <div className="flex h-full flex-col border-r border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-700">{`${process.env.NEXT_PUBLIC_APP_URL?.replace(/^https?:\/\//, '')}/blog/`}</div>
+          <div className="flex h-full flex-col border-r border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-500">{`${process.env.NEXT_PUBLIC_APP_URL?.replace(/^https?:\/\//, '')}/blog/`}</div>
           <div className="flex-1">
             <Input
               className="max-w-none border-none ring-0"
@@ -227,7 +227,7 @@ function Status() {
         content={
           <Command defaultValue={watch('status')} tabIndex={0} loop className="focus:outline-none">
             <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[160px]">
-              {['draft', 'published'].map((status) => (
+              {['draft', 'published'].map((status: any) => (
                 <Command.Item
                   key={status}
                   value={status}
