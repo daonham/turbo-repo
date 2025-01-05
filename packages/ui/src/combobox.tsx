@@ -1,12 +1,11 @@
 import { cn } from '@repo/utils';
 import { Command, CommandInput, CommandItem, useCommandState } from 'cmdk';
 import { Check, ChevronDown, Plus } from 'lucide-react';
-import { useMotionValueEvent, useScroll } from 'motion/react';
 import { HTMLProps, isValidElement, PropsWithChildren, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatedSizeContainer } from './animated-size-container';
 import { Button, ButtonProps } from './button';
 import { Checkbox } from './checkbox';
-import { useMediaQuery, useResizeObserver } from './hooks';
+import { useMediaQuery, useScrollProgress } from './hooks';
 import { Icon, LoadingSpinner } from './icons';
 import { Popover, PopoverProps } from './popover';
 
@@ -248,41 +247,17 @@ export function Combobox({
 
 const Scroll = ({ children }: PropsWithChildren) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [opacity, setOpacity] = useState(1);
-
-  const { scrollYProgress } = useScroll({
-    container: ref,
-    offset: ['end end', 'start start']
-  });
-
-  const resizeObserverEntry = useResizeObserver(ref);
-
-  // when search
-  useEffect(() => {
-    if (ref.current) {
-      const { clientHeight, scrollHeight } = ref.current;
-
-      if (scrollHeight <= clientHeight) {
-        setOpacity(0);
-      } else {
-        setOpacity(scrollYProgress.get());
-      }
-    }
-  }, [resizeObserverEntry, scrollYProgress]);
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    setOpacity(latest);
-  });
+  const { scrollProgress, updateScrollProgress } = useScrollProgress(ref);
 
   return (
     <>
-      <div className="scrollbar-hide max-h-[min(50vh,250px)] w-screen overflow-y-scroll sm:w-auto" ref={ref}>
+      <div ref={ref} onScroll={updateScrollProgress} className="scrollbar-hide max-h-[min(50vh,250px)] w-screen overflow-y-scroll sm:w-auto">
         {children}
       </div>
       {/* Bottom scroll fade */}
       <div
         className="pointer-events-none absolute bottom-0 left-0 hidden h-16 w-full rounded-b-lg bg-gradient-to-t from-white sm:block"
-        style={{ opacity: opacity }}
+        style={{ opacity: 1 - Math.pow(scrollProgress, 2) }}
       ></div>
     </>
   );
