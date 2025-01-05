@@ -521,7 +521,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
                 <div className="p-2">
                   {imageType === 'upload' && (
                     <FileUpload
-                      accept="images"
+                      accept={{ 'image/*': [] }}
                       className="flex items-center gap-3"
                       contentClassName="h-15 w-15 rounded-md border border-gray-100"
                       uploadClassName="bg-gray-50"
@@ -530,19 +530,20 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
                       imageSrc={editor.getAttributes('image')?.src || ''}
                       loading={imageLoading}
                       readFile
-                      onChange={async ({ src, file }: { src: string; file: File }) => {
-                        let url = src;
+                      multiple={false}
+                      onChange={async (data: { file: File; src?: string }[]) => {
+                        let url = data[0]?.src || '';
 
-                        if (onUploadImage) {
+                        if (onUploadImage && data[0]?.src) {
                           setImageLoading(true);
-                          url = await onUploadImage(src);
+                          url = await onUploadImage(data[0]?.src);
                           setImageLoading(false);
                         }
 
                         editor
                           .chain()
                           .focus()
-                          .setImage({ src: url, alt: file.name || '' })
+                          .setImage({ src: url, alt: data[0]?.file.name || '' })
                           .run();
                         setOpenImage(false);
                       }}

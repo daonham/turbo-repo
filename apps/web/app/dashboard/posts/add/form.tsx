@@ -171,7 +171,6 @@ function FeaturedImage() {
       <Label>Featured Image</Label>
       <div className="relative">
         <FileUpload
-          accept="images"
           className="flex items-center gap-3 rounded-md border border-dashed border-gray-300 p-4"
           contentClassName="h-15 w-15 rounded-md border border-gray-100"
           uploadClassName="bg-gray-50"
@@ -180,11 +179,11 @@ function FeaturedImage() {
           showHoverOverlay={false}
           imageSrc={watch('featureImage')?.src}
           readFile
-          onChange={({ src, file }: { src: string; file: File }) => {
-            setValue('featureImage', { src, file });
-          }}
-          content={null}
+          multiple={false}
           maxFileSizeMB={2}
+          onChange={(data: { file: File; src?: string }[]) => {
+            setValue('featureImage', { src: data[0]?.src || '', file: data[0]?.file });
+          }}
         >
           <div className="flex flex-col gap-1">
             <div className="text-sm">{watch('featureImage')?.file?.name ?? 'Choose a file or drag & drop it here'}</div>

@@ -1,19 +1,10 @@
 import { cn } from '@repo/utils';
 import { cva, VariantProps } from 'class-variance-authority';
 import { CloudUpload } from 'lucide-react';
-import { DragEvent, ReactNode, useState } from 'react';
+import { ReactNode, useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 import { LoadingCircle } from './icons';
-
-type AcceptedFileFormats = 'any' | 'images';
-
-const acceptFileTypes: Record<AcceptedFileFormats, { types: string[]; errorMessage?: string }> = {
-  any: { types: [] },
-  images: {
-    types: ['image/png', 'image/jpeg'],
-    errorMessage: 'File type not supported (.png or .jpg only)'
-  }
-};
 
 const imageUploadVariants = cva(
   'relative isolate flex aspect-[1200/630] w-full flex-col items-center justify-center overflow-hidden bg-white transition-all hover:bg-gray-50',
@@ -30,24 +21,13 @@ const imageUploadVariants = cva(
   }
 );
 
-type FileUploadReadFileProps =
-  | {
-      /**
-       * Whether to automatically read the file and return the result as `src` to onChange
-       */
-      readFile?: false;
-      onChange?: (data: { file: File }) => void;
-    }
-  | {
-      /**
-       * Whether to automatically read the file and return the result as `src` to onChange
-       */
-      readFile: true;
-      onChange?: (data: { file: File; src: string }) => void;
-    };
-
-export type FileUploadProps = FileUploadReadFileProps & {
-  accept: AcceptedFileFormats;
+export type FileUploadProps = {
+  accept: {
+    [key: string]: string[];
+  };
+  readFile?: boolean;
+  onChange?: (data: { file: File; src?: string }[]) => void;
+  multiple?: boolean;
   className?: string;
   uploadClassName?: string;
   iconClassName?: string;
@@ -100,7 +80,8 @@ export function FileUpload({
   contentClassName,
   previewClassName,
   customPreview,
-  accept = 'any',
+  accept,
+  multiple = false,
   imageSrc,
   loading = false,
   clickToUpload = true,
@@ -110,42 +91,42 @@ export function FileUpload({
   disabled = false,
   children
 }: FileUploadProps & { children?: ReactNode }) {
-  const [dragActive, setDragActive] = useState(false);
-  const [fileName, setFileName] = useState<string | null>(null);
-
-  const onFileChange = async (e: React.ChangeEvent<HTMLInputElement> | DragEvent) => {
-    const file = 'dataTransfer' in e ? e.dataTransfer.files && e.dataTransfer.files[0] : e.target.files && e.target.files[0];
-    if (!file) return;
-
-    setFileName(file.name);
-
-    if (maxFileSizeMB > 0 && file.size / 1024 / 1024 > maxFileSizeMB) {
-      toast.error(`File size too big (max ${maxFileSizeMB} MB)`);
-      return;
-    }
-
-    const acceptedTypes = acceptFileTypes[accept].types;
-
-    if (acceptedTypes.length && !acceptedTypes.includes(file.type)) {
-      toast.error(acceptFileTypes[accept].errorMessage ?? 'File type not supported');
-      return;
-    }
-
-    let fileToUse = file;
-
+  const onDropAccepted = useCallback(async (files: File[]) => {
     // File reading logic
     if (readFile) {
-      const reader = new FileReader();
-      reader.onload = (e) => onChange?.({ src: e.target?.result as string, file: fileToUse });
-      reader.readAsDataURL(fileToUse);
-      return;
+      const data: { src: string; file: File }[] = [];
+      try {
+        for (const file of files) {
+          const src = await readFileAsDataURL(file);
+          data.push({ src: src as string, file });
+        }
+      } catch (e: any) {
+        toast.error(e?.message || 'Failed to read file');
+        return;
+      }
+      onChange?.(data);
+    } else {
+      onChange?.(files.map((file) => ({ file })));
     }
+  }, []);
 
-    onChange?.({ file: fileToUse });
-  };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDropAccepted,
+    accept: accept || { 'image/*': [] },
+    noClick: !clickToUpload,
+    multiple: multiple,
+    maxSize: maxFileSizeMB * 1024 * 1024,
+    disabled: disabled,
+    onError: (e) => {
+      toast.error(e?.message || 'Failed to upload file');
+    },
+    onDropRejected: (fileRejections) => {
+      toast.error(fileRejections[0]?.errors[0]?.message || 'Failed to upload file');
+    }
+  });
 
   return (
-    <label className={cn('group relative', !disabled ? cn(clickToUpload && 'cursor-pointer') : 'cursor-not-allowed', className)}>
+    <div {...getRootProps()} className={cn('group relative', !disabled ? cn(clickToUpload && 'cursor-pointer') : 'cursor-not-allowed', className)}>
       <div className={cn(imageUploadVariants({ variant }), contentClassName)}>
         {loading && (
           <div className="z-1 absolute inset-0 flex items-center justify-center rounded-[inherit] bg-white">
@@ -156,7 +137,7 @@ export function FileUpload({
           className={cn(
             'absolute inset-0 flex flex-col items-center justify-center rounded-[inherit] border-2 border-transparent bg-white transition-all',
             disabled && 'bg-gray-50',
-            dragActive && !disabled && 'cursor-copy border-gray-700 bg-gray-50 opacity-100',
+            isDragActive && !disabled && 'cursor-copy border-gray-700 bg-gray-50 opacity-100',
             imageSrc ? cn('opacity-0', showHoverOverlay && !disabled && 'group-hover:opacity-100') : cn(!disabled && 'group-hover:bg-gray-50'),
             uploadClassName
           )}
@@ -164,7 +145,7 @@ export function FileUpload({
           <CloudUpload
             className={cn(
               'size-7 transition-all duration-75',
-              !disabled ? cn('text-gray-500 group-hover:scale-110 group-active:scale-95', dragActive ? 'scale-110' : 'scale-100') : 'text-gray-400',
+              !disabled ? cn('text-gray-500 group-hover:scale-110 group-active:scale-95', isDragActive ? 'scale-110' : 'scale-100') : 'text-gray-400',
               iconClassName
             )}
           />
@@ -172,44 +153,21 @@ export function FileUpload({
         </div>
         {imageSrc &&
           (customPreview ?? <img src={imageSrc} alt="Preview" className={cn('h-full w-full rounded-[inherit] object-cover', previewClassName)} />)}
-        {clickToUpload && (
-          <div className="sr-only mt-1 flex shadow-sm">
-            <input
-              key={fileName} // Gets us a fresh input every time a file is uploaded
-              type="file"
-              accept={acceptFileTypes[accept].types.join(',')}
-              onChange={onFileChange}
-              disabled={disabled}
-            />
-          </div>
-        )}
+        <div className="sr-only mt-1 flex shadow-sm">
+          <input {...getInputProps()} />
+        </div>
       </div>
-
-      <div
-        className="z-1 absolute inset-0"
-        onDragOver={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setDragActive(true);
-        }}
-        onDragEnter={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setDragActive(true);
-        }}
-        onDragLeave={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setDragActive(false);
-        }}
-        onDrop={async (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onFileChange(e);
-          setDragActive(false);
-        }}
-      />
       {children}
-    </label>
+    </div>
   );
+}
+
+function readFileAsDataURL(file: File) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error(`Failed to read file: ${file.name}`));
+    reader.onabort = () => reject(new Error(`File reading aborted: ${file.name}`));
+    reader.onload = (e) => resolve(e.target?.result);
+    reader.readAsDataURL(file);
+  });
 }
