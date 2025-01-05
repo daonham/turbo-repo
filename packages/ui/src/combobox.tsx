@@ -190,13 +190,15 @@ export function Combobox({
                           optionClassName
                         )}
                         onSelect={async () => {
-                          setIsCreating(true);
-                          const success = await onCreate?.(search);
-                          if (success) {
-                            setSearch('');
-                            setIsOpen(false);
+                          if (!isCreating) {
+                            setIsCreating(true);
+                            const success = await onCreate?.(search);
+                            if (success) {
+                              setSearch('');
+                              setIsOpen(false);
+                            }
+                            setIsCreating(false);
                           }
-                          setIsCreating(false);
                         }}
                       >
                         {isCreating ? <LoadingSpinner className="size-4 shrink-0" /> : <Plus className="size-4 shrink-0" />}
