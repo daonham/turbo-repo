@@ -98,9 +98,9 @@ export function TagSelect() {
         matchTriggerWidth
       >
         {selectedTags?.length > 0 ? (
-          <div className="my-px flex flex-wrap gap-2">
+          <div className="my-px flex flex-wrap gap-1.5">
             {selectedTags.slice(0, 10).map((tag) => (
-              <div className="border-1 rounded-xl border-gray-200 bg-gray-100 px-2 py-px" key={tag.value}>
+              <div className="border-1 py-1.25 rounded-xl border-gray-200 bg-gray-100 px-2 text-xs leading-none text-gray-600" key={tag.value}>
                 {tag.label}
               </div>
             ))}
