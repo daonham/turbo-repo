@@ -44,10 +44,17 @@ export function LoginForm() {
   useEffect(() => {
     // If provider login callback error.
     const error = searchParams?.get('error');
+
     if (error) {
-      toast.error('An unexpected error occurred. Please try again later.');
+      const timeout = setTimeout(() => {
+        toast.error('An unexpected error occurred. Please try again later.');
+      }, 500);
+
+      return () => {
+        clearTimeout(timeout);
+      };
     }
-  }, [searchParams]);
+  }, [searchParams, authClient]);
 
   return (
     <div>
