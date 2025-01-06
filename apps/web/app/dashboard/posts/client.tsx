@@ -1,6 +1,6 @@
 'use client';
 
-import MaxWidthWrapper from '@/components/layout/max-width-wrapper';
+import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
 import { Button, Table, useTable } from '@repo/ui';
 import { CirclePlus } from 'lucide-react';
 

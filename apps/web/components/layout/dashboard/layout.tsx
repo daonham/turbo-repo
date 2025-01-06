@@ -174,13 +174,12 @@ const data = {
   ]
 };
 
-export default function AdminLayout({ user, children }: { user: any; children: React.ReactNode }) {
+export default function AdminLayout({ defaultOpen, user, children }: { defaultOpen: boolean; user: any; children: React.ReactNode }) {
   const router = useRouter();
-
   const pathname = usePathname();
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={defaultOpen}>
       <Sidebar collapsible="icon">
         <SidebarHeader>
           <SidebarMenu>

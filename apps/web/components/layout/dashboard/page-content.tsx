@@ -35,7 +35,7 @@ export default function PageContent({
               <BreadcrumbList>
                 {breadcrumbs.map((breadcrumb, index) => (
                   <Fragment key={index}>
-                    <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbItem>
                       {breadcrumb.href ? (
                         <BreadcrumbLink href={breadcrumb.href}>{breadcrumb.name}</BreadcrumbLink>
                       ) : (
@@ -43,7 +43,7 @@ export default function PageContent({
                       )}
                     </BreadcrumbItem>
 
-                    {index < breadcrumbs.length - 1 && <BreadcrumbSeparator className="hidden md:block" />}
+                    {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
                   </Fragment>
                 ))}
               </BreadcrumbList>

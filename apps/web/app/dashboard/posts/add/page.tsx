@@ -1,4 +1,4 @@
-import PageContent from '@/components/layout/page-content';
+import PageContent from '@/components/layout/dashboard/page-content';
 import PageClient from './client';
 
 const breadcrumbs = [

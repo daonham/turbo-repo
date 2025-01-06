@@ -1,6 +1,6 @@
-import AdminLayout from '@/components/layout/admin-layout';
+import AdminLayout from '@/components/layout/dashboard/layout';
 import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export default async function Layout({
   children
@@ -15,9 +15,14 @@ export default async function Layout({
     return <div>Not authenticated</div>;
   }
 
+  const cookieStore = await cookies();
+  const defaultOpen = cookieStore.get('sidebar:state')?.value === 'true';
+
   return (
     <div className="size-full bg-white">
-      <AdminLayout user={session?.user}>{children}</AdminLayout>
+      <AdminLayout defaultOpen={defaultOpen} user={session?.user}>
+        {children}
+      </AdminLayout>
     </div>
   );
 }
