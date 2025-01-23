@@ -1,4 +1,4 @@
-@source "./**/*.{ts,tsx}";
+@source "./src";
 
 @plugin "tailwindcss-animate";
 
