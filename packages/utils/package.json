@@ -18,11 +18,11 @@
   "devDependencies": {
     "@repo/config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/ms": "^0.7.34",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
+    "@types/ms": "^2.1.0",
+    "@types/react": "19.0.7",
+    "@types/react-dom": "19.0.3",
     "tsup": "^8.3.5",
-    "typescript": "5.7.2"
+    "typescript": "5.7.3"
   },
   "dependencies": {
     "clsx": "^2.1.1",
