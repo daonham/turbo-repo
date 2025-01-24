@@ -18,7 +18,7 @@ const Input: React.FC<
           ref={ref}
           type={isPasswordVisible ? 'text' : type}
           className={cn(
-            'w-full max-w-md rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-600 focus:outline-none focus:ring-gray-600 sm:text-sm',
+            'focus:outline-hidden w-full max-w-md rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-600 focus:ring-gray-600 sm:text-sm',
             error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
             className
           )}

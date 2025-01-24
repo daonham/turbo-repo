@@ -48,7 +48,7 @@ export function Popover({
           {children}
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 z-50 bg-gray-100/50 bg-opacity-10 backdrop-blur" />
+          <Drawer.Overlay className="fixed inset-0 z-50 bg-gray-100/50 backdrop-blur" />
           <Drawer.Content
             className="fixed bottom-0 left-0 right-0 z-50 mt-24 rounded-t-[10px] border-t border-gray-200 bg-white"
             onEscapeKeyDown={onEscapeKeyDown}

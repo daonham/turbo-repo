@@ -202,7 +202,7 @@ const SidebarTrigger: React.FC<
       ref={ref}
       data-sidebar="trigger"
       className={cn(
-        'focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-800 focus-visible:outline-none',
+        'focus-visible:ring-ring focus-visible:outline-hidden inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-800',
         'h-7 w-7',
         className
       )}
@@ -240,7 +240,7 @@ const SidebarMenuItem: React.FC<React.ComponentProps<'li'>> = ({ ref, className,
 SidebarMenuItem.displayName = 'SidebarMenuItem';
 
 const sidebarMenuButtonVariants = cva(
-  'peer/menu-button data-[state=open]:text-gray-800 text-gray-600 cursor-pointer flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-gray-200 transition-[width,height,padding] hover:bg-gray-200 focus-visible:ring-1 active:bg-gray-200 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-gray-200 data-[active=true]:font-medium data-[active=true]:text-gray-800 data-[state=open]:hover:bg-gray-200 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span]:truncate [&>svg]:size-4 [&>svg]:shrink-0',
+  'peer/menu-button data-[state=open]:text-gray-800 text-gray-600 cursor-pointer flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden ring-gray-200 transition-[width,height,padding] hover:bg-gray-200 focus-visible:ring-1 active:bg-gray-200 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-gray-200 data-[active=true]:font-medium data-[active=true]:text-gray-800 data-[state=open]:hover:bg-gray-200 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span]:truncate [&>svg]:size-4 [&>svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -316,7 +316,7 @@ const SidebarGroupLabel: React.FC<React.ComponentProps<'div'> & { asChild?: bool
       ref={ref}
       data-sidebar="group-label"
       className={cn(
-        'flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-gray-500/80 outline-none ring-gray-200 transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
+        'outline-hidden flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-gray-500/80 ring-gray-200 transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
         'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
         className
       )}
@@ -359,7 +359,7 @@ const SidebarMenuSubButton: React.FC<
       data-size={size}
       data-active={isActive}
       className={cn(
-        'flex h-8 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-gray-600 outline-none ring-gray-200 hover:bg-gray-200 hover:text-gray-800 focus-visible:ring-2 active:bg-gray-200 active:text-gray-800 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-gray-800',
+        'outline-hidden flex h-8 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-gray-600 ring-gray-200 hover:bg-gray-200 hover:text-gray-800 focus-visible:ring-2 active:bg-gray-200 active:text-gray-800 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-gray-800',
         'data-[active=true]:bg-gray-200 data-[active=true]:text-gray-800',
         size === 'sm' && 'text-xs',
         size === 'md' && 'text-sm',
@@ -385,7 +385,7 @@ const SidebarMenuAction: React.FC<
       ref={ref}
       data-sidebar="menu-action"
       className={cn(
-        'absolute right-1 top-2 flex aspect-square w-5 cursor-pointer items-center justify-center rounded-sm p-0 text-gray-600 outline-none ring-gray-200 transition-transform hover:bg-gray-200 hover:text-gray-800 focus-visible:ring-2 peer-hover/menu-button:text-gray-800 [&>svg]:size-4 [&>svg]:shrink-0',
+        'outline-hidden absolute right-1 top-2 flex aspect-square w-5 cursor-pointer items-center justify-center rounded-sm p-0 text-gray-600 ring-gray-200 transition-transform hover:bg-gray-200 hover:text-gray-800 focus-visible:ring-2 peer-hover/menu-button:text-gray-800 [&>svg]:size-4 [&>svg]:shrink-0',
         // Increases the hit area of the button on mobile.
         'after:absolute after:-inset-2 after:md:hidden',
         'peer-data-[size=sm]/menu-button:top-1',

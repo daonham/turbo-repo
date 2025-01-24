@@ -225,7 +225,7 @@ function Status() {
         openPopover={isOpen}
         setOpenPopover={setIsOpen}
         content={
-          <Command defaultValue={watch('status')} tabIndex={0} loop className="focus:outline-none">
+          <Command defaultValue={watch('status')} tabIndex={0} loop className="focus:outline-hidden">
             <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[160px]">
               {['draft', 'published'].map((status: any) => (
                 <Command.Item

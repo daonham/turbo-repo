@@ -151,7 +151,7 @@ export function Combobox({
                 placeholder={searchPlaceholder}
                 value={search}
                 onValueChange={setSearch}
-                className={cn('grow border-0 py-3 pl-4 pr-2 outline-none placeholder:text-gray-400 focus:ring-0 sm:text-sm', inputClassName)}
+                className={cn('outline-hidden grow border-0 py-3 pl-4 pr-2 placeholder:text-gray-400 focus:ring-0 sm:text-sm', inputClassName)}
                 onKeyDown={(e) => {
                   if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
                     e.preventDefault();

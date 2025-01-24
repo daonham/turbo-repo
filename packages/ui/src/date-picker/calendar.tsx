@@ -67,7 +67,7 @@ function Calendar({
               <button
                 type="button"
                 className={cn(
-                  'flex h-7 w-7 shrink-0 cursor-pointer select-none items-center justify-center rounded border p-1 outline-none transition',
+                  'outline-hidden flex h-7 w-7 shrink-0 cursor-pointer select-none items-center justify-center rounded border p-1 transition',
                   'border-gray-200 text-gray-600 hover:text-gray-800',
                   'hover:bg-gray-50 active:bg-gray-100',
                   'disabled:pointer-events-none disabled:text-gray-400'
@@ -85,7 +85,7 @@ function Calendar({
               <button
                 type="button"
                 className={cn(
-                  'flex h-7 w-7 shrink-0 cursor-pointer select-none items-center justify-center rounded border p-1 outline-none transition',
+                  'outline-hidden flex h-7 w-7 shrink-0 cursor-pointer select-none items-center justify-center rounded border p-1 transition',
                   'border-gray-200 text-gray-600 hover:text-gray-800',
                   'hover:bg-gray-50 active:bg-gray-100',
                   'disabled:pointer-events-none disabled:text-gray-400'

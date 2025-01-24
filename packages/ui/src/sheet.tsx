@@ -55,7 +55,7 @@ const SheetContent: React.FC<React.ComponentProps<typeof SheetPrimitive.Content>
     <SheetOverlay />
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       {children}
-      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100">
+      <SheetPrimitive.Close className="focus:outline-hidden absolute right-4 top-4 rounded-sm opacity-70 ring-white transition-opacity hover:opacity-100 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>

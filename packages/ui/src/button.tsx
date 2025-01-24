@@ -10,7 +10,7 @@ export const buttonVariants = cva(
       variant: {
         primary: 'border-black bg-black text-white hover:bg-gray-800 hover:ring-4 hover:ring-gray-200',
         secondary: cn(
-          'border-gray-200 bg-white text-gray-900 hover:bg-gray-50 focus-visible:border-gray-500 outline-none',
+          'border-gray-200 bg-white text-gray-900 hover:bg-gray-50 focus-visible:border-gray-500 outline-hidden',
           'data-[state=open]:border-gray-500 data-[state=open]:ring-4 data-[state=open]:ring-gray-200'
         ),
         outline: 'border-transparent text-gray-500 duration-75 hover:bg-gray-100',
@@ -71,7 +71,7 @@ const Button: React.FC<ButtonProps> = ({
         type={props.type || (props.onClick ? 'button' : 'submit')}
         className={cn(
           buttonVariants({ variant }),
-          'disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 disabled:outline-none disabled:ring-0',
+          'disabled:outline-hidden disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 disabled:ring-0',
           className
         )}
         disabled={disabled}

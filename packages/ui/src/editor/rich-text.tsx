@@ -95,7 +95,7 @@ export function RichText({
     ],
     editorProps: {
       attributes: {
-        class: cn('prose px-5 my-5 focus:outline-none overflow-y-auto max-w-full h-28', classEditorContent),
+        class: cn('prose px-5 my-5 focus:outline-hidden overflow-y-auto max-w-full h-28', classEditorContent),
         style: stylesEditorContent || '',
         autocomplete: 'off',
         autocorrect: 'off',
@@ -324,7 +324,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
             setOpenPopover={setOpenNode}
             align="start"
             content={
-              <Command defaultValue={activeNodeItem.name} tabIndex={0} loop className="focus:outline-none">
+              <Command defaultValue={activeNodeItem.name} tabIndex={0} loop className="focus:outline-hidden">
                 <Command.List className="flex w-screen flex-col gap-1 px-1 py-0 text-sm sm:w-auto sm:min-w-[160px]">
                   {items.map((item) => (
                     <Command.Item
@@ -352,7 +352,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
               </Command>
             }
           >
-            <button className={cn('flex h-8 items-center gap-1.5 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
+            <button className={cn('focus:outline-hidden flex h-8 items-center gap-1.5 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100')}>
               {activeNodeItem.name}
               <ChevronDown className="size-4" />
             </button>
@@ -625,7 +625,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
             setOpenPopover={setOpenColor}
             align="start"
             content={
-              <Command tabIndex={0} loop className="focus:outline-none">
+              <Command tabIndex={0} loop className="focus:outline-hidden">
                 <Command.List className="flex w-screen flex-col gap-1 text-sm sm:w-auto sm:min-w-[160px]">
                   <Command.Group
                     value={activeColorItem?.color}
@@ -693,7 +693,7 @@ function Toolbar({ editor, isStickyToolbar, excludedToolbarItems, onUploadImage 
               </Command>
             }
           >
-            <button className={cn('flex h-8 items-center gap-1 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none')}>
+            <button className={cn('focus:outline-hidden flex h-8 items-center gap-1 rounded-md px-2 text-sm text-gray-500 hover:bg-gray-100')}>
               <span
                 className="flex size-6 items-center justify-center rounded-sm border border-gray-200"
                 style={{
@@ -783,7 +783,7 @@ function Button({ tooltip, className, isActive, icon, ...props }: React.Componen
     <button
       {...props}
       className={cn(
-        'flex size-8 items-center justify-center rounded-md text-white outline-none',
+        'outline-hidden flex size-8 items-center justify-center rounded-md text-white',
         isActive ? 'bg-gray-700 p-2 text-white' : 'text-gray-500',
         className
       )}
