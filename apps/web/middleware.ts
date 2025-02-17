@@ -1,3 +1,4 @@
+import { getSessionCookie } from 'better-auth';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export default async function middleware(req: NextRequest) {
@@ -6,13 +7,7 @@ export default async function middleware(req: NextRequest) {
   const isDashboardPage = path.startsWith('/dashboard');
 
   if (isAuthPage || isDashboardPage) {
-    const fetchSession = await fetch(`${req.nextUrl.origin}/api/auth/get-session`, {
-      headers: {
-        cookie: req.headers.get('cookie') || ''
-      }
-    });
-
-    const isAuth = await fetchSession.json();
+    const isAuth = getSessionCookie(req);
 
     if (isAuth && isAuthPage) {
       return NextResponse.redirect(new URL('/dashboard', req.url));
