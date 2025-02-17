@@ -18,8 +18,9 @@ const DEFAULT_FORM_PROPS = {
   title: '',
   slug: '',
   featureImage: {
-    file: null,
-    src: ''
+    src: '',
+    name: '',
+    size: 0
   },
   content: '',
   tags: []
@@ -182,13 +183,13 @@ function FeaturedImage() {
           multiple={false}
           maxFileSizeMB={2}
           onChange={(data: { file: File; src?: string }[]) => {
-            setValue('featureImage', { src: data[0]?.src || '', file: data[0]?.file });
+            setValue('featureImage', { src: data[0]?.src || '', name: data[0]?.file?.name || '', size: data[0]?.file?.size || 0 });
           }}
         >
           <div className="flex flex-col gap-1">
-            <div className="text-sm">{watch('featureImage')?.file?.name ?? 'Choose a file or drag & drop it here'}</div>
+            <div className="text-sm">{watch('featureImage')?.name || 'Choose a file or drag & drop it here'}</div>
             <div className="text-sm text-gray-400">
-              {watch('featureImage')?.file?.size ? formatBytes(watch('featureImage')?.file?.size) : 'JPG, PNG formats, up to 2MB'}
+              {watch('featureImage')?.size ? formatBytes(watch('featureImage')?.size) : 'JPG, PNG formats, up to 2MB'}
             </div>
           </div>
         </FileUpload>
@@ -196,7 +197,7 @@ function FeaturedImage() {
           <Tooltip content="Remove file">
             <button
               className="z-6 absolute right-2 top-2 flex cursor-pointer items-center justify-center p-1 text-gray-400 hover:border-gray-800 hover:text-gray-800"
-              onClick={() => setValue('featureImage', { src: '', file: null })}
+              onClick={() => setValue('featureImage', { src: '', name: '', size: 0 })}
             >
               <X className="size-5" />
               <span className="sr-only">Remove file</span>

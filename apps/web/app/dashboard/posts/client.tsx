@@ -20,7 +20,7 @@ export default function PageClient() {
     {
       id: 'content',
       header: 'Content',
-      accessorFn: (d) => d.content || '--'
+      accessorFn: (d) => d.content || ''
     },
     {
       id: 'createdAt',

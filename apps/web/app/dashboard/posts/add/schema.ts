@@ -15,8 +15,9 @@ export const schema = z.object({
     }),
   featureImage: z
     .object({
-      file: z.any(),
-      src: z.string()
+      src: z.string(),
+      name: z.string(),
+      size: z.number()
     })
     .optional(),
   content: z.string().nonempty({
