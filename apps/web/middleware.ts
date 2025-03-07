@@ -1,4 +1,4 @@
-import { getSessionCookie } from 'better-auth';
+import { getSessionCookie } from 'better-auth/cookies';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export default async function middleware(req: NextRequest) {
