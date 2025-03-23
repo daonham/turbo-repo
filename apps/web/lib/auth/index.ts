@@ -11,6 +11,7 @@ import { admin } from 'better-auth/plugins';
 
 export const auth = betterAuth({
   database: mongodbAdapter(client.db(process.env.MONGODB_DB_NAME)),
+  trustedOrigins: ['http://localhost:3000'],
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
@@ -63,6 +64,7 @@ export const auth = betterAuth({
   },
   plugins: [nextCookies(), admin()],
   rateLimit: {
+    enabled: true,
     window: 10, // time window in seconds
     max: 100 // max requests in the window
   }
