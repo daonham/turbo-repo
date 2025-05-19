@@ -363,8 +363,8 @@ export default function AdminLayout({ defaultOpen, user, children }: { defaultOp
                   ))}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    onClick={() =>
-                      authClient.signOut({
+                    onClick={async () =>
+                      await authClient.signOut({
                         fetchOptions: {
                           onSuccess: () => {
                             router.push('/login'); // redirect to login page
