@@ -9,6 +9,18 @@
   "files": [
     "dist/**"
   ],
+  "exports": {
+    ".": {
+      "import": "./src/index.tsx",
+      "types": "./src/index.tsx",
+      "require": "./src/index.tsx"
+    },
+    "./icons/*": {
+      "import": "./src/icons/*.tsx",
+      "types": "./src/icons/*.tsx",
+      "require": "./src/icons/*.tsx"
+    }
+  },
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
