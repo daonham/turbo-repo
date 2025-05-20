@@ -19,7 +19,9 @@ export default function ResetPasswordLink({ email, url }: { email: string; url: 
               </Link>
             </Section>
             <Text className="text-sm leading-6 text-black">or copy and paste this URL into your browser:</Text>
-            <Text className="max-w-sm flex-wrap break-words font-medium text-purple-600 no-underline">{url.replace(/^https?:\/\//, '')}</Text>
+            <Text className="max-w-sm flex-wrap break-words font-medium text-purple-600 no-underline">
+              {url ? url.replace(/^https?:\/\//, '') : ''}
+            </Text>
           </Container>
         </Body>
       </Tailwind>

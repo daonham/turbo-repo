@@ -1,8 +1,8 @@
-import { sendEmail } from '@/emails';
-import ResetPasswordLink from '@/emails/reset-password-link';
-import VerifyEmail from '@/emails/verify-email';
 import client from '@/lib/db';
 import { isStoraged, storage } from '@/lib/storage';
+import { sendEmail } from '@repo/email';
+import ResetPasswordLink from '@repo/email/templates/reset-password-link';
+import VerifyEmail from '@repo/email/templates/verify-email';
 import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import { createAuthMiddleware } from 'better-auth/api';

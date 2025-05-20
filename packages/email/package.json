@@ -1,0 +1,38 @@
+{
+  "name": "@repo/email",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "email dev --dir ./src/templates -p 3333",
+    "clean": "rm -rf .turbo node_modules"
+  },
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@react-email/components": "0.0.41",
+    "@repo/config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "lucide-react": "^0.511.0",
+    "nodemailer": "^7.0.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-email": "4.0.14",
+    "resend": "^4.5.1"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.17",
+    "@types/react": "19.1.4",
+    "@types/react-dom": "19.1.5",
+    "typescript": "^5.8.3"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    },
+    "./templates/*": {
+      "import": "./src/templates/*.tsx",
+      "require": "./src/templates/*.tsx"
+    }
+  }
+}

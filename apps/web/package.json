@@ -7,14 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check-types": "tsc --noEmit",
-    "email": "email dev"
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
     "@next-safe-action/adapter-react-hook-form": "^1.0.14",
-    "@react-email/components": "0.0.41",
     "@repo/config": "workspace:*",
+    "@repo/email": "workspace:*",
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
     "@sindresorhus/slugify": "^2.2.1",
@@ -30,11 +29,9 @@
     "motion": "^12.12.1",
     "next": "15.3.2",
     "next-safe-action": "^7.10.8",
-    "nodemailer": "^7.0.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.56.4",
-    "resend": "^4.5.1",
     "sonner": "^2.0.3",
     "swr": "^2.3.3",
     "use-debounce": "^10.0.4",
@@ -44,13 +41,11 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22",
-    "@types/nodemailer": "^6.4.17",
     "@types/react": "19.1.4",
     "@types/react-dom": "19.1.5",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "postcss": "^8.5.3",
-    "react-email": "4.0.14",
     "tailwindcss": "4.1.7",
     "typescript": "5.8.3"
   }
