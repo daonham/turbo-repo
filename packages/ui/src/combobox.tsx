@@ -1,7 +1,7 @@
 import { cn } from '@repo/utils';
 import { Command, CommandInput, CommandItem, useCommandState } from 'cmdk';
 import { Check, ChevronDown, Plus } from 'lucide-react';
-import { HTMLProps, isValidElement, PropsWithChildren, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { HTMLProps, isValidElement, PropsWithChildren, ReactNode, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatedSizeContainer } from './animated-size-container';
 import { Button, ButtonProps } from './button';
 import { Checkbox } from './checkbox';
@@ -247,7 +247,7 @@ export function Combobox({
 
 const Scroll = ({ children }: PropsWithChildren) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollProgress, updateScrollProgress } = useScrollProgress(ref);
+  const { scrollProgress, updateScrollProgress } = useScrollProgress(ref as RefObject<HTMLElement>);
 
   return (
     <>

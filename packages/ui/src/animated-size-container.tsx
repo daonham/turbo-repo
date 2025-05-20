@@ -1,6 +1,6 @@
 import { cn } from '@repo/utils';
 import { motion } from 'motion/react';
-import { ComponentPropsWithoutRef, PropsWithChildren, forwardRef, useRef } from 'react';
+import { ComponentPropsWithoutRef, PropsWithChildren, RefObject, forwardRef, useRef } from 'react';
 import { useResizeObserver } from './hooks';
 
 type AnimatedSizeContainerProps = PropsWithChildren<{
@@ -15,7 +15,7 @@ type AnimatedSizeContainerProps = PropsWithChildren<{
 const AnimatedSizeContainer = forwardRef<HTMLDivElement, AnimatedSizeContainerProps>(
   ({ width = false, height = false, className, transition, children, ...rest }: AnimatedSizeContainerProps, forwardedRef) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const resizeObserverEntry = useResizeObserver(containerRef);
+    const resizeObserverEntry = useResizeObserver(containerRef as RefObject<Element>);
 
     return (
       <motion.div

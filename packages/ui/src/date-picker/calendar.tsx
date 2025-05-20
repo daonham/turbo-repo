@@ -13,6 +13,7 @@ function Calendar({
   ...props
 }: DayPickerProps) {
   return (
+    // @ts-expect-error
     <DayPicker
       mode={mode}
       weekStartsOn={weekStartsOn}
