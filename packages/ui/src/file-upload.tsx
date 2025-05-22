@@ -22,7 +22,7 @@ const imageUploadVariants = cva(
 );
 
 export type FileUploadProps = {
-  accept: {
+  accept?: {
     [key: string]: string[];
   };
   readFile?: boolean;

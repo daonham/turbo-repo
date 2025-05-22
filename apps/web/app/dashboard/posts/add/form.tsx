@@ -53,11 +53,11 @@ export function FormInner(props: Props) {
     setError,
     clearErrors,
     getValues,
-    formState: { isDirty, isSubmitting, isSubmitSuccessful, errors }
+    formState: { isDirty, isSubmitting, errors }
   } = useFormContext<FormProps>();
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log('formData', data))}>
+    <div>
       <div className="grid w-full grid-cols-[auto_320px] gap-6">
         <div className="w-full">
           <div className="">
@@ -80,7 +80,7 @@ export function FormInner(props: Props) {
                 <Label htmlFor="content">Content</Label>
                 <RichText
                   className={cn('min-h-80', errors.content?.message && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
-                  value={watch('content')}
+                  content={watch('content') || ''}
                   onChange={(content: string) => setValue('content', content)}
                   isStickyToolbar={true}
                   classEditorContent="h-full"
@@ -103,13 +103,13 @@ export function FormInner(props: Props) {
               <div className="relative flex flex-col gap-6 p-4">
                 <Status />
                 <TagSelect />
-                <Button text="Submit" />
+                <Button disabled={!isDirty} loading={isSubmitting} text="Submit" onClick={handleSubmit((data) => console.log('formData', data))} />
               </div>
             </div>
           </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 
@@ -189,7 +189,7 @@ function FeaturedImage() {
           <div className="flex flex-col gap-1">
             <div className="text-sm">{watch('featureImage')?.name || 'Choose a file or drag & drop it here'}</div>
             <div className="text-sm text-gray-400">
-              {watch('featureImage')?.size ? formatBytes(watch('featureImage')?.size) : 'JPG, PNG formats, up to 2MB'}
+              {watch('featureImage')?.size ? formatBytes(watch('featureImage')?.size || 0) : 'JPG, PNG formats, up to 2MB'}
             </div>
           </div>
         </FileUpload>
@@ -223,6 +223,7 @@ function Status() {
         </Tooltip>
       </div>
       <Popover
+        align="end"
         openPopover={isOpen}
         setOpenPopover={setIsOpen}
         content={
@@ -248,7 +249,6 @@ function Status() {
             </Command.List>
           </Command>
         }
-        align="end"
       >
         <Button
           type="button"
