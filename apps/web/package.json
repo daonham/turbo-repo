@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit",
-    "db:generate": "npx @better-auth/cli generate --config ./lib/auth/index.ts"
+    "db:auth:generate": "npx @better-auth/cli generate --config ./lib/auth/index.ts",
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
