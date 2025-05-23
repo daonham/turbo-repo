@@ -133,7 +133,7 @@ export function Table<T>({
   return (
     <div className={cn('relative rounded-lg border border-gray-200 bg-white', containerClassName)}>
       {(!error && !!data?.length) || loading ? (
-        <div className={cn('relative min-h-[400px] overflow-x-auto rounded-[inherit]', scrollWrapperClassName)}>
+        <div className={cn('relative overflow-x-auto rounded-[inherit]', scrollWrapperClassName)}>
           <table
             className={cn(
               [
@@ -197,12 +197,7 @@ export function Table<T>({
               {table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className={cn(
-                    'group/row',
-                    onRowClick && 'cursor-pointer select-none',
-                    // hacky fix: if there are more than 8 rows, remove the bottom border from the last row
-                    table.getRowModel().rows.length > 8 && row.index === table.getRowModel().rows.length - 1 && '[&_td]:border-b-0'
-                  )}
+                  className={cn('group/row', onRowClick && 'cursor-pointer select-none')}
                   onClick={
                     onRowClick
                       ? (e) => {
@@ -220,6 +215,7 @@ export function Table<T>({
                         tableCellClassName(cell.column.id, !!onRowClick),
                         'group text-gray-600',
                         getCommonPinningClassNames(cell.column, row.index === table.getRowModel().rows.length - 1),
+                        row.index === table.getRowModel().rows.length - 1 && 'border-b-0',
                         typeof tdClassName === 'function' ? tdClassName(cell.column.id) : tdClassName
                       )}
                       style={{
