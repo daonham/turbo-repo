@@ -38,7 +38,7 @@
     "sonner": "^2.0.3",
     "swr": "^2.3.3",
     "use-debounce": "^10.0.4",
-    "zod": "^3.24.4"
+    "zod": "^3.25.23"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
@@ -46,7 +46,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22",
-    "@types/react": "19.1.4",
+    "@types/react": "19.1.5",
     "@types/react-dom": "19.1.5",
     "drizzle-kit": "^0.31.1",
     "eslint": "^9",

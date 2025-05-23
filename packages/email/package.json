@@ -16,12 +16,12 @@
     "nodemailer": "^7.0.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-email": "4.0.14",
+    "react-email": "4.0.15",
     "resend": "^4.5.1"
   },
   "devDependencies": {
     "@types/nodemailer": "^6.4.17",
-    "@types/react": "19.1.4",
+    "@types/react": "19.1.5",
     "@types/react-dom": "19.1.5",
     "typescript": "^5.8.3"
   },
