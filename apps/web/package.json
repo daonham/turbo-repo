@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "db:generate": "npx @better-auth/cli generate --config ./lib/auth/index.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@neondatabase/serverless": "^1.0.0",
     "@next-safe-action/adapter-react-hook-form": "^1.0.14",
     "@repo/config": "workspace:*",
     "@repo/email": "workspace:*",
@@ -24,8 +26,9 @@
     "better-auth": "^1.2.8",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.43.1",
     "lucide-react": "^0.511.0",
-    "mongodb": "^6.16.0",
     "motion": "^12.12.1",
     "next": "15.3.2",
     "next-safe-action": "^7.10.8",
@@ -38,15 +41,19 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@better-auth/cli": "^1.2.8",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22",
     "@types/react": "19.1.4",
     "@types/react-dom": "19.1.5",
+    "drizzle-kit": "^0.31.1",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "postcss": "^8.5.3",
     "tailwindcss": "4.1.7",
+    "tsx": "^4.19.4",
     "typescript": "5.8.3"
   }
 }

@@ -1,6 +1,8 @@
 import { createTagBodySchema, getTagsQuerySchema } from '@/app/dashboard/posts/tags/schema';
-import client from '@/lib/db';
+import { db } from '@/lib/db';
+import { postTags } from '@/lib/db/schema';
 import { getSearchParams, nanoid } from '@repo/utils';
+import { desc, eq, ilike } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
@@ -11,34 +13,16 @@ export async function GET(req: Request) {
 
     const { search, ids, page, pageSize } = getTagsQuerySchema.parse(searchParams);
 
-    // database is post-tags
-    const db = client.db(process.env.MONGODB_DB_NAME).collection('postTags');
-
-    const find = search
-      ? {
-          name: {
-            $regex: search,
-            $options: 'i'
-          }
-        }
-      : {};
-
     const results = await db
-      .find(find, {
-        projection: {
-          _id: 0,
-          createdAt: 0
-        }
-      })
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * pageSize)
+      .select()
+      .from(postTags)
+      .where(search ? ilike(postTags.name, `%${search}%`) : undefined)
+      .orderBy(desc(postTags.createdAt))
       .limit(pageSize)
-      .toArray();
-
-    const total = await db.countDocuments(find);
+      .offset((page - 1) * pageSize);
 
     return NextResponse.json([...results]);
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({
       error: {
         message: error.message || 'Internal Server Error'
@@ -56,36 +40,28 @@ export async function POST(request: Request) {
     const { tag } = createTagBodySchema.parse(body);
 
     // database is post-tags
-    const db = await client.db(process.env.MONGODB_DB_NAME).collection('postTags');
+    const existingTag = await db.select().from(postTags).where(eq(postTags.name, tag));
 
-    const existingTag = await db.findOne({ name: tag });
-
-    if (existingTag) {
+    if (existingTag.length > 0) {
       throw new Error('Tag already exists');
     }
 
-    const createTag = await db.insertOne({
-      id: `tag_${nanoid(20)}`,
-      name: tag,
-      createdAt: new Date()
-    });
+    const createTag = await db
+      .insert(postTags)
+      .values({
+        id: `tag_${nanoid(20)}`,
+        name: tag
+      })
+      .returning();
 
-    if (!createTag.insertedId) {
+    if (!createTag.length) {
       throw new Error('Failed to create tag');
     }
 
-    const newTag = await db.findOne(
-      { _id: createTag.insertedId },
-      {
-        projection: {
-          _id: 0,
-          createdAt: 0
-        }
-      }
-    );
+    const newTag = createTag[0];
 
     return NextResponse.json(newTag);
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json(
       {
         error: {

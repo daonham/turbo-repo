@@ -1,16 +1,25 @@
-import client from '@/lib/db';
+import { db } from '@/lib/db';
+import { account, session, user, verification } from '@/lib/db/schema';
 import { isStoraged, storage } from '@/lib/storage';
 import { sendEmail } from '@repo/email';
 import ResetPasswordLink from '@repo/email/templates/reset-password-link';
 import VerifyEmail from '@repo/email/templates/verify-email';
 import { betterAuth } from 'better-auth';
-import { mongodbAdapter } from 'better-auth/adapters/mongodb';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { createAuthMiddleware } from 'better-auth/api';
 import { nextCookies } from 'better-auth/next-js';
 import { admin } from 'better-auth/plugins';
 
 export const auth = betterAuth({
-  database: mongodbAdapter(client.db(process.env.MONGODB_DB_NAME)),
+  database: drizzleAdapter(db, {
+    provider: 'pg',
+    schema: {
+      user,
+      session,
+      account,
+      verification
+    }
+  }),
   trustedOrigins: ['http://localhost:3000'],
   emailAndPassword: {
     enabled: true,
