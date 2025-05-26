@@ -13,7 +13,8 @@ export function RegisterForm() {
     action: { isExecuting },
     form: {
       register,
-      formState: { errors }
+      formState: { errors },
+      reset
     }
   } = useHookFormAction(registerAction, zodResolver(schema), {
     formProps: {
@@ -21,6 +22,7 @@ export function RegisterForm() {
     },
     actionProps: {
       onSuccess: () => {
+        reset();
         toast.success('Please check your email to verify your account before logging in.');
       },
       onError: ({ error }) => {

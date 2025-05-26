@@ -117,17 +117,17 @@ const data = {
       ]
     },
     {
-      title: 'Customers',
-      url: '/dashboard/customers',
+      title: 'Users',
+      url: '/dashboard/users',
       icon: Users,
       items: [
         {
-          title: 'All Customers',
-          url: '/dashboard/customers'
+          title: 'All Users',
+          url: '/dashboard/users'
         },
         {
           title: 'Add new',
-          url: 'dashboard/customers/add'
+          url: 'dashboard/users/add'
         }
       ]
     },

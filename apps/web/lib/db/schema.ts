@@ -1,5 +1,6 @@
 import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
+// Better Auth
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
@@ -61,6 +62,7 @@ export const verification = pgTable('verification', {
   updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date())
 });
 
+// Custom tables
 export const postTags = pgTable('post_tags', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
