@@ -2,11 +2,6 @@ import { useQueryState } from 'nuqs';
 import { useEffect } from 'react';
 import { useTablePagination } from '../table/use-table-pagination';
 
-export type PaginationState = {
-  pageIndex: number;
-  pageSize: number;
-};
-
 export const PAGINATION_LIMIT = 100;
 
 export function usePagination(pageSize = PAGINATION_LIMIT) {

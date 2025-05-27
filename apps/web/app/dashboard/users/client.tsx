@@ -109,7 +109,7 @@ export default function PageClient() {
   return (
     <MaxWidthWrapper className="flex flex-col gap-3">
       <div className="flex w-full flex-col items-end justify-between gap-2 md:flex-row">
-        <SearchOptions search={search} setSearch={setSearch} />
+        <SearchOptions search={search} setSearch={setSearch} pagination={pagination} setPagination={setPagination} />
         <ViewOptions table={table} />
       </div>
       <div className="w-full">
