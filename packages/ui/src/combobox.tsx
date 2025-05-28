@@ -39,6 +39,7 @@ export type ComboboxProps<TMultiple extends boolean | undefined, TMeta extends a
   optionRight?: (option: ComboboxOption) => ReactNode;
   optionClassName?: string;
   matchTriggerWidth?: boolean;
+  hideSearch?: boolean;
 }>;
 
 function isMultipleSelection(multiple: boolean | undefined, setSelected: any): setSelected is (tags: ComboboxOption[]) => void {
@@ -68,6 +69,7 @@ export function Combobox({
   optionRight,
   optionClassName,
   matchTriggerWidth,
+  hideSearch = false,
   children
 }: ComboboxProps<boolean | undefined, any>) {
   const isMultiple = isMultipleSelection(multiple, setSelected);
@@ -146,26 +148,28 @@ export function Combobox({
           className="pointer-events-auto"
         >
           <Command loop shouldFilter={shouldFilter}>
-            <div className="flex items-center overflow-hidden rounded-t-lg border-b border-gray-200">
-              <CommandInput
-                placeholder={searchPlaceholder}
-                value={search}
-                onValueChange={setSearch}
-                className={cn('outline-hidden grow border-0 py-3 pl-4 pr-2 placeholder:text-gray-400 focus:ring-0 sm:text-sm', inputClassName)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setIsOpen(false);
-                  }
-                }}
-              />
-              {shortcutHint && (
-                <kbd className="mr-2 hidden shrink-0 rounded border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-500 md:block">
-                  {shortcutHint}
-                </kbd>
-              )}
-            </div>
+            {!hideSearch && (
+              <div className="flex items-center overflow-hidden rounded-t-lg border-b border-gray-200">
+                <CommandInput
+                  placeholder={searchPlaceholder}
+                  value={search}
+                  onValueChange={setSearch}
+                  className={cn('outline-hidden grow border-0 py-3 pl-4 pr-2 placeholder:text-gray-400 focus:ring-0 sm:text-sm', inputClassName)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsOpen(false);
+                    }
+                  }}
+                />
+                {shortcutHint && (
+                  <kbd className="mr-2 hidden shrink-0 rounded border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-500 md:block">
+                    {shortcutHint}
+                  </kbd>
+                )}
+              </div>
+            )}
             <Scroll>
               <Command.List className={cn('flex w-full min-w-[100px] flex-col gap-1 p-1')}>
                 {sortedOptions !== undefined ? (

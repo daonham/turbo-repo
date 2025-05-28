@@ -4,8 +4,10 @@ import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
 import { authClient } from '@/lib/auth/client';
 import { Table, usePagination, useTable } from '@repo/ui';
 import { EllipsisVertical } from 'lucide-react';
+import { useQueryState } from 'nuqs';
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
+import RoleFilter from './role-filter';
 import SearchOptions from './search-options';
 import { useUsers } from './use-users';
 import ViewOptions from './view-options';
@@ -26,6 +28,7 @@ export default function PageClient() {
 
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(DEFAULT_COLUMN_VISIBILITY);
   const [search, setSearch] = useState('');
+  const [role, setRole] = useQueryState('role');
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { pagination, setPagination } = usePagination();
@@ -38,7 +41,10 @@ export default function PageClient() {
     query: {
       offset: (pagination.pageIndex - 1) * pagination.pageSize,
       limit: pagination.pageSize,
-      ...(debouncedSearch ? { searchField: 'email', searchOperator: 'contains', searchValue: debouncedSearch } : {})
+      sortBy: 'createdAt',
+      sortDirection: 'desc',
+      search: debouncedSearch,
+      role: role || null
     }
   });
 
@@ -109,8 +115,13 @@ export default function PageClient() {
   return (
     <MaxWidthWrapper className="flex flex-col gap-3">
       <div className="flex w-full flex-col items-end justify-between gap-2 md:flex-row">
-        <SearchOptions search={search} setSearch={setSearch} pagination={pagination} setPagination={setPagination} />
-        <ViewOptions table={table} />
+        <div className="flex items-center gap-2">
+          <SearchOptions search={search} setSearch={setSearch} pagination={pagination} setPagination={setPagination} />
+          <RoleFilter role={role} setRole={setRole} />
+        </div>
+        <div>
+          <ViewOptions table={table} />
+        </div>
       </div>
       <div className="w-full">
         {/* Add your table component here */}
