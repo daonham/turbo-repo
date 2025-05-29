@@ -7,7 +7,7 @@ const ROLES: ComboboxOption[] = [
   { label: 'User', value: 'user' }
 ];
 
-export default function RoleFilter({ role, setRole }: { role: string | null; setRole: (role: string | null) => void }) {
+export default function RoleOptions({ role, setRole }: { role: string | null; setRole: (role: string | null) => void }) {
   return (
     <Combobox
       selected={ROLES.find((r) => role === r.value) || null}
@@ -16,7 +16,7 @@ export default function RoleFilter({ role, setRole }: { role: string | null; set
       icon={<CirclePlus className="size-4 shrink-0" />}
       hideSearch
       buttonProps={{
-        className: cn('py-2 px-3 h-auto w-fit text-gray-700 border-gray-300 border-dashed')
+        className: cn('py-2 px-3 h-auto w-fit text-sm font-medium text-gray-700 hover:bg-gray-100')
       }}
       optionClassName="w-full min-w-30"
     >

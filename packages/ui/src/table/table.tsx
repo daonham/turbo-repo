@@ -290,7 +290,7 @@ export function Table<T>({
   }, [enableColumnResizing, table.getVisibleLeafColumns()]);
 
   return (
-    <div className={cn('relative rounded-lg border border-gray-200 bg-white', containerClassName)}>
+    <div className={cn('relative rounded-lg border border-gray-200', containerClassName)}>
       {(!error && !!data?.length) || loading ? (
         <div className={cn('relative overflow-x-auto rounded-[inherit]', scrollWrapperClassName)}>
           <table

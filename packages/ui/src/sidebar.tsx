@@ -220,7 +220,7 @@ const SidebarTrigger: React.FC<
 SidebarTrigger.displayName = 'SidebarTrigger';
 
 const SidebarInset: React.FC<React.ComponentProps<'main'>> = ({ ref, className, ...props }) => {
-  return <main ref={ref} className={cn('relative flex min-h-svh flex-1 flex-col bg-white', className)} {...props} />;
+  return <main ref={ref} className={cn('relative flex min-h-svh w-full flex-1 flex-col bg-white', className)} {...props} />;
 };
 SidebarInset.displayName = 'SidebarInset';
 

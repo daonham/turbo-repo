@@ -1,13 +1,14 @@
 'use client';
 
+import SortOptions from '@/app/dashboard/users/sort-options';
 import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
-import { authClient } from '@/lib/auth/client';
 import { Table, usePagination, useTable } from '@repo/ui';
+import { User } from 'better-auth';
 import { EllipsisVertical } from 'lucide-react';
-import { useQueryState } from 'nuqs';
+import { parseAsString, useQueryState } from 'nuqs';
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import RoleFilter from './role-filter';
+import RoleOptions from './role-options';
 import SearchOptions from './search-options';
 import { useUsers } from './use-users';
 import ViewOptions from './view-options';
@@ -23,12 +24,12 @@ const DEFAULT_COLUMN_VISIBILITY: VisibilityState = {
   createdAt: true
 };
 
-export default function PageClient() {
-  const { data: session } = authClient.useSession();
-
+export default function PageClient({ user }: { user: User }) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(DEFAULT_COLUMN_VISIBILITY);
   const [search, setSearch] = useState('');
   const [role, setRole] = useQueryState('role');
+  const [sort, setSort] = useQueryState('sort', parseAsString.withDefault('createdAt'));
+  const [sortDirection, setSortDirection] = useQueryState('sortDirection', parseAsString.withDefault('desc'));
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { pagination, setPagination } = usePagination();
@@ -41,8 +42,8 @@ export default function PageClient() {
     query: {
       offset: (pagination.pageIndex - 1) * pagination.pageSize,
       limit: pagination.pageSize,
-      sortBy: 'createdAt',
-      sortDirection: 'desc',
+      sortBy: sort,
+      sortDirection: sortDirection,
       search: debouncedSearch,
       role: role || null
     }
@@ -58,10 +59,11 @@ export default function PageClient() {
           return (
             <div className="flex items-center gap-2">
               <div>
-                {row?.original?.email || ''}{' '}
-                {session?.user?.id === row?.original?.id && (
-                  <span className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-medium text-emerald-500">You</span>
+                {row?.original?.email || ''}
+                {user?.id === row?.original?.id && (
+                  <span className="ml-1 rounded-full bg-emerald-100 px-2 py-1 text-xs font-medium text-emerald-500">You</span>
                 )}
+                {row?.original?.banned && <span className="ml-1 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-500">Banned</span>}
               </div>
             </div>
           );
@@ -114,18 +116,17 @@ export default function PageClient() {
 
   return (
     <MaxWidthWrapper className="flex flex-col gap-3">
-      <div className="flex w-full flex-col items-end justify-between gap-2 md:flex-row">
-        <div className="flex items-center gap-2">
+      <div className="flex w-full items-end justify-between gap-2">
+        <div className="flex w-full flex-wrap items-center gap-2">
           <SearchOptions search={search} setSearch={setSearch} pagination={pagination} setPagination={setPagination} />
-          <RoleFilter role={role} setRole={setRole} />
-        </div>
-        <div>
+          <RoleOptions role={role} setRole={setRole} />
+          <SortOptions sort={sort} setSort={setSort} sortDirection={sortDirection} setSortDirection={setSortDirection} />
           <ViewOptions table={table} />
         </div>
       </div>
       <div className="w-full">
         {/* Add your table component here */}
-        <Table {...tableProps} table={table} />
+        <Table {...tableProps} scrollWrapperClassName="overflow-x-hidden" table={table} />
       </div>
     </MaxWidthWrapper>
   );
