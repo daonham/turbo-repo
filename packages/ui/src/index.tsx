@@ -10,6 +10,7 @@ export * from './file-upload';
 export * from './input';
 export * from './input-otp';
 export * from './label';
+export * from './modal';
 export * from './popover';
 export * from './sheet';
 export * from './sidebar';
