@@ -16,10 +16,10 @@ export default function SearchOptions({
   setPagination: (pagination: PaginationState) => void;
 }) {
   return (
-    <div className="relative flex w-full items-center sm:w-auto">
+    <div className="relative flex w-auto items-center">
       <Input
         placeholder="Search email..."
-        className="w-full pl-8"
+        className="w-56 pl-8 text-sm"
         value={search}
         onChange={(e) => {
           setSearch(e.target.value.trim());

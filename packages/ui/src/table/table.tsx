@@ -35,7 +35,7 @@ const tableCellClassName = (columnId: string, clickable?: boolean) =>
   cn([
     'py-2.5 text-left text-sm leading-6 whitespace-nowrap border-gray-200 px-4 relative',
     'border-l border-b',
-    columnId === 'menu' && 'border-l-transparent py-0 px-1',
+    columnId === 'menu' && 'border-l-transparent py-0 px-1 bg-white',
     clickable && 'group-hover/row:bg-bg-muted transition-colors duration-75'
   ]);
 

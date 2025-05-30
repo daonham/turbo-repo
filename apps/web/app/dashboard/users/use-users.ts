@@ -13,8 +13,11 @@ const partialUsersQuerySchema = z.object({
 
 // doc: https://www.better-auth.com/docs/plugins/admin
 export function useUsers({ query }: { query: z.infer<typeof partialUsersQuerySchema> }) {
+  // remove search and role from query and keep the rest
+  const { search, role, ...rest } = query;
+
   let queryString = new URLSearchParams({
-    ...query
+    ...rest
   } as Record<string, any>).toString();
 
   if (query.search) {

@@ -90,7 +90,7 @@ export default function SortOptions({
     >
       <Button
         type="button"
-        className="h-auto w-fit whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 sm:ml-auto"
+        className="ml-auto h-auto w-fit whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
         variant="secondary"
         icon={<ArrowUpDown className="size-4 shrink-0" />}
         text="Sort"

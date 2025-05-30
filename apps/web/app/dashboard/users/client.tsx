@@ -3,12 +3,13 @@
 import SortOptions from '@/app/dashboard/users/sort-options';
 import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
 import { Table, usePagination, useTable } from '@repo/ui';
+import { Row } from '@tanstack/react-table';
 import { User } from 'better-auth';
-import { EllipsisVertical } from 'lucide-react';
 import { parseAsString, useQueryState } from 'nuqs';
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import RoleOptions from './role-options';
+import RowMenuButton from './row-menu-button';
 import SearchOptions from './search-options';
 import { useUsers } from './use-users';
 import ViewOptions from './view-options';
@@ -90,7 +91,7 @@ export default function PageClient({ user }: { user: User }) {
         minSize: 43,
         size: 43,
         maxSize: 43,
-        cell: ({ row }) => <EllipsisVertical className="size-4" />
+        cell: ({ row }: { row: Row<any> }) => <RowMenuButton row={row} />
       }
     ]
       .filter((c) => c.id === 'menu' || columnVisibility)
@@ -119,14 +120,16 @@ export default function PageClient({ user }: { user: User }) {
       <div className="flex w-full items-end justify-between gap-2">
         <div className="flex w-full flex-wrap items-center gap-2">
           <SearchOptions search={search} setSearch={setSearch} pagination={pagination} setPagination={setPagination} />
-          <RoleOptions role={role} setRole={setRole} />
-          <SortOptions sort={sort} setSort={setSort} sortDirection={sortDirection} setSortDirection={setSortDirection} />
-          <ViewOptions table={table} />
+          <div className="flex flex-1 items-center gap-2">
+            <RoleOptions role={role} setRole={setRole} />
+            <SortOptions sort={sort} setSort={setSort} sortDirection={sortDirection} setSortDirection={setSortDirection} />
+            <ViewOptions table={table} />
+          </div>
         </div>
       </div>
       <div className="w-full">
         {/* Add your table component here */}
-        <Table {...tableProps} scrollWrapperClassName="overflow-x-hidden" table={table} />
+        <Table {...tableProps} scrollWrapperClassName="overflow-x-auto" table={table} />
       </div>
     </MaxWidthWrapper>
   );
