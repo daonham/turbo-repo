@@ -5,7 +5,7 @@ import { actionClient } from '@/lib/safe-action';
 import { ratelimit } from '@/lib/upstash';
 import { schema } from './schema';
 
-export const forgotAction = actionClient.schema(schema).action(async ({ parsedInput }) => {
+export const forgotAction = actionClient.inputSchema(schema).action(async ({ parsedInput }) => {
   const { email } = parsedInput;
 
   try {

@@ -5,7 +5,7 @@ import { actionClient } from '@/lib/safe-action';
 import { ratelimit } from '@/lib/upstash';
 import { schema } from './schema';
 
-export const loginAction = actionClient.schema(schema).action(async ({ parsedInput }) => {
+export const loginAction = actionClient.inputSchema(schema).action(async ({ parsedInput }) => {
   const { email, password } = parsedInput;
 
   const { success } = await ratelimit(5, '1 m').limit(`login-attempts:${email}`);
