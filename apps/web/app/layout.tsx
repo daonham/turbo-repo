@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import RootProviders from './providers';
+
+import './globals.css';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -21,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} antialiased`} suppressHydrationWarning>
       <body className="min-h-[100dvh]">
-        <RootProviders>{children}</RootProviders>
+        <NuqsAdapter>
+          <RootProviders>{children}</RootProviders>
+        </NuqsAdapter>
       </body>
     </html>
   );
