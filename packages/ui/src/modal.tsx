@@ -116,7 +116,7 @@ export function Modal({
           }}
           className={cn(
             'fixed inset-0 z-40 m-auto h-fit w-full max-w-md',
-            'border border-neutral-200 bg-white p-0 shadow-xl sm:rounded-2xl',
+            'border border-gray-200 bg-white p-0 shadow-xl sm:rounded-2xl',
             'scrollbar-hide animate-scale-in overflow-y-auto',
             className
           )}
