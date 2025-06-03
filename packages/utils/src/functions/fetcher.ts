@@ -7,9 +7,10 @@ export async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit
   const res = await fetch(input, init);
 
   if (!res.ok) {
-    const error = new Error('An error occurred while fetching the data.') as SWRError;
+    const data = await res.json();
+    const error = new Error(data?.message || 'An error occurred while fetching the data.') as SWRError;
 
-    error.info = (await res.json()).error;
+    error.info = data?.error;
     error.status = res.status;
 
     throw error;

@@ -1,5 +1,6 @@
 import { headers } from 'next/headers';
 
+import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
 import PageContent from '@/components/layout/dashboard/page-content';
 import { auth } from '@/lib/auth';
 import PageClient from './client';
@@ -19,17 +20,15 @@ export default async function Page() {
     headers: await headers()
   });
 
-  if (!session) {
-    return <div>Not authenticated</div>;
-  }
-
-  if (session.user?.role !== 'admin') {
-    return <div>You are not authorized to access this page</div>;
-  }
-
   return (
     <PageContent title="Users" breadcrumbs={BREADCRUMBS}>
-      <PageClient user={session.user} />
+      {session?.user?.role === 'admin' ? (
+        <PageClient user={session.user} />
+      ) : (
+        <MaxWidthWrapper>
+          <div className="flex w-full text-gray-600">You are not authorized to access this page</div>
+        </MaxWidthWrapper>
+      )}
     </PageContent>
   );
 }

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Row } from '@tanstack/react-table';
 import { Command } from 'cmdk';
-import { EllipsisVertical, Pencil, Trash, X } from 'lucide-react';
-import { Button, Modal, Popover } from '@repo/ui';
+import { EllipsisVertical, Pencil, Trash } from 'lucide-react';
+import { Button, Popover } from '@repo/ui';
 import { cn } from '@repo/utils';
+
+import RemoveUser from './remove-user';
 
 export default function RowMenuButton({ row }: { row: Row<any> }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,19 +59,7 @@ export default function RowMenuButton({ row }: { row: Row<any> }) {
         />
       </Popover>
 
-      <Modal showModal={isDeleteOpen} setShowModal={setIsDeleteOpen}>
-        <div className="flex flex-col gap-4 p-6">
-          <h1 className="text-lg font-medium">Delete User</h1>
-          <p className="text-sm text-gray-600">Are you sure you want to delete this user? This action cannot be undone.</p>
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" text="Cancel" onClick={() => setIsDeleteOpen(false)} />
-            <Button variant="danger" text="Delete" />
-          </div>
-          <button className="absolute right-4 top-4 cursor-pointer hover:text-gray-700" onClick={() => setIsDeleteOpen(false)}>
-            <X className="size-5 shrink-0 text-gray-600" />
-          </button>
-        </div>
-      </Modal>
+      <RemoveUser isDeleteOpen={isDeleteOpen} setIsDeleteOpen={setIsDeleteOpen} email={row.original.email} userId={row.original.id} />
     </>
   );
 }
