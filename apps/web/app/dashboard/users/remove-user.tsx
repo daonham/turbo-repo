@@ -7,17 +7,14 @@ import { Button, Modal } from '@repo/ui';
 import { mutatePrefix } from '@/lib/swr/mutate';
 import { removeUserAction } from './actions';
 
-export default function RemoveUser({
-  isDeleteOpen,
-  setIsDeleteOpen,
-  email,
-  userId
-}: {
+type RemoveUserProps = {
   isDeleteOpen: boolean;
   setIsDeleteOpen: Dispatch<SetStateAction<boolean>>;
   email: string;
   userId: string;
-}) {
+};
+
+export default function RemoveUser({ isDeleteOpen, setIsDeleteOpen, email, userId }: RemoveUserProps) {
   const { execute, isExecuting } = useAction(removeUserAction, {
     onSuccess: () => {
       toast.success('User deleted successfully');
@@ -41,10 +38,12 @@ export default function RemoveUser({
           <Button loading={isExecuting} variant="danger" className="w-fit" text="Delete" onClick={() => execute({ userId: userId })} />
         </div>
         <button
+          type="button"
           className="absolute right-4 top-4 flex size-7 cursor-pointer items-center justify-center rounded-2xl hover:bg-gray-100 hover:text-gray-700"
           onClick={() => setIsDeleteOpen(false)}
         >
           <X className="size-4 shrink-0 text-gray-600" />
+          <span className="sr-only">Close</span>
         </button>
       </div>
     </Modal>
