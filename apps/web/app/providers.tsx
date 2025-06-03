@@ -1,8 +1,8 @@
 'use client';
 
-import { TooltipProvider } from '@repo/ui';
 import { CircleAlert, CircleCheck, Info, TriangleAlert } from 'lucide-react';
 import { Toaster } from 'sonner';
+import { TooltipProvider } from '@repo/ui';
 
 export default function RootProviders({ children }: { children: React.ReactNode }) {
   return (

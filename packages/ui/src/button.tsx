@@ -1,5 +1,6 @@
+import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '@repo/utils';
-import { VariantProps, cva } from 'class-variance-authority';
+
 import { LoadingSpinner } from './icons';
 import { Tooltip } from './tooltip';
 

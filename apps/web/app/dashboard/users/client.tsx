@@ -1,13 +1,14 @@
 'use client';
 
-import SortOptions from '@/app/dashboard/users/sort-options';
-import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
-import { Table, usePagination, useTable } from '@repo/ui';
+import { useState } from 'react';
 import { Row } from '@tanstack/react-table';
 import { User } from 'better-auth';
 import { parseAsString, useQueryState } from 'nuqs';
-import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
+import { Table, usePagination, useTable } from '@repo/ui';
+
+import SortOptions from '@/app/dashboard/users/sort-options';
+import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
 import RoleOptions from './role-options';
 import RowMenuButton from './row-menu-button';
 import SearchOptions from './search-options';

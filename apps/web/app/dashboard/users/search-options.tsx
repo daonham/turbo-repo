@@ -1,8 +1,8 @@
 'use client';
 
-import { Input } from '@repo/ui';
 import { PaginationState } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
+import { Input } from '@repo/ui';
 
 export default function SearchOptions({
   search,

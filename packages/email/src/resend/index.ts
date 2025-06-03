@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+
 import { ResendEmailOptions } from './types';
 
 export const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;

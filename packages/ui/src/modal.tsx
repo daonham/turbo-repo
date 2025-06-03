@@ -1,11 +1,12 @@
 'use client';
 
+import { ComponentProps, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { cn } from '@repo/utils';
-import { useRouter } from 'next/navigation';
-import { ComponentProps, Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Drawer } from 'vaul';
+import { cn } from '@repo/utils';
+
 import { useMediaQuery } from './hooks';
 
 export function Modal({

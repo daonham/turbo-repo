@@ -1,5 +1,6 @@
-import { passwordSchema } from '@/app/(auth)/register/schema';
 import { z } from 'zod';
+
+import { passwordSchema } from '@/app/(auth)/register/schema';
 
 export const schema = z
   .object({

@@ -1,9 +1,11 @@
 'use client';
 
-import { cn } from '@repo/utils';
-import { OTPInput, OTPInputContext, type OTPInputProps } from 'input-otp';
-import { Dot } from 'lucide-react';
 import { use } from 'react';
+import { OTPInput, OTPInputContext } from 'input-otp';
+import { Dot } from 'lucide-react';
+import { cn } from '@repo/utils';
+
+import type { OTPInputProps } from 'input-otp';
 
 const InputOTP: React.FC<React.ComponentProps<typeof OTPInput> & OTPInputProps> = ({ ref, className, containerClassName, ...props }) => (
   <OTPInput

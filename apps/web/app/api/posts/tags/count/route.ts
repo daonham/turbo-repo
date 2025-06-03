@@ -1,9 +1,10 @@
+import { NextResponse } from 'next/server';
+import { ilike } from 'drizzle-orm';
+import { getSearchParams } from '@repo/utils';
+
 import { getTagsCountQuerySchema } from '@/app/dashboard/posts/tags/schema';
 import { db } from '@/lib/db';
 import { postTags } from '@/lib/db/schema';
-import { getSearchParams } from '@repo/utils';
-import { ilike } from 'drizzle-orm';
-import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
   try {

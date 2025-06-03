@@ -1,6 +1,7 @@
+import { headers } from 'next/headers';
+
 import PageContent from '@/components/layout/dashboard/page-content';
 import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
 import PageClient from './client';
 
 const BREADCRUMBS = [

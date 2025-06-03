@@ -1,6 +1,6 @@
 'use client';
 
-import { cn, getUrlFromStringIfValid } from '@repo/utils';
+import React, { useCallback, useState } from 'react';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import ImageExtension from '@tiptap/extension-image';
@@ -8,7 +8,7 @@ import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
-import { EditorContent, useEditor, type Editor } from '@tiptap/react';
+import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Command } from 'cmdk';
 import {
@@ -38,8 +38,10 @@ import {
   UnderlineIcon,
   Undo
 } from 'lucide-react';
-import React, { useCallback, useState } from 'react';
 import { toast } from 'sonner';
+import { cn, getUrlFromStringIfValid } from '@repo/utils';
+
+import type { Editor } from '@tiptap/react';
 import { Button as ButtonComponent } from '../button';
 import { FileUpload } from '../file-upload';
 import { Input } from '../input';

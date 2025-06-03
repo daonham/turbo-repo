@@ -1,15 +1,16 @@
 'use client';
 
-import { FormProps } from '@/app/dashboard/posts/add/form';
-import { TAGS_MAX_PAGE_SIZE } from '@/app/dashboard/posts/tags/schema';
-import { Combobox, Tooltip } from '@repo/ui';
-import { cn } from '@repo/utils';
-import { HelpCircle, Tag } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { HelpCircle, Tag } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { useDebounce } from 'use-debounce';
+import { Combobox, Tooltip } from '@repo/ui';
+import { cn } from '@repo/utils';
+
+import { FormProps } from '@/app/dashboard/posts/add/form';
+import { TAGS_MAX_PAGE_SIZE } from '@/app/dashboard/posts/tags/schema';
 import { useTags, useTagsCount } from './use-tags';
 
 type TagProps = {

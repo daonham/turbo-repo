@@ -7,8 +7,21 @@ module.exports = {
   arrowParens: "always",
   printWidth: 150,
   tabWidth: 2,
-  plugins: [
-    "prettier-plugin-organize-imports",
-    "prettier-plugin-tailwindcss",
+  importOrder: [
+    "<BUILTIN_MODULES>",
+    "^(react/(.*)$)|^(react$)",
+    "^(next/(.*)$)|^(next$)",
+    "<THIRD_PARTY_MODULES>",
+    "^@repo/(.*)$",
+    "",
+    "<TYPES>",
+    "<TYPES>^[.]",
+    "^@/(.*)$",
+    "^[.]",
+    "",
+    "^(?!.*[.]css$)[./].*$",
+    ".css$"
   ],
+  importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
+  plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
 };

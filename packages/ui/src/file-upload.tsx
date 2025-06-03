@@ -1,9 +1,10 @@
-import { cn } from '@repo/utils';
+import { ReactNode, useCallback } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 import { CloudUpload } from 'lucide-react';
-import { ReactNode, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
+import { cn } from '@repo/utils';
+
 import { LoadingCircle } from './icons';
 
 const imageUploadVariants = cva(

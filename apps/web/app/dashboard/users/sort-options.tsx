@@ -1,9 +1,9 @@
 'use client';
 
+import { useState } from 'react';
+import { ArrowUpDown, Check, X } from 'lucide-react';
 import { Button, Combobox, ComboboxOption, Popover } from '@repo/ui';
 import { cn } from '@repo/utils';
-import { ArrowUpDown, Check, X } from 'lucide-react';
-import { useState } from 'react';
 
 const SORT_OPTIONS = [
   { label: 'Created At', value: 'createdAt' },

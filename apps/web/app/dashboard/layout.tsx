@@ -1,6 +1,7 @@
+import { cookies, headers } from 'next/headers';
+
 import AdminLayout from '@/components/layout/dashboard/layout';
 import { auth } from '@/lib/auth';
-import { cookies, headers } from 'next/headers';
 
 export default async function Layout({
   children

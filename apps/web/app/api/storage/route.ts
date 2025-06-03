@@ -1,8 +1,9 @@
-import { auth } from '@/lib/auth';
-import { isStoraged, storage } from '@/lib/storage';
-import { nanoid } from '@repo/utils';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { nanoid } from '@repo/utils';
+
+import { auth } from '@/lib/auth';
+import { isStoraged, storage } from '@/lib/storage';
 
 export async function POST(request: Request) {
   const session = await auth.api.getSession({

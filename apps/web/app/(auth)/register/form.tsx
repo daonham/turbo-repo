@@ -2,8 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
-import { Button, Input, Label } from '@repo/ui';
 import { toast } from 'sonner';
+import { Button, Input, Label } from '@repo/ui';
+
 import { registerAction } from './actions';
 import { schema } from './schema';
 

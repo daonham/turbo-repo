@@ -1,7 +1,8 @@
-import { getTagsCountQuerySchema, getTagsQuerySchema } from '@/app/dashboard/posts/tags/schema';
-import { fetcher } from '@repo/utils';
 import useSWR from 'swr';
 import { z } from 'zod';
+import { fetcher } from '@repo/utils';
+
+import { getTagsCountQuerySchema, getTagsQuerySchema } from '@/app/dashboard/posts/tags/schema';
 
 const partialTagsQuerySchema = getTagsQuerySchema.partial();
 

@@ -1,6 +1,7 @@
-import { cn } from '@repo/utils';
+import { ComponentPropsWithoutRef, forwardRef, PropsWithChildren, RefObject, useRef } from 'react';
 import { motion } from 'motion/react';
-import { ComponentPropsWithoutRef, PropsWithChildren, RefObject, forwardRef, useRef } from 'react';
+import { cn } from '@repo/utils';
+
 import { useResizeObserver } from './hooks';
 
 type AnimatedSizeContainerProps = PropsWithChildren<{

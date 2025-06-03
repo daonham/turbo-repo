@@ -1,14 +1,15 @@
-import { db } from '@/lib/db';
-import { account, session, user, verification } from '@/lib/db/schema';
-import { isStoraged, storage } from '@/lib/storage';
-import { sendEmail } from '@repo/email';
-import ResetPasswordLink from '@repo/email/templates/reset-password-link';
-import VerifyEmail from '@repo/email/templates/verify-email';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { createAuthMiddleware } from 'better-auth/api';
 import { nextCookies } from 'better-auth/next-js';
 import { admin } from 'better-auth/plugins';
+import { sendEmail } from '@repo/email';
+import ResetPasswordLink from '@repo/email/templates/reset-password-link';
+import VerifyEmail from '@repo/email/templates/verify-email';
+
+import { db } from '@/lib/db';
+import { account, session, user, verification } from '@/lib/db/schema';
+import { isStoraged, storage } from '@/lib/storage';
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {

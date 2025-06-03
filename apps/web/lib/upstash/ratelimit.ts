@@ -1,4 +1,5 @@
 import { Ratelimit } from '@upstash/ratelimit';
+
 import { redis } from './redis';
 
 // Create a new ratelimiter, that allows 10 requests per 10 seconds by default

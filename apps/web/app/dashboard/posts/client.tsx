@@ -1,8 +1,9 @@
 'use client';
 
-import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
-import { Button, Table, useTable } from '@repo/ui';
 import { CirclePlus } from 'lucide-react';
+import { Button, Table, useTable } from '@repo/ui';
+
+import MaxWidthWrapper from '@/components/layout/dashboard/max-width-wrapper';
 
 export default function PageClient() {
   const columns = [

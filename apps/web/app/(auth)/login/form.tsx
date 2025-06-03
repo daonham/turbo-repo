@@ -1,14 +1,15 @@
 'use client';
 
-import { authClient } from '@/lib/auth/client';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
-import { Button, Input, Label } from '@repo/ui';
-import { Google } from '@repo/ui/icons/google';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 import { toast } from 'sonner';
+import { Button, Input, Label } from '@repo/ui';
+import { Google } from '@repo/ui/icons/google';
+
+import { authClient } from '@/lib/auth/client';
 import { loginAction } from './actions';
 import { schema } from './schema';
 

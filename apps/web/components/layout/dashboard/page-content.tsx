@@ -1,8 +1,9 @@
 'use client';
 
+import { Fragment, PropsWithChildren, ReactNode } from 'react';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, SidebarTrigger } from '@repo/ui';
 import { cn } from '@repo/utils';
-import { Fragment, PropsWithChildren, ReactNode } from 'react';
+
 import MaxWidthWrapper from './max-width-wrapper';
 
 export default function PageContent({

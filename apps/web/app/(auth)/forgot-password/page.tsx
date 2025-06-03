@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { ForgotPasswordForm } from './form';
 
 export default async function Page() {

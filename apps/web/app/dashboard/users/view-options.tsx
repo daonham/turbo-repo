@@ -1,11 +1,11 @@
 'use client';
 
-import { Button, Popover } from '@repo/ui';
-import { cn } from '@repo/utils';
+import { useState } from 'react';
 import { Table } from '@tanstack/react-table';
 import { Command } from 'cmdk';
 import { Check, Settings2 } from 'lucide-react';
-import { useState } from 'react';
+import { Button, Popover } from '@repo/ui';
+import { cn } from '@repo/utils';
 
 export default function ViewOptions({ table }: { table: Table<any> }) {
   const [open, setOpen] = useState(false);

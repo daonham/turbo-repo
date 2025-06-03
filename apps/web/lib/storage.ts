@@ -1,5 +1,5 @@
-import { fetchWithTimeout } from '@repo/utils';
 import { AwsClient } from 'aws4fetch';
+import { fetchWithTimeout } from '@repo/utils';
 
 interface ImageOptions {
   contentType?: string;

@@ -1,11 +1,12 @@
 'use client';
 
+import { createContext, use, useCallback, useEffect, useMemo, useState } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { cn } from '@repo/utils';
 import { cva, VariantProps } from 'class-variance-authority';
 import { PanelLeft } from 'lucide-react';
-import { createContext, use, useCallback, useEffect, useMemo, useState } from 'react';
+import { cn } from '@repo/utils';
+
 import { useMediaQuery } from './hooks';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './sheet';
 import { Tooltip } from './tooltip';

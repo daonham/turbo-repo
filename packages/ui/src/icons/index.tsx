@@ -1,7 +1,7 @@
 'use client';
 
-import { LucideIcon } from 'lucide-react';
 import { ComponentType, SVGProps } from 'react';
+import { LucideIcon } from 'lucide-react';
 
 // loaders
 export * from './loading-circle';

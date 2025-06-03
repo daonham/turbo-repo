@@ -1,5 +1,28 @@
 'use client';
 
+import { Fragment } from 'react';
+import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+  Activity,
+  Bolt,
+  ChevronRight,
+  ChevronsUpDown,
+  ClipboardMinus,
+  Folder,
+  Forward,
+  Frame,
+  GalleryVerticalEnd,
+  House,
+  LogOut,
+  Map,
+  MoreHorizontal,
+  PieChart,
+  Settings2,
+  Trash2,
+  Users,
+  Workflow
+} from 'lucide-react';
 import {
   Collapsible,
   CollapsibleContent,
@@ -28,29 +51,6 @@ import {
 } from '@repo/ui';
 
 import { authClient } from '@/lib/auth/client';
-import {
-  Activity,
-  Bolt,
-  ChevronRight,
-  ChevronsUpDown,
-  ClipboardMinus,
-  Folder,
-  Forward,
-  Frame,
-  GalleryVerticalEnd,
-  House,
-  LogOut,
-  Map,
-  MoreHorizontal,
-  PieChart,
-  Settings2,
-  Trash2,
-  Users,
-  Workflow
-} from 'lucide-react';
-import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
-import { Fragment } from 'react';
 
 const data = {
   workspace: [

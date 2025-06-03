@@ -1,6 +1,8 @@
-import { cn } from '@repo/utils';
 import { ChevronDown, ChevronLeft, ChevronRight, Circle } from 'lucide-react';
-import { DayPicker, useDayPicker, type DayPickerProps, type Matcher } from 'react-day-picker';
+import { DayPicker, useDayPicker } from 'react-day-picker';
+import { cn } from '@repo/utils';
+
+import type { DayPickerProps, Matcher } from 'react-day-picker';
 
 function Calendar({
   mode = 'single',

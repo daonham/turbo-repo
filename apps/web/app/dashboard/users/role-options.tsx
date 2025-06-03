@@ -1,6 +1,6 @@
+import { CirclePlus } from 'lucide-react';
 import { Combobox, ComboboxOption } from '@repo/ui';
 import { cn } from '@repo/utils';
-import { CirclePlus } from 'lucide-react';
 
 const ROLES: ComboboxOption[] = [
   { label: 'Admin', value: 'admin' },

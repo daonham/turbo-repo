@@ -1,7 +1,8 @@
-import { cn } from '@repo/utils';
+import { HTMLProps, isValidElement, PropsWithChildren, ReactNode, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { Command, CommandInput, CommandItem, useCommandState } from 'cmdk';
 import { Check, ChevronDown, Plus } from 'lucide-react';
-import { HTMLProps, isValidElement, PropsWithChildren, ReactNode, RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { cn } from '@repo/utils';
+
 import { AnimatedSizeContainer } from './animated-size-container';
 import { Button, ButtonProps } from './button';
 import { Checkbox } from './checkbox';

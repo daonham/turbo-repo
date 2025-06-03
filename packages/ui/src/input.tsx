@@ -1,6 +1,6 @@
-import { cn } from '@repo/utils';
-import { AlertCircle, EyeIcon, EyeOffIcon } from 'lucide-react';
 import { useCallback, useState } from 'react';
+import { AlertCircle, EyeIcon, EyeOffIcon } from 'lucide-react';
+import { cn } from '@repo/utils';
 
 const Input: React.FC<
   React.ComponentProps<'input'> & {

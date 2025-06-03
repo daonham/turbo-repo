@@ -1,8 +1,9 @@
+import { PropsWithChildren, ReactNode, useEffect, useState, WheelEventHandler } from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { cn } from '@repo/utils';
-import { PropsWithChildren, ReactNode, useEffect, useState, WheelEventHandler } from 'react';
 import { Drawer } from 'vaul';
+import { cn } from '@repo/utils';
+
 import { useMediaQuery } from './hooks';
 
 export type PopoverProps = PropsWithChildren<{

@@ -1,4 +1,16 @@
-import { cn, deepEqual, isClickOnInteractiveChild } from '@repo/utils';
+import {
+  CSSProperties,
+  Dispatch,
+  HTMLAttributes,
+  memo,
+  MouseEvent,
+  PropsWithChildren,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import {
   Cell,
   Column,
@@ -15,19 +27,8 @@ import {
   VisibilityState
 } from '@tanstack/react-table';
 import { AnimatePresence, motion } from 'motion/react';
-import {
-  CSSProperties,
-  Dispatch,
-  HTMLAttributes,
-  memo,
-  MouseEvent,
-  PropsWithChildren,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import { cn, deepEqual, isClickOnInteractiveChild } from '@repo/utils';
+
 import { Button } from '../button';
 import { LoadingSpinner, SortOrder } from '../icons';
 

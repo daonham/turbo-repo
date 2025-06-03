@@ -1,9 +1,10 @@
+import { NextResponse } from 'next/server';
+import { desc, eq, ilike } from 'drizzle-orm';
+import { getSearchParams, nanoid } from '@repo/utils';
+
 import { createTagBodySchema, getTagsQuerySchema } from '@/app/dashboard/posts/tags/schema';
 import { db } from '@/lib/db';
 import { postTags } from '@/lib/db/schema';
-import { getSearchParams, nanoid } from '@repo/utils';
-import { desc, eq, ilike } from 'drizzle-orm';
-import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
   try {

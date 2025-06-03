@@ -1,6 +1,6 @@
-import { fetcher } from '@repo/utils';
 import useSWR from 'swr';
 import { z } from 'zod';
+import { fetcher } from '@repo/utils';
 
 const partialUsersQuerySchema = z.object({
   offset: z.number(),
