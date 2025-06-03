@@ -29,7 +29,7 @@ export default function RemoveUser({ isDeleteOpen, setIsDeleteOpen, email, userI
   return (
     <Modal showModal={isDeleteOpen} setShowModal={setIsDeleteOpen}>
       <div className="flex flex-col gap-4 p-6">
-        <h1 className="text-lg font-medium">Delete User</h1>
+        <h1 className="text-base font-medium">Delete User</h1>
         <p className="text-sm text-gray-600">
           Are you sure you want to delete <span className="font-semibold text-gray-700">{email}</span>? This action cannot be undone.
         </p>
