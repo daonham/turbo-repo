@@ -26,7 +26,7 @@
     "@repo/config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/ms": "^2.1.0",
-    "@types/react": "19.1.4",
+    "@types/react": "19.1.6",
     "@types/react-dom": "19.1.5",
     "tsup": "^8.5.0",
     "typescript": "5.8.3"
