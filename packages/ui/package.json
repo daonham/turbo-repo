@@ -73,7 +73,6 @@
     "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",
     "sonner": "^2.0.5",
-    "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.2"
   }
 }
