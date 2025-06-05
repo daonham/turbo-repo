@@ -37,7 +37,7 @@ const tableCellClassName = (columnId: string, clickable?: boolean) =>
     'py-2.5 text-left text-sm leading-6 whitespace-nowrap border-gray-200 px-4 relative',
     'border-l border-b',
     columnId === 'menu' && 'border-l-transparent py-0 px-1 bg-white',
-    clickable && 'group-hover/row:bg-bg-muted transition-colors duration-75'
+    clickable && 'group-hover/row:bg-gray-100 transition-colors duration-75'
   ]);
 
 const resizingClassName = cn([
@@ -474,7 +474,7 @@ export function Table<T>({
       {/* Loading overlay */}
       <AnimatePresence>
         {loading && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-bg-default/50 absolute inset-0 h-full">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 h-full bg-white/50">
             <div className="flex h-[75vh] w-full items-center justify-center">
               <LoadingSpinner />
             </div>
