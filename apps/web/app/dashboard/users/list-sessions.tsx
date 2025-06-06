@@ -123,7 +123,7 @@ export default function ListSessions({ isListSessionsOpen, setIsListSessionsOpen
   });
 
   return (
-    <Modal showModal={isListSessionsOpen} setShowModal={setIsListSessionsOpen} className="min-w-xl w-max max-w-none">
+    <Modal showModal={isListSessionsOpen} setShowModal={setIsListSessionsOpen} className="sm:min-w-xl w-full sm:w-max sm:max-w-none">
       <div className="flex flex-col gap-4 p-6">
         <h1 className="text-base font-medium">Sessions</h1>
         <div className="w-full">
@@ -140,14 +140,6 @@ export default function ListSessions({ isListSessionsOpen, setIsListSessionsOpen
             </div>
           )}
         </div>
-        <button
-          type="button"
-          className="absolute right-4 top-4 flex size-7 cursor-pointer items-center justify-center rounded-2xl bg-gray-100 hover:bg-gray-200 hover:text-gray-700"
-          onClick={() => setIsListSessionsOpen(false)}
-        >
-          <X className="size-4 shrink-0 text-gray-600" />
-          <span className="sr-only">Close</span>
-        </button>
       </div>
     </Modal>
   );

@@ -37,14 +37,6 @@ export default function RemoveUser({ isDeleteOpen, setIsDeleteOpen, email, userI
           <Button variant="outline" text="Cancel" className="w-fit" onClick={() => setIsDeleteOpen(false)} />
           <Button loading={isExecuting} variant="danger" className="w-fit" text="Delete" onClick={() => execute({ userId: userId })} />
         </div>
-        <button
-          type="button"
-          className="absolute right-4 top-4 flex size-7 cursor-pointer items-center justify-center rounded-2xl bg-gray-100 hover:bg-gray-200 hover:text-gray-700"
-          onClick={() => setIsDeleteOpen(false)}
-        >
-          <X className="size-4 shrink-0 text-gray-600" />
-          <span className="sr-only">Close</span>
-        </button>
       </div>
     </Modal>
   );

@@ -4,6 +4,7 @@ import { ComponentProps, Dispatch, SetStateAction, useEffect, useState } from 'r
 import { useRouter } from 'next/navigation';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import { X } from 'lucide-react';
 import { Drawer } from 'vaul';
 import { cn } from '@repo/utils';
 
@@ -17,7 +18,8 @@ export function Modal({
   onClose,
   desktopOnly,
   preventDefaultClose,
-  drawerRootProps
+  drawerRootProps,
+  isShowCloseButton = true
 }: {
   children: React.ReactNode;
   className?: string;
@@ -27,6 +29,7 @@ export function Modal({
   desktopOnly?: boolean;
   preventDefaultClose?: boolean;
   drawerRootProps?: ComponentProps<typeof Drawer.Root>;
+  isShowCloseButton?: boolean;
 }) {
   const router = useRouter();
 
@@ -127,6 +130,18 @@ export function Modal({
             <Dialog.Description>This is a modal</Dialog.Description>
           </VisuallyHidden.Root>
           {children}
+          {isShowCloseButton && (
+            <Dialog.Close asChild>
+              <button
+                type="button"
+                className="absolute right-4 top-4 flex size-7 cursor-pointer items-center justify-center rounded-2xl bg-gray-100 hover:bg-gray-200 hover:text-gray-700"
+                onClick={() => setShowModal?.(false)}
+              >
+                <X className="size-4 shrink-0 text-gray-600" />
+                <span className="sr-only">Close</span>
+              </button>
+            </Dialog.Close>
+          )}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
