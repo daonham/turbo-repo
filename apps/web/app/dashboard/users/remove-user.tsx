@@ -39,7 +39,7 @@ export default function RemoveUser({ isDeleteOpen, setIsDeleteOpen, email, userI
         </div>
         <button
           type="button"
-          className="absolute right-4 top-4 flex size-7 cursor-pointer items-center justify-center rounded-2xl hover:bg-gray-100 hover:text-gray-700"
+          className="absolute right-4 top-4 flex size-7 cursor-pointer items-center justify-center rounded-2xl bg-gray-100 hover:bg-gray-200 hover:text-gray-700"
           onClick={() => setIsDeleteOpen(false)}
         >
           <X className="size-4 shrink-0 text-gray-600" />

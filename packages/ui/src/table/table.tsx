@@ -80,8 +80,10 @@ type BaseTableProps<T> = {
   className?: string;
   containerClassName?: string;
   scrollWrapperClassName?: string;
+  emptyStateClassName?: string;
   thClassName?: string | ((columnId: string) => string);
   tdClassName?: string | ((columnId: string) => string);
+  loadingClassName?: string;
 };
 
 type UseTableProps<T> = BaseTableProps<T> &
@@ -273,6 +275,7 @@ export function Table<T>({
   className,
   containerClassName,
   scrollWrapperClassName,
+  emptyStateClassName,
   thClassName,
   tdClassName,
   table,
@@ -282,7 +285,8 @@ export function Table<T>({
   rowProps,
   rowCount,
   children,
-  enableColumnResizing = false
+  enableColumnResizing = false,
+  loadingClassName
 }: TableProps<T>) {
   // Memoize table width calculation
   const tableWidth = useMemo(() => {
@@ -292,7 +296,7 @@ export function Table<T>({
 
   return (
     <div className={cn('relative rounded-lg border border-gray-200', containerClassName)}>
-      {(!error && !!data?.length) || loading ? (
+      {!error && !!data?.length ? (
         <div className={cn('relative overflow-x-auto rounded-[inherit]', scrollWrapperClassName)}>
           <table
             className={cn(
@@ -435,8 +439,18 @@ export function Table<T>({
           </table>
           {children}
         </div>
+      ) : loading ? (
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className={cn('flex h-96 w-full items-center justify-center', loadingClassName)}
+          >
+            <LoadingSpinner />
+          </motion.div>
+        </AnimatePresence>
       ) : (
-        <div className="flex h-96 w-full items-center justify-center text-sm text-gray-500">
+        <div className={cn('flex h-96 w-full items-center justify-center text-sm text-gray-500', emptyStateClassName)}>
           {error || emptyState || `No ${resourceName?.(true) || 'items'} found.`}
         </div>
       )}
@@ -470,17 +484,6 @@ export function Table<T>({
           </div>
         </div>
       )}
-
-      {/* Loading overlay */}
-      <AnimatePresence>
-        {loading && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 h-full bg-white/50">
-            <div className="flex h-[75vh] w-full items-center justify-center">
-              <LoadingSpinner />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
