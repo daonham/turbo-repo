@@ -30,11 +30,11 @@
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
-    "drizzle-orm": "^0.44.1",
-    "lucide-react": "^0.511.0",
-    "motion": "^12.15.0",
+    "drizzle-orm": "^0.44.2",
+    "lucide-react": "^0.513.0",
+    "motion": "^12.16.0",
     "next": "15.3.3",
-    "next-safe-action": "^8.0.0",
+    "next-safe-action": "^8.0.1",
     "nuqs": "^2.4.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -42,7 +42,7 @@
     "sonner": "^2.0.5",
     "swr": "^2.3.3",
     "use-debounce": "^10.0.4",
-    "zod": "^3.25.49"
+    "zod": "^3.25.53"
   },
   "devDependencies": {
     "@babel/core": "^7.27.4",
@@ -51,7 +51,7 @@
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22",
     "@types/react": "19.1.6",
-    "@types/react-dom": "19.1.5",
+    "@types/react-dom": "19.1.6",
     "drizzle-kit": "^0.31.1",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
