@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { parseAbsoluteToLocal } from '@internationalized/date';
-import { addDays, differenceInSeconds, formatDate, parseISO } from 'date-fns';
+import { addDays, differenceInSeconds, formatDate, parseISO, setDate, setMonth, setYear } from 'date-fns';
 import { Ban } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -49,6 +49,7 @@ export default function BanUser({ isBanOpen, setIsBanOpen, userId, banExpires }:
     const now = new Date();
     const diff = differenceInSeconds(target, now);
 
+    // TODO: fetch ban user
     console.log('diff', diff);
   };
 
@@ -92,7 +93,17 @@ export default function BanUser({ isBanOpen, setIsBanOpen, userId, banExpires }:
                   content={
                     <Calendar
                       mode="single"
-                      onDayClick={(date) => setValue('expiresAt', date)}
+                      onDayClick={(date) => {
+                        const expiresAt = getValues('expiresAt');
+
+                        // get only date and set time from expiresAt
+                        if (expiresAt) {
+                          const updatedDate = setYear(setMonth(setDate(expiresAt, date.getDate()), date.getMonth()), date.getFullYear());
+                          setValue('expiresAt', updatedDate);
+                        } else {
+                          setValue('expiresAt', date);
+                        }
+                      }}
                       selected={getValues('expiresAt') || undefined}
                       disabled={(date) => date < new Date()}
                     />
