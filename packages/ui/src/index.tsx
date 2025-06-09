@@ -16,6 +16,7 @@ export * from './sheet';
 export * from './sidebar';
 export * from './table';
 export * from './tooltip';
+export * from './switch';
 
 // icons
 export * from './icons';

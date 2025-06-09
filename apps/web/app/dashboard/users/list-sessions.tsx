@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Row, VisibilityState } from '@tanstack/react-table';
 import { formatDate } from 'date-fns';
-import { X } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button, Modal, Table, useTable } from '@repo/ui';
 

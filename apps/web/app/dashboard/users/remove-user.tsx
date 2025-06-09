@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-import { X } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import { toast } from 'sonner';
 import { Button, Modal } from '@repo/ui';

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Row } from '@tanstack/react-table';
 import { Command } from 'cmdk';
-import { EllipsisVertical, ListOrdered, Pencil, Trash } from 'lucide-react';
+import { Ban, EllipsisVertical, ListOrdered, Pencil, Trash } from 'lucide-react';
 import { Button, Popover } from '@repo/ui';
 import { cn } from '@repo/utils';
 
+import BanUser from './ban-user';
 import ListSessions from './list-sessions';
 import RemoveUser from './remove-user';
 
@@ -13,6 +14,7 @@ export default function RowMenuButton({ row }: { row: Row<any> }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isListSessionsOpen, setIsListSessionsOpen] = useState(false);
+  const [isBanOpen, setIsBanOpen] = useState(false);
 
   return (
     <>
@@ -48,6 +50,31 @@ export default function RowMenuButton({ row }: { row: Row<any> }) {
                 <ListOrdered className="size-4 shrink-0" />
                 <span className="text-sm">Sessions</span>
               </Command.Item>
+              {row.original.banned ? (
+                <Command.Item
+                  className={cn(
+                    'flex h-auto w-full cursor-pointer select-none items-center gap-2 whitespace-nowrap rounded-md bg-none px-3 py-2 text-green-500 hover:bg-green-100',
+                    'data-[selected=true]:bg-gray-100'
+                  )}
+                >
+                  <Ban className="size-4 shrink-0 text-green-500" />
+                  <span className="text-sm">Unban</span>
+                </Command.Item>
+              ) : (
+                <Command.Item
+                  className={cn(
+                    'flex h-auto w-full cursor-pointer select-none items-center gap-2 whitespace-nowrap rounded-md bg-none px-3 py-2 text-red-500 hover:bg-red-100',
+                    'data-[selected=true]:bg-gray-100'
+                  )}
+                  onSelect={() => {
+                    setIsBanOpen(true);
+                    setIsOpen(false);
+                  }}
+                >
+                  <Ban className="size-4 shrink-0 text-red-500" />
+                  <span className="text-sm">Ban</span>
+                </Command.Item>
+              )}
               <Command.Item
                 className={cn(
                   'flex h-auto w-full cursor-pointer select-none items-center gap-2 whitespace-nowrap rounded-md bg-none px-3 py-2 text-red-500 hover:bg-red-100',
@@ -81,6 +108,8 @@ export default function RowMenuButton({ row }: { row: Row<any> }) {
       {isListSessionsOpen && (
         <ListSessions isListSessionsOpen={isListSessionsOpen} setIsListSessionsOpen={setIsListSessionsOpen} userId={row.original.id} />
       )}
+
+      {isBanOpen && <BanUser isBanOpen={isBanOpen} setIsBanOpen={setIsBanOpen} userId={row.original.id} banExpires={row.original.banExpires || ''} />}
     </>
   );
 }
