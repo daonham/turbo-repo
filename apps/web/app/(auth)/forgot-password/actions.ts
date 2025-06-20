@@ -15,7 +15,7 @@ export const forgotAction = actionClient.inputSchema(schema).action(async ({ par
       throw new Error('Too many requests. Please try again later.');
     }
 
-    await auth.api.forgetPassword({
+    await auth.api.requestPasswordReset({
       body: {
         email,
         redirectTo: '/reset-password'
