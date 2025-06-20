@@ -25,7 +25,7 @@ export function useUsers({ query }: { query: z.infer<typeof partialUsersQuerySch
   }
 
   if (query.role) {
-    queryString += `&filterField=role&filterOperator=eq&filterValue=${query.role}`;
+    queryString += `&filterField=role&filterOperator=contains&filterValue=${query.role}`;
   }
 
   const { data, error, isValidating, mutate } = useSWR(`/api/auth/admin/list-users?${queryString}`, fetcher, {
