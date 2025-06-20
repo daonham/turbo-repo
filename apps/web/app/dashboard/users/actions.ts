@@ -7,6 +7,7 @@ import { auth } from '@/lib/auth';
 import { authActionClient } from '@/lib/safe-action';
 
 export const removeUserAction = authActionClient
+  .metadata({ name: 'adminRemoveUser' })
   .inputSchema(
     z.object({
       userId: z.string()
