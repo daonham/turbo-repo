@@ -4,9 +4,9 @@ import { headers } from 'next/headers';
 import { z } from 'zod';
 
 import { auth } from '@/lib/auth';
-import { actionClient } from '@/lib/safe-action';
+import { authActionClient } from '@/lib/safe-action';
 
-export const removeUserAction = actionClient
+export const removeUserAction = authActionClient
   .inputSchema(
     z.object({
       userId: z.string()
