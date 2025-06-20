@@ -26,8 +26,8 @@
     "@repo/config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/ms": "^2.1.0",
-    "@types/react": "19.1.6",
-    "@types/react-dom": "19.1.5",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
     "tsup": "^8.5.0",
     "typescript": "5.8.3"
   },
@@ -37,6 +37,6 @@
     "nanoid": "^5.1.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "tailwind-merge": "^3.3.0"
+    "tailwind-merge": "^3.3.1"
   }
 }

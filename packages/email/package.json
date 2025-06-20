@@ -8,21 +8,21 @@
   },
   "main": "./src/index.ts",
   "dependencies": {
-    "@react-email/components": "0.0.41",
+    "@react-email/components": "0.1.0",
     "@repo/config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@repo/utils": "workspace:*",
-    "lucide-react": "^0.511.0",
+    "lucide-react": "^0.518.0",
     "nodemailer": "^7.0.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-email": "4.0.15",
-    "resend": "^4.5.1"
+    "react-email": "4.0.16",
+    "resend": "^4.6.0"
   },
   "devDependencies": {
     "@types/nodemailer": "^6.4.17",
-    "@types/react": "19.1.6",
-    "@types/react-dom": "19.1.5",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
     "typescript": "^5.8.3"
   },
   "exports": {
