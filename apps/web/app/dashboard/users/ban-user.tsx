@@ -39,7 +39,7 @@ export default function BanUser({ isBanOpen, setIsBanOpen, userId, banExpires }:
   });
 
   const onSubmit = (data: any) => {
-    const { expiresAt } = data;
+    const { expiresAt, reason } = data;
 
     if (!expiresAt) {
       return;
@@ -52,8 +52,6 @@ export default function BanUser({ isBanOpen, setIsBanOpen, userId, banExpires }:
     // TODO: fetch ban user
     console.log('diff', diff);
   };
-
-  console.log(getValues('expiresAt'));
 
   return (
     <Modal showModal={isBanOpen} setShowModal={setIsBanOpen}>
