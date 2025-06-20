@@ -1,5 +1,7 @@
 import { Inter } from 'next/font/google';
+import { CircleAlert, CircleCheck, Info, TriangleAlert } from 'lucide-react';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { Toaster } from 'sonner';
 
 import type { Metadata } from 'next';
 import RootProviders from './providers';
@@ -27,6 +29,18 @@ export default function RootLayout({
         <NuqsAdapter>
           <RootProviders>{children}</RootProviders>
         </NuqsAdapter>
+
+        <Toaster
+          closeButton
+          position="bottom-center"
+          className="pointer-events-auto"
+          icons={{
+            error: <CircleAlert className="size-5 text-red-500" />,
+            success: <CircleCheck className="size-5 text-emerald-500" />,
+            info: <Info className="size-5 text-blue-500" />,
+            warning: <TriangleAlert className="size-5 text-amber-500" />
+          }}
+        />
       </body>
     </html>
   );
