@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { z } from 'zod';
+import * as z from 'zod/v4';
 import { fetcher } from '@repo/utils';
 
 import { getTagsCountQuerySchema, getTagsQuerySchema } from '@/app/dashboard/posts/tags/schema';

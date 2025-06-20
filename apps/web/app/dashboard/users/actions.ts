@@ -1,7 +1,7 @@
 'use server';
 
 import { headers } from 'next/headers';
-import { z } from 'zod';
+import * as z from 'zod/v4';
 
 import { auth } from '@/lib/auth';
 import { authActionClient } from '@/lib/safe-action';

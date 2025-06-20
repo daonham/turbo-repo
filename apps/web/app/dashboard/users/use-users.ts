@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { z } from 'zod';
+import * as z from 'zod/v4';
 import { fetcher } from '@repo/utils';
 
 const partialUsersQuerySchema = z.object({

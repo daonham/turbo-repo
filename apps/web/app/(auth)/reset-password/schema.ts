@@ -1,14 +1,14 @@
-import { z } from 'zod';
+import * as z from 'zod/v4';
 
 import { passwordSchema } from '@/app/(auth)/register/schema';
 
 export const schema = z
   .object({
-    token: z.string().min(1),
+    token: z.string().min(1, 'Token is required.'),
     password: passwordSchema,
     confirmPassword: z.string()
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Confirm password must match password',
+    error: 'Confirm password must match password.',
     path: ['confirmPassword']
   });
