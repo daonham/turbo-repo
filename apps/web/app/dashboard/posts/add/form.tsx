@@ -4,7 +4,7 @@ import slugify from '@sindresorhus/slugify';
 import { Command } from 'cmdk';
 import { AlertCircle, Check, ChevronDown, HelpCircle, Shuffle, X } from 'lucide-react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import * as z from 'zod/v4';
+import * as z from 'zod';
 import { Button, FileUpload, Input, Label, Popover, RichText, Tooltip } from '@repo/ui';
 import { cn, formatBytes } from '@repo/utils';
 

@@ -4,10 +4,8 @@ import React, { useCallback, useState } from 'react';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import ImageExtension from '@tiptap/extension-image';
-import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
-import TextStyle from '@tiptap/extension-text-style';
-import Underline from '@tiptap/extension-underline';
+import { TextStyleKit } from '@tiptap/extension-text-style';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Command } from 'cmdk';
@@ -72,7 +70,6 @@ export function RichText({
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Underline,
       ImageExtension.configure({
         inline: true,
         allowBase64: true,
@@ -80,19 +77,13 @@ export function RichText({
           class: 'h-auto max-w-full not-prose m-0 inline-block'
         }
       }),
-      TextStyle,
+      TextStyleKit,
       Color,
       Highlight.configure({
         multicolor: true
       }),
       TextAlign.configure({
         types: ['heading', 'paragraph']
-      }),
-      Link.configure({
-        openOnClick: false,
-        autolink: true,
-        defaultProtocol: 'https',
-        protocols: ['http', 'https']
       })
     ],
     editorProps: {

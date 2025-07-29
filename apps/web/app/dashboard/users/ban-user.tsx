@@ -4,7 +4,7 @@ import { parseAbsoluteToLocal } from '@internationalized/date';
 import { addDays, differenceInSeconds, formatDate, parseISO, setDate, setMonth, setYear } from 'date-fns';
 import { Ban } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
-import * as z from 'zod/v4';
+import * as z from 'zod';
 import { Button, Calendar, DateInput, Input, Label, Modal, Popover, Switch, TimeField } from '@repo/ui';
 
 const banUserSchema = z.object({
