@@ -79,6 +79,7 @@ export function LoginForm() {
               <Link
                 href={`/forgot-password?email=${encodeURIComponent(getValues('email') || '')}`}
                 className="text-sm text-gray-500 transition-colors hover:text-black"
+                tabIndex={-1}
               >
                 Forgot password?
               </Link>
