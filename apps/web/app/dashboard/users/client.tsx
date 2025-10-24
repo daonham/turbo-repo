@@ -28,7 +28,7 @@ const DEFAULT_COLUMN_VISIBILITY: VisibilityState = {
 
 export default function PageClient({ user }: { user: User }) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(DEFAULT_COLUMN_VISIBILITY);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useQueryState('search', parseAsString.withDefault(''));
   const [role, setRole] = useQueryState('role');
   const [sort, setSort] = useQueryState('sort', parseAsString.withDefault('createdAt'));
   const [sortDirection, setSortDirection] = useQueryState('sortDirection', parseAsString.withDefault('desc'));

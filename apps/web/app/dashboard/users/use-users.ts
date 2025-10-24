@@ -16,19 +16,27 @@ export function useUsers({ query }: { query: z.infer<typeof partialUsersQuerySch
   // remove search and role from query and keep the rest
   const { search, role, ...rest } = query;
 
-  let queryString = new URLSearchParams({
-    ...rest
-  } as Record<string, any>).toString();
+  const params = new URLSearchParams();
 
   if (query.search) {
-    queryString += `&searchField=email&searchOperator=contains&searchValue=${query.search}`;
+    params.set('searchField', 'email');
+    params.set('searchOperator', 'contains');
+    params.set('searchValue', query.search);
   }
 
   if (query.role) {
-    queryString += `&filterField=role&filterOperator=contains&filterValue=${query.role}`;
+    params.set('filterField', 'role');
+    params.set('filterOperator', 'contains');
+    params.set('filterValue', query.role);
   }
 
-  const { data, error, isValidating, mutate } = useSWR(`/api/auth/admin/list-users?${queryString}`, fetcher, {
+  if (Object.keys(rest).length > 0) {
+    Object.entries(rest).forEach(([key, value]) => {
+      params.set(key, value as string);
+    });
+  }
+
+  const { data, error, isValidating, mutate } = useSWR(`/api/auth/admin/list-users?${params.toString()}`, fetcher, {
     dedupingInterval: 60000
   });
 
